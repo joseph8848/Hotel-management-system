@@ -1,0 +1,35 @@
+{
+  "project": "champion-hotel-portal",
+  "test": {
+    "command": "npm run test:e2e",
+    "headed": "npm run test:e2e:headed",
+    "server": "npx http-server -p 4173 -c-1 .",
+    "port": 4173
+  },
+  "login": {
+    "email": "kilonzojoseph8848@gmail.com",
+    "password": "8848joseph",
+    "roles": ["admin", "staff", "customer"],
+    "redirects": {
+      "admin": "dashboard_admin.html",
+      "staff": "dashboard_staff.html",
+      "customer": "dashboard_customer.html"
+    }
+  },
+  "pages": [
+    "dashboard_admin.html",
+    "dashboard_staff.html",
+    "dashboard_customer.html",
+    "menu_orders.html",
+    "billing_transactions.html",
+    "reports_analytics.html",
+    "system_settings.html",
+    "login.html"
+  ],
+  "accessibility": {
+    "skip_link": true,
+    "aria_current": true,
+    "aria_expanded": true,
+    "live_region_toasts": true
+  }
+}
