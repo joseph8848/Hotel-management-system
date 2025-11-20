@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Champion Hotel - Premier luxury hotel in Nairobi, Kenya. Book your stay with us for an unforgettable experience.">
+  <meta name="keywords" content="hotel, luxury hotel, Nairobi hotel, accommodation, booking">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700;800&family=Cinzel:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/design-system.css">
+  <link rel="stylesheet" href="assets/css/landing.css">
+  <script src="assets/js/landing.js" defer></script>
+  <title>Champion Hotel - Premier Luxury Experience in Nairobi</title>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="main-nav" id="main-nav">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <img src="Champion hotel logo.png" alt="Champion Hotel Logo" class="nav-logo">
+        <span class="nav-title">Champion Hotel</span>
+      </div>
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="#home" class="nav-link active">Home</a></li>
+        <li><a href="#rooms" class="nav-link">Rooms</a></li>
+        <li><a href="#amenities" class="nav-link">Amenities</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="booking.html" class="btn btn-primary">Book Now</a>
+        <a href="login.html" class="btn btn-outline">Sign In</a>
+      </div>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-controls="nav-menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section" id="home">
+    <div class="hero-background"></div>
+    <div class="hero-content">
+      <h1 class="hero-title fade-in">Welcome to Champion Hotel</h1>
+      <p class="hero-subtitle fade-in">Experience Luxury, Comfort & Exceptional Service</p>
+      <div class="hero-actions fade-in">
+        <a href="booking.html" class="btn btn-primary btn-lg">Book Your Stay</a>
+        <a href="#rooms" class="btn btn-outline btn-lg">Explore Rooms</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <span>Scroll to explore</span>
+      <div class="scroll-indicator"></div>
+    </div>
+  </section>
+
+  <!-- Quick Booking Widget -->
+  <section class="quick-booking">
+    <div class="container">
+      <div class="booking-widget card-glass">
+        <h3 class="heading-5">Quick Booking</h3>
+        <form class="booking-form-inline" action="booking.html" method="GET">
+          <div class="form-group-inline">
+            <label for="quick-checkin" class="sr-only">Check-in</label>
+            <input type="date" id="quick-checkin" name="check_in" class="form-input" required>
+          </div>
+          <div class="form-group-inline">
+            <label for="quick-checkout" class="sr-only">Check-out</label>
+            <input type="date" id="quick-checkout" name="check_out" class="form-input" required>
+          </div>
+          <div class="form-group-inline">
+            <label for="quick-guests" class="sr-only">Guests</label>
+            <select id="quick-guests" name="guests" class="form-select">
+              <option value="1">1 Guest</option>
+              <option value="2" selected>2 Guests</option>
+              <option value="3">3 Guests</option>
+              <option value="4">4 Guests</option>
+              <option value="5">5+ Guests</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">Check Availability</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rooms Section -->
+  <section class="rooms-section" id="rooms">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="heading-2">Our Luxury Rooms</h2>
+        <p class="body-large">Choose from our selection of elegantly designed rooms</p>
+      </div>
+      <div class="rooms-grid">
+        <div class="room-card card">
+          <img src="Imgs/champ 3.jpeg" alt="Deluxe Suite" class="room-image" loading="lazy">
+          <div class="room-content">
+            <h3 class="heading-4">Deluxe Suite</h3>
+            <p class="body-base">Spacious suite with ocean view, king bed, and modern amenities</p>
+            <ul class="room-features-list">
+              <li>🛏️ King Size Bed</li>
+              <li>🌊 Ocean View</li>
+              <li>🛁 Luxury Bathroom</li>
+              <li>📺 Smart TV</li>
+            </ul>
+            <div class="room-footer">
+              <div class="room-price">
+                <span class="price-label">From</span>
+                <span class="price-amount">KSh 15,000</span>
+                <span class="price-period">/night</span>
+              </div>
+              <a href="booking.html" class="btn btn-primary">Book Now</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="room-card card">
+          <img src="Imgs/champ 4.jpeg" alt="Executive Suite" class="room-image" loading="lazy">
+          <div class="room-content">
+            <h3 class="heading-4">Executive Suite</h3>
+            <p class="body-base">Perfect for business travelers with work desk and city views</p>
+            <ul class="room-features-list">
+              <li>🛏️ King Size Bed</li>
+              <li>🏙️ City View</li>
+              <li>💼 Work Desk</li>
+              <li>☕ Coffee Maker</li>
+            </ul>
+            <div class="room-footer">
+              <div class="room-price">
+                <span class="price-label">From</span>
+                <span class="price-amount">KSh 20,000</span>
+                <span class="price-period">/night</span>
+              </div>
+              <a href="booking.html" class="btn btn-primary">Book Now</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="room-card card">
+          <img src="Imgs/champ 5.jpeg" alt="Presidential Suite" class="room-image" loading="lazy">
+          <div class="room-content">
+            <h3 class="heading-4">Presidential Suite</h3>
+            <p class="body-base">Ultimate luxury with private pool and butler service</p>
+            <ul class="room-features-list">
+              <li>🏊 Private Pool</li>
+              <li>🛎️ Butler Service</li>
+              <li>🍽️ Dining Area</li>
+              <li>🌅 Panoramic View</li>
+            </ul>
+            <div class="room-footer">
+              <div class="room-price">
+                <span class="price-label">From</span>
+                <span class="price-amount">KSh 35,000</span>
+                <span class="price-period">/night</span>
+              </div>
+              <a href="booking.html" class="btn btn-primary">Book Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Amenities Section -->
+  <section class="amenities-section" id="amenities">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="heading-2">World-Class Amenities</h2>
+        <p class="body-large">Everything you need for a perfect stay</p>
+      </div>
+      <div class="amenities-grid">
+        <div class="amenity-card">
+          <div class="amenity-icon">🏊</div>
+          <h3 class="heading-5">Swimming Pool</h3>
+          <p class="body-small">Olympic-size pool with poolside bar</p>
+        </div>
+        <div class="amenity-card">
+          <div class="amenity-icon">🍽️</div>
+          <h3 class="heading-5">Fine Dining</h3>
+          <p class="body-small">Award-winning restaurant & 24/7 room service</p>
+        </div>
+        <div class="amenity-card">
+          <div class="amenity-icon">💪</div>
+          <h3 class="heading-5">Fitness Center</h3>
+          <p class="body-small">State-of-the-art gym equipment</p>
+        </div>
+        <div class="amenity-card">
+          <div class="amenity-icon">🧖</div>
+          <h3 class="heading-5">Spa & Wellness</h3>
+          <p class="body-small">Relaxing treatments and massages</p>
+        </div>
+        <div class="amenity-card">
+          <div class="amenity-icon">📶</div>
+          <h3 class="heading-5">Free WiFi</h3>
+          <p class="body-small">High-speed internet throughout</p>
+        </div>
+        <div class="amenity-card">
+          <div class="amenity-icon">🚗</div>
+          <h3 class="heading-5">Parking</h3>
+          <p class="body-small">Complimentary valet parking</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about-section" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-content">
+          <h2 class="heading-2">About Champion Hotel</h2>
+          <p class="body-large">
+            Located in the heart of Nairobi, Champion Hotel has been providing exceptional 
+            hospitality since 2010. Our commitment to excellence and attention to detail 
+            ensures every guest enjoys a memorable stay.
+          </p>
+          <p class="body-base">
+            With 150 luxuriously appointed rooms, world-class dining, and comprehensive 
+            business facilities, we cater to both leisure and business travelers. Our 
+            dedicated staff is committed to making your stay comfortable and enjoyable.
+          </p>
+          <div class="about-stats">
+            <div class="stat-item">
+              <div class="stat-number">150+</div>
+              <div class="stat-label">Luxury Rooms</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">15</div>
+              <div class="stat-label">Years Experience</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">50K+</div>
+              <div class="stat-label">Happy Guests</div>
+            </div>
+          </div>
+        </div>
+        <div class="about-image">
+          <img src="Imgs/champion.jpeg" alt="Champion Hotel Building" class="rounded-xl shadow-xl" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact-section" id="contact">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="heading-2">Get In Touch</h2>
+        <p class="body-large">We're here to help with any questions</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <div class="contact-details">
+              <h3 class="heading-5">Address</h3>
+              <p class="body-base">123 Kenyatta Avenue<br>Nairobi, Kenya</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📞</div>
+            <div class="contact-details">
+              <h3 class="heading-5">Phone</h3>
+              <p class="body-base">+254 700 123 456<br>+254 700 123 457</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📧</div>
+            <div class="contact-details">
+              <h3 class="heading-5">Email</h3>
+              <p class="body-base">info@championhotel.com<br>reservations@championhotel.com</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">🕐</div>
+            <div class="contact-details">
+              <h3 class="heading-5">Hours</h3>
+              <p class="body-base">24/7 Reception<br>Always at your service</p>
+            </div>
+          </div>
+        </div>
+        <div class="contact-form-container card">
+          <h3 class="heading-4">Send Us a Message</h3>
+          <form class="contact-form" id="contact-form">
+            <div class="form-group">
+              <label for="contact-name" class="form-label">Name</label>
+              <input type="text" id="contact-name" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label for="contact-email" class="form-label">Email</label>
+              <input type="email" id="contact-email" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label for="contact-subject" class="form-label">Subject</label>
+              <input type="text" id="contact-subject" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label for="contact-message" class="form-label">Message</label>
+              <textarea id="contact-message" class="form-textarea" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4 class="heading-5">Champion Hotel</h4>
+          <p class="body-small">
+            Premier luxury hotel in Nairobi, providing exceptional hospitality 
+            and world-class service since 2010.
+          </p>
+          <div class="social-links">
+            <a href="#" class="social-link" aria-label="Facebook">📘</a>
+            <a href="#" class="social-link" aria-label="Twitter">🐦</a>
+            <a href="#" class="social-link" aria-label="Instagram">📷</a>
+            <a href="#" class="social-link" aria-label="LinkedIn">💼</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4 class="heading-6">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#rooms">Rooms</a></li>
+            <li><a href="#amenities">Amenities</a></li>
+            <li><a href="booking.html">Book Now</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 class="heading-6">Services</h4>
+          <ul class="footer-links">
+            <li><a href="#">Room Service</a></li>
+            <li><a href="#">Spa & Wellness</a></li>
+            <li><a href="#">Restaurant</a></li>
+            <li><a href="#">Events</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 class="heading-6">Support</h4>
+          <ul class="footer-links">
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="body-small">© 2025 Champion Hotel Management System. All rights reserved.</p>
+        <p class="body-small">Developed by Joseph Kilonzo Nzomo - Zetech University</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-top" id="scroll-top" aria-label="Scroll to top">
+    ↑
+  </button>
+</body>
+</html>

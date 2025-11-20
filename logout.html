@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <title>Logged Out - Champion Hotel</title>
+  <style>
+    .logout-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .logout-card {
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(15px);
+      border-radius: 16px;
+      padding: 40px;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .logout-card h1 {
+      color: #ffffff;
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+    }
+
+    .logout-card p {
+      color: #ccc;
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+
+    .login-link {
+      background: linear-gradient(45deg, #007BFF, #6a00ff);
+      color: white;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: 600;
+      transition: 0.3s;
+      display: inline-block;
+    }
+
+    .login-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0,123,255,0.5);
+    }
+  </style>
+</head>
+<body>
+  <div class="background"></div>
+
+  <img src="Champion hotel logo.png" alt="Champion Hotel Logo" class="logo">
+
+  <div class="logout-container">
+    <div class="logout-card">
+      <h1>Logged Out</h1>
+      <p>You have been logged out successfully. Click here to log in again.</p>
+      <a href="login.html" class="login-link">Log In Again</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 Champion Hotel | Premier Luxury Hotel Management</p>
+  </footer>
+</body>
+</html>

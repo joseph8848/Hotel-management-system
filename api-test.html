@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Tester</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 1000px; margin: 0 auto; padding: 20px; }
+        .container { display: flex; gap: 20px; }
+        .sidebar { width: 250px; }
+        .main { flex: 1; }
+        .endpoint { padding: 10px; margin: 5px 0; background: #f0f0f0; cursor: pointer; }
+        .endpoint:hover { background: #e0e0e0; }
+        .response { margin-top: 20px; padding: 15px; background: #f8f8f8; border: 1px solid #ddd; border-radius: 4px; white-space: pre-wrap; }
+        button { padding: 8px 15px; margin: 5px 0; cursor: pointer; }
+        input, select { width: 100%; padding: 8px; margin: 5px 0 15px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Hotel Management API Tester</h1>
+    
+    <div class="container">
+        <div class="sidebar">
+            <h3>Endpoints</h3>
+            <div class="endpoint" onclick="testEndpoint('login')">Login</div>
+            <div class="endpoint" onclick="testEndpoint('getMe')">Get Current User</div>
+            <div class="endpoint" onclick="testEndpoint('getRooms')">Get Available Rooms</div>
+            <div class="endpoint" onclick="testEndpoint('createBooking')">Create Booking</div>
+            <div class="endpoint" onclick="testEndpoint('getBookings')">Get My Bookings</div>
+        </div>
+        
+        <div class="main">
+            <div id="testForm">
+                <p>Select an endpoint from the left to get started.</p>
+            </div>
+            
+            <h3>Response</h3>
+            <div id="response" class="response">
+                Response will appear here...
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:8000/api';
+        let authToken = localStorage.getItem('authToken') || '';
+        
+        // Test endpoints
+        async function testEndpoint(endpoint) {
+            const testForms = {
+                login: `
+                    <h2>Login</h2>
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="email" id="email" value="guest@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Password:</label>
+                        <input type="password" id="password" value="Guest!234">
+                    </div>
+                    <button onclick="sendRequest('POST', '/auth/login', {
+                        email: document.getElementById('email').value,
+                        password: document.getElementById('password').value
+                    })">Login</button>
+                `,
+                
+                getMe: `
+                    <h2>Get Current User</h2>
+                    <button onclick="sendRequest('GET', '/auth/me')">Get My Info</button>
+                `,
+                
+                getRooms: `
+                    <h2>Get Available Rooms</h2>
+                    <div class="form-group">
+                        <label>Check-in:</label>
+                        <input type="date" id="checkIn" value="${formatDate(new Date())}">
+                    </div>
+                    <div class="form-group">
+                        <label>Check-out:</label>
+                        <input type="date" id="checkOut" value="${formatDate(new Date(Date.now() + 24 * 60 * 60 * 1000))}">
+                    </div>
+                    <button onclick="sendRequest('GET', '/rooms/available?check_in=' + 
+                        encodeURIComponent(document.getElementById('checkIn').value) + 
+                        '&check_out=' + encodeURIComponent(document.getElementById('checkOut').value))">
+                        Search Available Rooms
+                    </button>
+                `,
+                
+                createBooking: `
+                    <h2>Create Booking</h2>
+                    <div class="form-group">
+                        <label>Room ID:</label>
+                        <input type="number" id="roomId" placeholder="Enter room ID">
+                    </div>
+                    <div class="form-group">
+                        <label>Check-in:</label>
+                        <input type="date" id="bookingCheckIn" value="${formatDate(new Date())}">
+                    </div>
+                    <div class="form-group">
+                        <label>Check-out:</label>
+                        <input type="date" id="bookingCheckOut" value="${formatDate(new Date(Date.now() + 24 * 60 * 60 * 1000))}">
+                    </div>
+                    <div class="form-group">
+                        <label>Guests:</label>
+                        <input type="number" id="guests" value="1" min="1">
+                    </div>
+                    <button onclick="sendRequest('POST', '/bookings', {
+                        room_id: parseInt(document.getElementById('roomId').value),
+                        check_in: document.getElementById('bookingCheckIn').value,
+                        check_out: document.getElementById('bookingCheckOut').value,
+                        guests: parseInt(document.getElementById('guests').value)
+                    })">Create Booking</button>
+                `,
+                
+                getBookings: `
+                    <h2>My Bookings</h2>
+                    <button onclick="sendRequest('GET', '/bookings')">Get My Bookings</button>
+                `
+            };
+            
+            document.getElementById('testForm').innerHTML = testForms[endpoint] || '<p>Endpoint not found</p>';
+        }
+        
+        // Send API request
+        async function sendRequest(method, endpoint, data = null) {
+            const url = API_BASE_URL + endpoint;
+            const options = {
+                method,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': authToken ? `Bearer ${authToken}` : ''
+                }
+            };
+            
+            if (data) {
+                options.body = JSON.stringify(data);
+            }
+            
+            try {
+                const response = await fetch(url, options);
+                const result = await response.json();
+                
+                // Store token if this was a login request
+                if (endpoint === '/auth/login' && result.data?.session_id) {
+                    authToken = result.data.session_id;
+                    localStorage.setItem('authToken', authToken);
+                }
+                
+                // Display response
+                document.getElementById('response').textContent = JSON.stringify(result, null, 2);
+            } catch (error) {
+                document.getElementById('response').textContent = `Error: ${error.message}`;
+            }
+        }
+        
+        // Helper function to format date as YYYY-MM-DD
+        function formatDate(date) {
+            return date.toISOString().split('T')[0];
+        }
+        
+        // Initialize with login form
+        testEndpoint('login');
+    </script>
+</body>
+</html>

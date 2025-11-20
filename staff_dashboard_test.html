@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Staff Dashboard Rendering Tests</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 1.5rem; background: #f6f7fb; color: #222; }
+    h1 { font-size: 1.5rem; margin-bottom: 1rem; }
+    .results { border-radius: 8px; padding: 1rem 1.25rem; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.08); }
+    .result { margin: 0.35rem 0; padding-left: 1.2rem; position: relative; }
+    .result.pass { color: #107C10; }
+    .result.fail { color: #A4262C; }
+    .result::before { content: '\2714'; position: absolute; left: 0; top: 0; }
+    .result.fail::before { content: '\2716'; }
+    .summary { font-weight: 600; margin-top: 1rem; }
+    .fixtures { display: none; }
+  </style>
+  <script src="script.js" defer></script>
+  <script defer>
+    const results = [];
+
+    function recordResult(name, passed, details = '') {
+      results.push({ name, passed, details });
+    }
+
+    function assertEqual(actual, expected, name) {
+      const passed = actual === expected;
+      const details = passed ? '' : `expected "${expected}", received "${actual}"`;
+      recordResult(name, passed, details);
+    }
+
+    function runTests() {
+      document.body.classList.add('staff-dashboard');
+      document.body.dataset.staffRole = 'frontdesk';
+
+      // Test 1: renderStaffAssignments populates cards and meta/actions
+      renderStaffAssignments(staffDashboardState.assignments.frontdesk, 'staff-assignments-grid');
+      const assignmentCards = document.querySelectorAll('#staff-assignments-grid .assignment-card');
+      assertEqual(
+        assignmentCards.length,
+        staffDashboardState.assignments.frontdesk.length,
+        'Assignments: renders a card per assignment'
+      );
+      if (assignmentCards.length) {
+        const firstCard = assignmentCards[0];
+        assertEqual(
+          firstCard.querySelector('[data-field="role"]').textContent.trim(),
+          staffDashboardState.assignments.frontdesk[0].role,
+          'Assignments: first card role text'
+        );
+        const metaItems = firstCard.querySelectorAll('[data-field="meta"] li');
+        assertEqual(
+          metaItems.length,
+          staffDashboardState.assignments.frontdesk[0].meta.length,
+          'Assignments: meta list item count'
+        );
+        const actionButtons = firstCard.querySelectorAll('[data-field="actions"] button');
+        assertEqual(
+          actionButtons.length,
+          staffDashboardState.assignments.frontdesk[0].actions.length,
+          'Assignments: action buttons count'
+        );
+      }
+
+      // Test 2: renderRoomManagement renders status blocks, roster rows, and notes
+      renderRoomManagement(staffDashboardState.rooms);
+      const statusBlocks = document.querySelectorAll('#room-status-grid .room-status-block');
+      assertEqual(
+        statusBlocks.length,
+        staffDashboardState.rooms.statusBlocks.length,
+        'Rooms: status blocks count'
+      );
+      if (statusBlocks.length) {
+        const firstBlockLines = statusBlocks[0].querySelectorAll('li');
+        assertEqual(
+          firstBlockLines.length,
+          staffDashboardState.rooms.statusBlocks[0].lines.length,
+          'Rooms: first status block line count'
+        );
+      }
+      const rosterRows = document.querySelectorAll('#room-roster-body tr');
+      assertEqual(
+        rosterRows.length,
+        staffDashboardState.rooms.roster.length,
+        'Rooms: roster rows count'
+      );
+      const noteItems = document.querySelectorAll('#room-notes-list li');
+      assertEqual(
+        noteItems.length,
+        staffDashboardState.rooms.notes.length,
+        'Rooms: housekeeping notes count'
+      );
+
+      // Test 3: renderShiftBookings populates table rows
+      renderShiftBookings(staffDashboardState.shiftBookings);
+      const bookingRows = document.querySelectorAll('#shift-bookings-body tr');
+      assertEqual(
+        bookingRows.length,
+        staffDashboardState.shiftBookings.length,
+        'Bookings: shift booking rows count'
+      );
+
+      outputResults();
+    }
+
+    function outputResults() {
+      const container = document.getElementById('test-results');
+      const list = document.createElement('div');
+      list.className = 'results';
+
+      results.forEach(result => {
+        const item = document.createElement('div');
+        item.className = `result ${result.passed ? 'pass' : 'fail'}`;
+        item.textContent = result.name + (result.details ? ` (${result.details})` : '');
+        list.appendChild(item);
+      });
+
+      const summary = document.createElement('div');
+      const failed = results.filter(r => !r.passed).length;
+      summary.className = 'summary';
+      summary.textContent = failed === 0
+        ? `All ${results.length} checks passed.`
+        : `${failed} of ${results.length} checks failed.`;
+      list.appendChild(summary);
+
+      container.appendChild(list);
+    }
+
+    document.addEventListener('DOMContentLoaded', runTests);
+  </script>
+</head>
+<body>
+  <h1>Staff Dashboard Rendering Tests</h1>
+  <div id="test-results"></div>
+
+  <div class="fixtures">
+    <div id="staff-assignments-grid"></div>
+    <template id="staff-assignment-template">
+      <article class="assignment-card">
+        <div class="assignment-top">
+          <span class="assignment-role" data-field="role"></span>
+          <span class="assignment-status" data-field="status"></span>
+        </div>
+        <h3 data-field="title"></h3>
+        <p data-field="description"></p>
+        <ul class="assignment-meta" data-field="meta"></ul>
+        <div class="assignment-actions" data-field="actions"></div>
+      </article>
+    </template>
+    <template id="staff-assignment-meta-template">
+      <li data-field="text"></li>
+    </template>
+    <template id="staff-assignment-action-template">
+      <button class="pill-btn" data-field="label"></button>
+    </template>
+
+    <div id="room-status-grid"></div>
+    <template id="room-status-block-template">
+      <article class="room-status-block">
+        <header data-field="title"></header>
+        <ul class="room-list" data-field="items"></ul>
+      </article>
+    </template>
+    <template id="room-status-line-template">
+      <li data-field="text"></li>
+    </template>
+
+    <table>
+      <tbody id="room-roster-body"></tbody>
+    </table>
+    <template id="room-roster-row-template">
+      <tr>
+        <td data-field="room"></td>
+        <td data-field="type"></td>
+        <td data-field="status"></td>
+        <td data-field="next"></td>
+        <td data-field="assigned"></td>
+      </tr>
+    </template>
+
+    <ul id="room-notes-list"></ul>
+
+    <table>
+      <tbody id="shift-bookings-body"></tbody>
+    </table>
+    <template id="shift-booking-row-template">
+      <tr>
+        <td data-field="guest"></td>
+        <td data-field="room"></td>
+        <td data-field="type"></td>
+        <td data-field="step"></td>
+        <td data-field="notes"></td>
+      </tr>
+    </template>
+  </div>
+</body>
+</html>
