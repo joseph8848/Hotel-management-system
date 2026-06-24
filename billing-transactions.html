@@ -1,0 +1,965 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <title>Billing & Transactions - Champion Hotel</title>
+    <style>
+      :root {
+        --primary: #8b7355;
+        --primary-dark: #6b5b45;
+        --secondary: #2c3e50;
+        --accent: #c19a6b;
+        --light: #f8f5f2;
+        --dark: #2c2c2c;
+        --success: #27ae60;
+        --warning: #e67e22;
+        --danger: #e74c3c;
+        --gray-100: #f5f5f5;
+        --gray-200: #eaeaea;
+        --gray-300: #d5d5d5;
+        --gray-400: #a0a0a0;
+        --gray-500: #7a7a7a;
+        --gray-600: #555555;
+        --gray-700: #404040;
+        --gray-800: #2c2c2c;
+        --gray-900: #1a1a1a;
+        --sidebar-width: 280px;
+        --header-height: 80px;
+        --transition: all 0.3s ease;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+      }
+
+      body {
+        background-color: var(--light);
+        color: var(--dark);
+        display: flex;
+        min-height: 100vh;
+      }
+
+      /* Sidebar Styles */
+      .sidebar {
+        width: var(--sidebar-width);
+        background: linear-gradient(180deg, var(--secondary) 0%, var(--dark) 100%);
+        color: white;
+        height: 100vh;
+        position: fixed;
+        transition: var(--transition);
+        z-index: 100;
+        overflow-y: auto;
+        box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .sidebar-header {
+        padding: 25px 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(0, 0, 0, 0.2);
+      }
+
+      .sidebar-header h2 {
+        font-size: 1.6rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+      }
+
+      .sidebar-header .hotel-logo {
+        width: 52px;
+        height: 52px;
+        border-radius: 14px;
+        object-fit: cover;
+        box-shadow: 0 10px 20px rgba(11, 19, 40, 0.3);
+        border: 2px solid rgba(255, 255, 255, 0.18);
+      }
+
+      .hotel-brand {
+        font-size: 0.9rem;
+        color: var(--accent);
+        margin-top: 5px;
+        letter-spacing: 2px;
+      }
+
+      .sidebar-menu {
+        padding: 20px 0;
+      }
+
+      .sidebar-menu ul {
+        list-style: none;
+      }
+
+      .sidebar-menu li {
+        padding: 15px 25px;
+        transition: var(--transition);
+        cursor: pointer;
+        border-left: 3px solid transparent;
+      }
+
+      .sidebar-menu li:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+        border-left: 3px solid var(--accent);
+      }
+
+      .sidebar-menu li.active {
+        background-color: rgba(193, 154, 107, 0.2);
+        border-left: 3px solid var(--accent);
+      }
+
+      .sidebar-menu a {
+        color: white;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+      }
+
+      .sidebar-menu i {
+        margin-right: 15px;
+        width: 20px;
+        text-align: center;
+        color: var(--accent);
+      }
+
+      /* Main Content Styles */
+      .main-content {
+        flex: 1;
+        margin-left: var(--sidebar-width);
+        transition: var(--transition);
+      }
+
+      /* Header Styles */
+      .header {
+        height: var(--header-height);
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 40px;
+        position: sticky;
+        top: 0;
+        z-index: 99;
+        backdrop-filter: blur(10px);
+      }
+
+      .header-left {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .header-left h1 {
+        font-size: 1.8rem;
+        color: var(--secondary);
+        font-weight: 600;
+      }
+
+      .date-display {
+        font-size: 0.9rem;
+        color: var(--gray-500);
+        margin-top: 5px;
+      }
+
+      .header-right {
+        display: flex;
+        align-items: center;
+      }
+
+      .notification {
+        position: relative;
+        margin-right: 25px;
+        cursor: pointer;
+      }
+
+      .notification i {
+        font-size: 1.4rem;
+        color: var(--secondary);
+      }
+
+      .notification-count {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: var(--accent);
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        font-size: 0.7rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+      }
+
+      .user-profile {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        padding: 8px 15px;
+        border-radius: 30px;
+        transition: var(--transition);
+        background: rgba(139, 115, 85, 0.1);
+      }
+
+      .user-profile:hover {
+        background: rgba(139, 115, 85, 0.2);
+      }
+
+      .user-profile img {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 12px;
+        border: 2px solid var(--accent);
+      }
+
+      .user-info {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .user-name {
+        font-weight: 600;
+        color: var(--secondary);
+      }
+
+      .user-role {
+        font-size: 0.8rem;
+        color: var(--gray-500);
+      }
+
+      /* Content Area Styles */
+      .content {
+        padding: 35px;
+      }
+
+      .welcome-banner {
+        background: linear-gradient(135deg, var(--secondary) 0%, var(--dark) 100%);
+        color: white;
+        border-radius: 15px;
+        padding: 25px 30px;
+        margin-bottom: 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .welcome-text h2 {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+        font-weight: 600;
+      }
+
+      .welcome-text p {
+        opacity: 0.9;
+        max-width: 600px;
+      }
+
+      .welcome-icon {
+        font-size: 4rem;
+        color: var(--accent);
+        opacity: 0.8;
+      }
+
+      .dashboard-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 25px;
+        margin-bottom: 35px;
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+        transition: var(--transition);
+        border: 1px solid rgba(139, 115, 85, 0.1);
+        backdrop-filter: blur(5px);
+      }
+
+      .card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .card-title {
+        font-size: 0.95rem;
+        color: var(--gray-600);
+        font-weight: 600;
+        letter-spacing: 0.5px;
+      }
+
+      .card-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-icon.blue {
+        background: linear-gradient(135deg, var(--secondary) 0%, #3498db 100%);
+      }
+
+      .card-icon.green {
+        background: linear-gradient(135deg, var(--success) 0%, #2ecc71 100%);
+      }
+
+      .card-icon.orange {
+        background: linear-gradient(135deg, var(--warning) 0%, #e67e22 100%);
+      }
+
+      .card-icon.red {
+        background: linear-gradient(135deg, var(--danger) 0%, #e74c3c 100%);
+      }
+
+      .card-value {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: var(--secondary);
+      }
+
+      .card-footer {
+        font-size: 0.85rem;
+        color: var(--gray-500);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .card-footer.positive {
+        color: var(--success);
+      }
+
+      .card-footer.negative {
+        color: var(--danger);
+      }
+
+      /* Table Styles */
+      .table-container {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+        border: 1px solid rgba(139, 115, 85, 0.1);
+        backdrop-filter: blur(5px);
+        overflow: hidden;
+      }
+
+      .section-title {
+        font-size: 1.3rem;
+        margin-bottom: 20px;
+        color: var(--secondary);
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .section-title i {
+        color: var(--accent);
+      }
+
+      .filter-bar {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+
+      .filter-group {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+      }
+
+      .filter-select,
+      .search-box {
+        padding: 10px 15px;
+        border: 1px solid rgba(139, 115, 85, 0.2);
+        border-radius: 8px;
+        background: white;
+        color: var(--secondary);
+        font-weight: 500;
+      }
+
+      .search-box {
+        width: 250px;
+      }
+
+      .data-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .data-table thead {
+        background: rgba(139, 115, 85, 0.1);
+      }
+
+      .data-table th {
+        padding: 15px;
+        text-align: left;
+        font-weight: 600;
+        color: var(--secondary);
+        border-bottom: 2px solid rgba(139, 115, 85, 0.2);
+      }
+
+      .data-table td {
+        padding: 15px;
+        border-bottom: 1px solid rgba(139, 115, 85, 0.1);
+      }
+
+      .data-table tbody tr {
+        transition: var(--transition);
+      }
+
+      .data-table tbody tr:hover {
+        background: rgba(139, 115, 85, 0.05);
+      }
+
+      .status {
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+
+      .status.paid {
+        background: rgba(39, 174, 96, 0.1);
+        color: var(--success);
+      }
+
+      .status.unpaid {
+        background: rgba(231, 76, 60, 0.1);
+        color: var(--danger);
+      }
+
+      .status.partial {
+        background: rgba(230, 126, 34, 0.1);
+        color: var(--warning);
+      }
+
+      .table-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .btn {
+        padding: 8px 15px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: var(--transition);
+        font-size: 0.8rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .btn i {
+        font-size: 0.85rem;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        color: white;
+      }
+
+      .btn-secondary {
+        background: var(--gray-200);
+        color: var(--dark);
+      }
+
+      .btn-success {
+        background: linear-gradient(135deg, var(--success) 0%, #2ecc71 100%);
+        color: white;
+      }
+
+      .btn-danger {
+        background: linear-gradient(135deg, var(--danger) 0%, #e74c3c 100%);
+        color: white;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Mobile Menu Button */
+      .mobile-menu-btn {
+        display: none;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: var(--secondary);
+        cursor: pointer;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 1200px) {
+        .data-table {
+          display: block;
+          overflow-x: auto;
+        }
+      }
+
+      @media (max-width: 992px) {
+        .sidebar {
+          transform: translateX(-100%);
+          width: 280px;
+        }
+
+        .sidebar.active {
+          transform: translateX(0);
+        }
+
+        .main-content {
+          margin-left: 0;
+        }
+
+        .mobile-menu-btn {
+          display: block;
+        }
+
+        .dashboard-cards {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .dashboard-cards {
+          grid-template-columns: 1fr;
+        }
+
+        .header {
+          padding: 0 20px;
+        }
+
+        .content {
+          padding: 20px;
+        }
+
+        .welcome-banner {
+          flex-direction: column;
+          text-align: center;
+          gap: 20px;
+        }
+
+        .welcome-icon {
+          font-size: 3rem;
+        }
+
+        .filter-bar {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .search-box {
+          width: 100%;
+        }
+
+        .table-actions {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .btn {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+    </style>
+    <script src="assets/js/shared/main.js" defer></script>
+  </head>
+  <body>
+    <a
+      href="#main-content"
+      class="skip-link"
+      style="
+        position: absolute;
+        left: -9999px;
+        top: auto;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+      "
+      >Skip to content</a
+    >
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <img
+          src="Champion hotel logo.png"
+          alt="Champion Hotel Logo"
+          class="hotel-logo"
+          loading="lazy"
+        />
+        <div>
+          <h2>Champion Hotel</h2>
+          <div class="hotel-brand">LUXURY HOTEL</div>
+        </div>
+      </div>
+      <div class="sidebar-menu">
+        <ul>
+          <li>
+            <a href="dashboard_admin.php">
+              <i class="fas fa-home"></i>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li class="active">
+            <a href="#">
+              <i class="fas fa-file-invoice-dollar"></i>
+              <span>Billing & Transactions</span>
+            </a>
+          </li>
+          <li>
+            <a href="logout.php">
+              <i class="fas fa-sign-out-alt"></i>
+              <span>Logout</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="main-content">
+      <!-- Header -->
+      <div class="header">
+        <div class="header-left">
+          <button class="mobile-menu-btn">
+            <i class="fas fa-bars"></i>
+          </button>
+          <div>
+            <h1>Billing & Transactions</h1>
+            <div class="date-display" id="currentDate">Monday, October 16, 2023</div>
+          </div>
+        </div>
+        <div class="header-right">
+          <div class="notification">
+            <i class="fas fa-bell"></i>
+            <span class="notification-count">3</span>
+          </div>
+          <div class="user-profile">
+            <img src="https://randomuser.me/api/portraits/men/41.jpg" alt="User Profile" />
+            <div class="user-info">
+              <div class="user-name">Michael Rodriguez</div>
+              <div class="user-role">Hotel Manager</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="content">
+        <!-- Welcome Banner -->
+        <div class="welcome-banner">
+          <div class="welcome-text">
+            <h2>Billing & Transactions Management</h2>
+            <p>
+              Manage all hotel billing, track payments, and monitor financial transactions in one
+              place.
+            </p>
+          </div>
+          <div class="welcome-icon">
+            <i class="fas fa-file-invoice-dollar"></i>
+          </div>
+        </div>
+
+        <!-- Dashboard Cards -->
+        <div class="dashboard-cards">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">TODAY'S REVENUE</div>
+              <div class="card-icon blue">
+                <i class="fas fa-dollar-sign"></i>
+              </div>
+            </div>
+            <div class="card-value">$2,450</div>
+            <div class="card-footer positive">
+              <i class="fas fa-arrow-up"></i>
+              <span>12.5% from yesterday</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">OUTSTANDING BALANCE</div>
+              <div class="card-icon red">
+                <i class="fas fa-exclamation-circle"></i>
+              </div>
+            </div>
+            <div class="card-value">$1,230</div>
+            <div class="card-footer negative">
+              <i class="fas fa-arrow-up"></i>
+              <span>3 bills overdue</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">TOTAL BILLS TODAY</div>
+              <div class="card-icon green">
+                <i class="fas fa-receipt"></i>
+              </div>
+            </div>
+            <div class="card-value">15</div>
+            <div class="card-footer positive">
+              <i class="fas fa-arrow-up"></i>
+              <span>2 more than yesterday</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">UNPAID BILLS</div>
+              <div class="card-icon orange">
+                <i class="fas fa-clock"></i>
+              </div>
+            </div>
+            <div class="card-value">8</div>
+            <div class="card-footer negative">
+              <i class="fas fa-exclamation-circle"></i>
+              <span>Requires attention</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Billing Table -->
+        <div class="table-container">
+          <div class="filter-bar">
+            <h2 class="section-title">
+              <i class="fas fa-list-alt"></i>
+              All Bills & Transactions
+            </h2>
+            <div class="filter-group">
+              <input type="text" class="search-box" placeholder="Search bills..." />
+              <select class="filter-select">
+                <option>All Status</option>
+                <option>Paid</option>
+                <option>Unpaid</option>
+                <option>Partial</option>
+              </select>
+              <select class="filter-select">
+                <option>All Payment Methods</option>
+                <option>Credit Card</option>
+                <option>Cash</option>
+                <option>Bank Transfer</option>
+                <option>Mobile Payment</option>
+              </select>
+            </div>
+          </div>
+
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Bill ID</th>
+                <th>Customer Name</th>
+                <th>Total Amount</th>
+                <th>Payment Status</th>
+                <th>Payment Method</th>
+                <th>Date Issued</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>BILL001</td>
+                <td>Jane Smith</td>
+                <td>$450</td>
+                <td><span class="status paid">Paid</span></td>
+                <td>Credit Card</td>
+                <td>2023-10-01</td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn btn-primary"><i class="fas fa-eye"></i> View</button>
+                    <button class="btn btn-secondary"><i class="fas fa-print"></i> Print</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>BILL002</td>
+                <td>Michael Johnson</td>
+                <td>$320</td>
+                <td><span class="status unpaid">Unpaid</span></td>
+                <td>Cash</td>
+                <td>2023-10-02</td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn btn-primary"><i class="fas fa-eye"></i> View</button>
+                    <button class="btn btn-success"><i class="fas fa-check"></i> Mark Paid</button>
+                    <button class="btn btn-secondary"><i class="fas fa-print"></i> Print</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>BILL003</td>
+                <td>Emily Davis</td>
+                <td>$680</td>
+                <td><span class="status partial">Partial</span></td>
+                <td>Bank Transfer</td>
+                <td>2023-10-03</td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn btn-primary"><i class="fas fa-eye"></i> View</button>
+                    <button class="btn btn-success"><i class="fas fa-check"></i> Mark Paid</button>
+                    <button class="btn btn-secondary"><i class="fas fa-print"></i> Print</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>BILL004</td>
+                <td>David Wilson</td>
+                <td>$275</td>
+                <td><span class="status paid">Paid</span></td>
+                <td>Credit Card</td>
+                <td>2023-10-04</td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn btn-primary"><i class="fas fa-eye"></i> View</button>
+                    <button class="btn btn-secondary"><i class="fas fa-print"></i> Print</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>BILL005</td>
+                <td>Sarah Brown</td>
+                <td>$890</td>
+                <td><span class="status unpaid">Unpaid</span></td>
+                <td>Mobile Payment</td>
+                <td>2023-10-05</td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn btn-primary"><i class="fas fa-eye"></i> View</button>
+                    <button class="btn btn-success"><i class="fas fa-check"></i> Mark Paid</button>
+                    <button class="btn btn-secondary"><i class="fas fa-print"></i> Print</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>BILL006</td>
+                <td>Robert Taylor</td>
+                <td>$150</td>
+                <td><span class="status paid">Paid</span></td>
+                <td>Cash</td>
+                <td>2023-10-06</td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn btn-primary"><i class="fas fa-eye"></i> View</button>
+                    <button class="btn btn-secondary"><i class="fas fa-print"></i> Print</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>BILL007</td>
+                <td>Lisa Anderson</td>
+                <td>$520</td>
+                <td><span class="status partial">Partial</span></td>
+                <td>Credit Card</td>
+                <td>2023-10-07</td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn btn-primary"><i class="fas fa-eye"></i> View</button>
+                    <button class="btn btn-success"><i class="fas fa-check"></i> Mark Paid</button>
+                    <button class="btn btn-secondary"><i class="fas fa-print"></i> Print</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>BILL008</td>
+                <td>James Miller</td>
+                <td>$410</td>
+                <td><span class="status unpaid">Unpaid</span></td>
+                <td>Bank Transfer</td>
+                <td>2023-10-08</td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn btn-primary"><i class="fas fa-eye"></i> View</button>
+                    <button class="btn btn-success"><i class="fas fa-check"></i> Mark Paid</button>
+                    <button class="btn btn-secondary"><i class="fas fa-print"></i> Print</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const localMobileMenuBtn = document.querySelector('.mobile-menu-btn');
+      const localSidebar = document.querySelector('.sidebar');
+
+      // Set current date
+      const now = new Date();
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      document.getElementById('currentDate').textContent = now.toLocaleDateString('en-US', options);
+
+      // Mobile Menu Toggle
+      localMobileMenuBtn.addEventListener('click', () => {
+        localSidebar.classList.toggle('active');
+      });
+
+      // Table interactions
+      const markPaidButtons = document.querySelectorAll('.btn-success');
+      markPaidButtons.forEach((button) => {
+        button.addEventListener('click', function () {
+          const row = this.closest('tr');
+          const statusCell = row.querySelector('.status');
+
+          if (statusCell.classList.contains('unpaid') || statusCell.classList.contains('partial')) {
+            statusCell.textContent = 'Paid';
+            statusCell.className = 'status paid';
+            this.remove();
+            if(typeof showToast === 'function') showToast('Bill marked as paid successfully!', 'success');
+          }
+        });
+      });
+
+      // Search functionality
+      const searchBox = document.querySelector('.search-box');
+      searchBox.addEventListener('input', function () {
+        const searchTerm = this.value.toLowerCase();
+        const rows = document.querySelectorAll('.data-table tbody tr');
+
+        rows.forEach((row) => {
+          const text = row.textContent.toLowerCase();
+          row.style.display = text.includes(searchTerm) ? '' : 'none';
+        });
+      });
+    </script>
+  </body>
+</html>

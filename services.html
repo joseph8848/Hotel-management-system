@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700;800&family=Cinzel:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/design-system.css" />
+    <link rel="stylesheet" href="assets/css/landing.css" />
+    <title>Our Services - Champion Hotel</title>
+    <style>
+      .page-content {
+        padding: 120px 0 60px;
+        min-height: calc(100vh - 300px);
+      }
+      .page-header {
+        text-align: center;
+        margin-bottom: 60px;
+      }
+      .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+      .service-card {
+        background: var(--surface-1);
+        border-radius: 8px;
+        padding: 40px 30px;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        border: 1px solid var(--border-color);
+        transition: transform 0.3s ease;
+      }
+      .service-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      }
+      .service-icon {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        display: inline-block;
+      }
+      .service-card h3 {
+        color: var(--deep-blue);
+        margin-bottom: 15px;
+      }
+      .service-card p {
+        color: var(--text-color);
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="main-nav" style="background: var(--surface-1);">
+      <div class="nav-container">
+        <div class="nav-brand">
+          <img src="Champion hotel logo.png" alt="Champion Hotel Logo" class="nav-logo" />
+          <span class="nav-title">Champion Hotel</span>
+        </div>
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="booking.html" class="nav-link">Book Now</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="page-content container">
+      <div class="page-header">
+        <h1 class="heading-2">Our Premium Services</h1>
+        <p class="body-large">Exceptional amenities designed for your absolute comfort.</p>
+      </div>
+
+      <div class="services-grid">
+        <article class="service-card">
+          <span class="service-icon">🍽️</span>
+          <h3 class="heading-4">In-Room Dining</h3>
+          <p class="body-base">Savor world-class cuisine from the comfort of your suite. Available 24/7 with an extensive menu ranging from local delicacies to international favorites.</p>
+          <a href="login.html" class="btn btn-outline" style="width:100%">Order Now</a>
+        </article>
+
+        <article class="service-card">
+          <span class="service-icon">💆‍♀️</span>
+          <h3 class="heading-4">Spa & Wellness</h3>
+          <p class="body-base">Rejuvenate your body and mind in our serene spa. Featuring holistic treatments, deep tissue massage, and a fully equipped thermal suite.</p>
+          <a href="login.html" class="btn btn-outline" style="width:100%">Book Spa</a>
+        </article>
+
+        <article class="service-card">
+          <span class="service-icon">🍷</span>
+          <h3 class="heading-4">Fine Dining Restaurant</h3>
+          <p class="body-base">Experience culinary excellence at our signature restaurant, featuring seasonal ingredients curated by our award-winning executive chefs.</p>
+          <a href="login.html" class="btn btn-outline" style="width:100%">Reserve Table</a>
+        </article>
+
+        <article class="service-card">
+          <span class="service-icon">🎉</span>
+          <h3 class="heading-4">Events & Meetings</h3>
+          <p class="body-base">From intimate board meetings to grand wedding receptions, our versatile event spaces are equipped with state-of-the-art technology and dedicated planners.</p>
+          <a href="contact.html" class="btn btn-outline" style="width:100%">Contact Planner</a>
+        </article>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+      <div class="container">
+        <div class="footer-bottom" style="border: none;">
+          <p class="body-small">© 2025 Champion Hotel Management System. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

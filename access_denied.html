@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Access Denied - Champion Hotel</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+      }
+
+      body {
+        background: url('Imgs/login_bg.jpg') no-repeat center center / cover;
+        color: #fff;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        position: relative;
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background:
+          linear-gradient(
+            135deg,
+            rgba(26, 26, 46, 0.6) 0%,
+            rgba(22, 33, 62, 0.5) 50%,
+            rgba(15, 52, 96, 0.4) 100%
+          ),
+          url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyIiBoZWlnaHQ9IjIiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3QgZmlsbD0idXJsKCNwYXR0ZXJuKSIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIvPjwvc3ZnPg==');
+        z-index: -1;
+      }
+
+      .logo {
+        position: absolute;
+        top: 32px;
+        left: 32px;
+        height: 70px;
+        width: auto;
+        object-fit: contain;
+        filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.35));
+        z-index: 2;
+      }
+
+      .error-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 80vh;
+        text-align: center;
+        padding: 20px;
+        width: 100%;
+        max-width: 800px;
+      }
+
+      .error-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(15px);
+        border-radius: 20px;
+        padding: 36px 32px;
+        width: 100%;
+        max-width: 480px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        animation: fadeIn 1s ease-in-out;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .error-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(90deg, #9d7dfc, #6a00ff, #007bff);
+      }
+
+      .error-icon {
+        font-size: 80px;
+        margin-bottom: 25px;
+        color: #ff6b6b;
+        filter: drop-shadow(0 0 10px rgba(255, 107, 107, 0.5));
+      }
+
+      .error-card h1 {
+        color: #ffffff;
+        font-size: 32px;
+        margin-bottom: 20px;
+        font-weight: 600;
+        text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      }
+
+      .error-card p {
+        color: #f0f0f0;
+        font-size: 18px;
+        margin-bottom: 30px;
+        line-height: 1.6;
+        font-weight: 400;
+      }
+
+      .dashboard-link {
+        background: linear-gradient(45deg, #9d7dfc, #6a00ff);
+        color: white;
+        text-decoration: none;
+        padding: 14px 30px;
+        border-radius: 30px;
+        font-size: 16px;
+        font-weight: 600;
+        transition: 0.3s;
+        display: inline-block;
+        box-shadow: 0 4px 15px rgba(157, 125, 252, 0.4);
+        margin-bottom: 20px;
+        border: none;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .dashboard-link::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: 0.5s;
+      }
+
+      .dashboard-link:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 7px 20px rgba(157, 125, 252, 0.6);
+      }
+
+      .dashboard-link:hover::before {
+        left: 100%;
+      }
+
+      .error-details {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 20px;
+        margin-top: 25px;
+        text-align: left;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .error-details h3 {
+        color: #b28cff;
+        margin-bottom: 15px;
+        font-weight: 600;
+        font-size: 18px;
+      }
+
+      .error-details p {
+        color: #e0e0e0;
+        font-size: 15px;
+        margin: 8px 0;
+        display: flex;
+      }
+
+      .error-details strong {
+        color: #ffffff;
+        min-width: 120px;
+        display: inline-block;
+      }
+
+      footer {
+        margin-top: 30px;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 14px;
+        padding: 20px;
+        width: 100%;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .support-info {
+        margin-top: 20px;
+        font-size: 14px;
+        color: #cccccc;
+        padding: 15px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .support-info a {
+        color: #b28cff;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .support-info a:hover {
+        text-decoration: underline;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 600px) {
+        .logo {
+          top: 20px;
+          left: 20px;
+          height: 56px;
+        }
+
+        .error-card {
+          padding: 30px 20px;
+        }
+
+        .error-icon {
+          font-size: 60px;
+        }
+
+        .error-card h1 {
+          font-size: 26px;
+        }
+
+        .error-card p {
+          font-size: 16px;
+        }
+
+        .error-details p {
+          flex-direction: column;
+        }
+
+        .error-details strong {
+          min-width: auto;
+          margin-bottom: 5px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <img src="Champion hotel logo.png" alt="Champion Hotel Logo" class="logo" />
+
+    <div class="error-container">
+      <div class="error-card">
+        <div class="error-icon">🚫</div>
+        <h1>Access Denied</h1>
+        <p>
+          We're sorry, but you don't have permission to access this page. This area is restricted to
+          authorized personnel only.
+        </p>
+        <p>
+          If you believe this is an error, please contact your system administrator or the hotel
+          management team.
+        </p>
+        <a href="logout.php" class="dashboard-link">Return to Login</a>
+
+        <div class="error-details">
+          <h3>Error Details</h3>
+          <p><strong>Error Code:</strong> 403 Forbidden</p>
+          <p><strong>Page:</strong> Admin Dashboard</p>
+          <p><strong>Time:</strong> <span id="current-time"></span></p>
+          <p><strong>IP Address:</strong> <span id="ip-address">192.168.1.105</span></p>
+        </div>
+
+        <div class="support-info">
+          Need assistance? Contact
+          <a href="mailto:support@championhotel.com">support@championhotel.com</a> or call +1 (555)
+          123-4567
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2025 Champion Hotel | Premier Luxury Hotel Management</p>
+    </footer>
+
+    <script>
+      // Display current time
+      document.getElementById('current-time').textContent = new Date().toLocaleString();
+
+      // Add subtle animation to the error icon
+      const icon = document.querySelector('.error-icon');
+      setInterval(() => {
+        icon.style.transform = 'scale(1.05)';
+        setTimeout(() => {
+          icon.style.transform = 'scale(1)';
+        }, 300);
+      }, 3000);
+    </script>
+  </body>
+</html>
