@@ -1,5 +1,7 @@
 # 🏨 Champion Hotel Management System
 
+[🚀 Run Locally](http://localhost:8080) - *Start the server first with `node server.js`*
+
 A comprehensive, modern hotel management system built with PHP, MySQL, and vanilla JavaScript. Features a luxury design with glassmorphism effects and real-time functionality.
 
 ## 📋 Project Overview
