@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 
-const analyticsPath = '/reports_analytics.html';
+const analyticsPath = '/reports-analytics.html';
 
 test.describe('Reports & Analytics portal', () => {
   test.beforeEach(async ({ page }) => {

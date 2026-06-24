@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 
-const staffPath = '/dashboard_staff.html';
+const staffPath = '/staff-dashboard.html';
 
 test.describe('Staff dashboard smoke', () => {
   test.beforeEach(async ({ page }) => {
@@ -20,7 +20,9 @@ test.describe('Staff dashboard smoke', () => {
   });
 
   test('front desk assignments render for current role', async ({ page }) => {
-    const visibleAssignments = await page.locator('.assignment-card[data-role="frontdesk"]').count();
+    const visibleAssignments = await page
+      .locator('.assignment-card[data-role="frontdesk"]')
+      .count();
     expect(visibleAssignments).toBeGreaterThan(0);
   });
 

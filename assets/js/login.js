@@ -11,20 +11,20 @@ const USER_TYPES = {
     title: 'Welcome Back',
     description: 'Access your bookings and reservations',
     buttonText: 'Sign In as Customer',
-    useEmail: true
+    useEmail: true,
   },
   staff: {
     title: 'Staff Portal',
     description: 'Access your work dashboard',
     buttonText: 'Sign In as Staff',
-    useEmail: false
+    useEmail: false,
   },
   admin: {
     title: 'Admin Portal',
     description: 'Manage hotel operations',
     buttonText: 'Sign In as Admin',
-    useEmail: false
-  }
+    useEmail: false,
+  },
 };
 
 const ERROR_MESSAGES = {
@@ -38,7 +38,7 @@ const ERROR_MESSAGES = {
   email_invalid: 'Please enter a valid email address.',
   username_required: 'Username is required.',
   password_required: 'Password is required.',
-  password_min_length: 'Password must be at least 6 characters long.'
+  password_min_length: 'Password must be at least 6 characters long.',
 };
 
 // ============================================
@@ -61,7 +61,7 @@ const elements = {
   customerFooter: document.getElementById('customer-footer'),
   emailError: document.getElementById('email-error'),
   usernameError: document.getElementById('username-error'),
-  passwordError: document.getElementById('password-error')
+  passwordError: document.getElementById('password-error'),
 };
 
 // ============================================
@@ -85,12 +85,12 @@ document.addEventListener('DOMContentLoaded', () => {
 function initializeUserType() {
   const urlParams = new URLSearchParams(window.location.search);
   const userType = urlParams.get('user_type') || 'customer';
-  
+
   if (USER_TYPES[userType]) {
     switchUserType(userType);
-    
+
     // Activate the correct tab
-    elements.tabBtns.forEach(btn => {
+    elements.tabBtns.forEach((btn) => {
       if (btn.dataset.userType === userType) {
         btn.classList.add('active');
       } else {
@@ -105,7 +105,7 @@ function initializeUserType() {
  */
 function attachEventListeners() {
   // Tab switching
-  elements.tabBtns.forEach(btn => {
+  elements.tabBtns.forEach((btn) => {
     btn.addEventListener('click', handleTabClick);
   });
 
@@ -142,10 +142,10 @@ function attachEventListeners() {
 function checkForErrors() {
   const urlParams = new URLSearchParams(window.location.search);
   const errorCode = urlParams.get('error');
-  
+
   if (errorCode && ERROR_MESSAGES[errorCode]) {
     showAlert(ERROR_MESSAGES[errorCode], 'error');
-    
+
     // Clean URL
     window.history.replaceState({}, document.title, window.location.pathname);
   }
@@ -159,11 +159,11 @@ function checkForErrors() {
  */
 function handleTabClick(event) {
   const userType = event.currentTarget.dataset.userType;
-  
+
   // Update active tab
-  elements.tabBtns.forEach(btn => btn.classList.remove('active'));
+  elements.tabBtns.forEach((btn) => btn.classList.remove('active'));
   event.currentTarget.classList.add('active');
-  
+
   // Switch user type
   switchUserType(userType);
 }
@@ -173,23 +173,23 @@ function handleTabClick(event) {
  */
 function switchUserType(userType) {
   if (!USER_TYPES[userType]) return;
-  
+
   currentUserType = userType;
   const config = USER_TYPES[userType];
-  
+
   // Update hidden input
   elements.userTypeInput.value = userType;
-  
+
   // Update portal header
   elements.portalTitle.textContent = config.title;
   elements.portalDescription.textContent = config.description;
-  
+
   // Update button text
   const btnText = elements.loginBtn.querySelector('.btn-text');
   if (btnText) {
     btnText.textContent = config.buttonText;
   }
-  
+
   // Toggle email/username fields
   if (config.useEmail) {
     elements.emailGroup.style.display = 'block';
@@ -204,7 +204,7 @@ function switchUserType(userType) {
     elements.usernameInput.required = true;
     elements.customerFooter.style.display = 'none';
   }
-  
+
   // Clear errors
   clearAllErrors();
   clearAlert();
@@ -219,7 +219,7 @@ function switchUserType(userType) {
 function togglePasswordVisibility() {
   const type = elements.passwordInput.type === 'password' ? 'text' : 'password';
   elements.passwordInput.type = type;
-  
+
   const eyeIcon = elements.togglePasswordBtn.querySelector('.eye-icon');
   if (eyeIcon) {
     eyeIcon.textContent = type === 'password' ? '👁️' : '🙈';
@@ -234,20 +234,20 @@ function togglePasswordVisibility() {
  */
 function validateEmail() {
   if (currentUserType !== 'customer') return true;
-  
+
   const email = elements.emailInput.value.trim();
-  
+
   if (!email) {
     showError('email', ERROR_MESSAGES.missing_identifier);
     return false;
   }
-  
+
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
     showError('email', ERROR_MESSAGES.email_invalid);
     return false;
   }
-  
+
   clearError('email');
   return true;
 }
@@ -257,14 +257,14 @@ function validateEmail() {
  */
 function validateUsername() {
   if (currentUserType === 'customer') return true;
-  
+
   const username = elements.usernameInput.value.trim();
-  
+
   if (!username) {
     showError('username', ERROR_MESSAGES.username_required);
     return false;
   }
-  
+
   clearError('username');
   return true;
 }
@@ -274,17 +274,17 @@ function validateUsername() {
  */
 function validatePassword() {
   const password = elements.passwordInput.value;
-  
+
   if (!password) {
     showError('password', ERROR_MESSAGES.password_required);
     return false;
   }
-  
+
   if (password.length < 6) {
     showError('password', ERROR_MESSAGES.password_min_length);
     return false;
   }
-  
+
   clearError('password');
   return true;
 }
@@ -294,15 +294,15 @@ function validatePassword() {
  */
 function validateForm() {
   let isValid = true;
-  
+
   if (currentUserType === 'customer') {
     isValid = validateEmail() && isValid;
   } else {
     isValid = validateUsername() && isValid;
   }
-  
+
   isValid = validatePassword() && isValid;
-  
+
   return isValid;
 }
 
@@ -314,23 +314,23 @@ function validateForm() {
  */
 async function handleFormSubmit(event) {
   event.preventDefault();
-  
+
   // Prevent double submission
   if (isSubmitting) return;
-  
+
   // Clear previous alerts
   clearAlert();
-  
+
   // Validate form
   if (!validateForm()) {
     showAlert('Please fix the errors before submitting.', 'error');
     return;
   }
-  
+
   // Set loading state
   setLoadingState(true);
   isSubmitting = true;
-  
+
   try {
     // Submit form
     elements.loginForm.submit();
@@ -351,12 +351,12 @@ async function handleFormSubmit(event) {
 function showError(field, message) {
   const errorElement = elements[`${field}Error`];
   const inputElement = elements[`${field}Input`];
-  
+
   if (errorElement) {
     errorElement.textContent = message;
     errorElement.style.display = 'block';
   }
-  
+
   if (inputElement) {
     inputElement.classList.add('error');
   }
@@ -368,12 +368,12 @@ function showError(field, message) {
 function clearError(field) {
   const errorElement = elements[`${field}Error`];
   const inputElement = elements[`${field}Input`];
-  
+
   if (errorElement) {
     errorElement.textContent = '';
     errorElement.style.display = 'none';
   }
-  
+
   if (inputElement) {
     inputElement.classList.remove('error');
   }

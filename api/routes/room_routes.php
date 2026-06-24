@@ -1,5 +1,4 @@
 <?php
-$db = get_db_connection();
 $roomController = new RoomController($db);
 
 // Get available rooms

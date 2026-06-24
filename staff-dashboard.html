@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Staff Dashboard - Champion Hotel</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="assets/js/shared/mockData.js" defer></script>
+    <script src="assets/js/shared/main.js" defer></script>
+    <script src="assets/js/staff/dashboard.js" defer></script>
+    <link rel="stylesheet" href="dashboard_staff.css" />
+  </head>
+  <body
+    class="staff-dashboard"
+    data-staff-role="frontdesk"
+    data-staff-role-label="Front Desk"
+    data-staff-name="Alex Johnson"
+    data-staff-shift-start="07:00"
+    data-staff-shift-end="15:00"
+    data-staff-ext="214"
+  >
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    <header class="top-bar">
+      <div class="top-left">
+        <button class="hamburger" id="sidebar-toggle" aria-label="Toggle navigation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <div class="top-brand">
+          <div class="hotel-name" id="staff-name">Alex Johnson</div>
+          <span class="role-pill" id="staff-role-label">Front Desk</span>
+        </div>
+      </div>
+      <div class="top-center">
+        <div class="clock-display" id="clock-display">--:--</div>
+        <label class="search-inline" for="quick-search">
+          <span aria-hidden="true">🔍</span>
+          <input type="search" id="quick-search" placeholder="Search guests, rooms, tasks..." />
+        </label>
+      </div>
+      <div class="top-right">
+        <div class="staff-badge-dropdown">
+          <button
+            class="badge-toggle"
+            id="staff-badge-toggle"
+            aria-expanded="false"
+            aria-haspopup="true"
+          >
+            <span class="icon">👤</span>
+            <span class="label">Shift details</span>
+            <span class="chevron">▾</span>
+          </button>
+          <div class="badge-menu" id="staff-badge-menu" role="menu" aria-hidden="true">
+            <span class="staff-badge">👤 <span id="staff-name-menu">Alex Johnson</span></span>
+            <span class="staff-badge">🏷️ <span id="staff-role-label-menu">Front Desk</span></span>
+            <span class="staff-badge"
+              >🕒 <span id="staff-shift-window-menu">07:00 – 15:00</span></span
+            >
+            <span class="staff-badge">☎️ <span id="staff-ext-menu">214</span></span>
+            <span class="staff-badge"
+              >⏳
+              <span id="shift-remaining-menu" aria-live="polite">Shift ends in --h --m</span></span
+            >
+          </div>
+        </div>
+        <div
+          class="icon-badge"
+          data-count="4"
+          role="button"
+          tabindex="0"
+          aria-label="Notifications"
+        >
+          🔔
+        </div>
+        <div class="icon-badge" data-count="2" role="button" tabindex="0" aria-label="Messages">
+          💬
+        </div>
+        <div class="avatar small" aria-label="Account">AJ</div>
+        <button class="header-btn ghost" id="panic-button">SOS</button>
+        <button class="header-btn" id="new-checkin-btn">New Check-in</button>
+      </div>
+    </header>
+
+    <div class="layout-container" id="main-content">
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-shell">
+          <div class="sidebar-brand">
+            <img
+              src="Champion hotel logo.png"
+              alt="Champion Hotel Logo"
+              class="logo-badge"
+              loading="lazy"
+            />
+            <div class="sidebar-meta">
+              <span class="sidebar-title">Ops Console</span>
+              <span class="sidebar-subtitle">Front Desk Team</span>
+            </div>
+          </div>
+          <div class="sidebar-body">
+            <nav>
+              <ul>
+                <li>
+                  <a href="#" class="active" data-section="overview"
+                    ><span class="icon">🏠</span> Command Center</a
+                  >
+                </li>
+                <li>
+                  <a href="#" data-section="rooms"><span class="icon">🏨</span> Manage Rooms</a>
+                </li>
+                <li>
+                  <a href="#" data-section="bookings"><span class="icon">📖</span> Bookings</a>
+                </li>
+                <li>
+                  <a href="#" data-section="customers"><span class="icon">👥</span> Customers</a>
+                </li>
+                <li>
+                  <a href="#" data-section="orders"><span class="icon">🍽️</span> Orders & Menu</a>
+                </li>
+                <li>
+                  <a href="#" data-section="billing"><span class="icon">💰</span> Billing</a>
+                </li>
+                <li>
+                  <a href="#" data-section="transactions"
+                    ><span class="icon">🧾</span> Transactions</a
+                  >
+                </li>
+                <li>
+                  <a href="#" data-section="reports"><span class="icon">📅</span> Daily Reports</a>
+                </li>
+                <li>
+                  <a href="#" data-section="contact"><span class="icon">📞</span> Contact Admin</a>
+                </li>
+                <li class="logout-item">
+                  <a href="logout.php"><span class="icon">🚪</span> Logout</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <section id="overview" class="content-section active">
+          <div class="role-dashboard active" data-role-view="frontdesk">
+            <section class="panel assignments-panel top">
+              <div class="panel-header">
+                <div>
+                  <div class="panel-title">Shift assignments</div>
+                  <p class="panel-subtitle">Coordinate support by role</p>
+                </div>
+                <div class="role-switcher">
+                  <button class="chip role-chip active" data-role="frontdesk">Front Desk</button>
+                  <button class="chip role-chip" data-role="housekeeping">Housekeeping</button>
+                  <button class="chip role-chip" data-role="kitchen">Kitchen</button>
+                  <button class="chip role-chip" data-role="maintenance">Maintenance</button>
+                  <button class="chip role-chip" data-role="all">All</button>
+                </div>
+              </div>
+              <div class="panel-body assignments-grid" id="staff-assignments-grid"></div>
+              <template id="staff-assignment-template">
+                <article class="assignment-card">
+                  <div class="assignment-top">
+                    <span class="assignment-role" data-field="role"></span>
+                    <span class="assignment-status" data-field="status"></span>
+                  </div>
+                  <h3 data-field="title"></h3>
+                  <p data-field="description"></p>
+                  <ul class="assignment-meta" data-field="meta"></ul>
+                  <div class="assignment-actions" data-field="actions"></div>
+                </article>
+              </template>
+              <template id="staff-assignment-meta-template">
+                <li data-field="text"></li>
+              </template>
+              <template id="staff-assignment-action-template">
+                <button class="pill-btn" data-field="label"></button>
+              </template>
+            </section>
+
+            <div class="cards-grid" id="staff-snapshot-grid"></div>
+            <template id="staff-snapshot-template">
+              <article class="snapshot-card">
+                <header>
+                  <span data-field="title"></span>
+                  <span class="trend" data-field="trend"></span>
+                </header>
+                <div class="metric" data-field="metric"></div>
+                <div class="snapshot-actions" data-field="actions"></div>
+              </article>
+            </template>
+            <template id="staff-snapshot-action-template">
+              <button class="chip" data-field="label"></button>
+            </template>
+
+            <div class="command-toolbar">
+              <div class="command-group">
+                <button class="command-btn primary" data-action="new-checkin">
+                  🛎️ Check-in guest
+                </button>
+                <button class="command-btn primary" data-action="checkout">
+                  ↩️ Process checkout
+                </button>
+                <button class="command-btn primary" data-action="assign-room">
+                  🗝️ Assign / change room
+                </button>
+                <button class="command-btn primary" data-action="take-payment">
+                  💳 Record payment
+                </button>
+              </div>
+              <div class="command-group">
+                <button class="command-btn" data-action="log-request">🧾 Log guest request</button>
+                <button class="command-btn" data-action="maintenance">🔧 Maintenance ticket</button>
+                <button class="command-btn" data-action="service-order">
+                  🍽️ Room service order
+                </button>
+                <button class="command-btn" data-action="shift-note">📝 Leave shift note</button>
+              </div>
+            </div>
+
+            <section class="panel action-hub">
+              <div class="panel-header">
+                <div>
+                  <div class="panel-title">Guest &amp; reservation control</div>
+                  <p class="panel-subtitle">
+                    Assign rooms, manage bookings, and schedule on-property services.
+                  </p>
+                </div>
+                <button class="pill-btn" data-action="view-history">Action history</button>
+              </div>
+              <div class="panel-body action-grid" id="staff-action-grid"></div>
+              <template id="staff-action-card-template">
+                <section class="action-card" data-field="card">
+                  <header>
+                    <h3 data-field="title"></h3>
+                    <span class="badge subtle" data-field="badge"></span>
+                  </header>
+                  <div class="action-form-container" data-field="form"></div>
+                  <div class="quick-links" data-field="links"></div>
+                </section>
+              </template>
+              <template id="staff-action-field-template">
+                <label data-field="label"></label>
+              </template>
+              <template id="staff-action-input-template">
+                <input />
+              </template>
+              <template id="staff-action-textarea-template">
+                <textarea></textarea>
+              </template>
+              <template id="staff-action-select-template">
+                <select></select>
+              </template>
+              <template id="staff-action-option-template">
+                <option></option>
+              </template>
+              <template id="staff-action-form-actions-template">
+                <div class="form-actions"></div>
+              </template>
+              <template id="staff-action-button-template">
+                <button class="pill-btn"></button>
+              </template>
+              <template id="staff-action-link-template">
+                <button class="chip"></button>
+              </template>
+            </section>
+
+            <div class="workspace-grid">
+              <section class="panel arrivals-panel">
+                <div class="panel-header">
+                  <div>
+                    <div class="panel-title">Today's arrivals &amp; departures</div>
+                    <p class="panel-subtitle">VIPs first • Average wait time 6m</p>
+                  </div>
+                  <div class="filter-group">
+                    <button class="filter-chip active" data-filter="all">All</button>
+                    <button class="filter-chip" data-filter="arrivals">Arrivals</button>
+                    <button class="filter-chip" data-filter="departures">Departures</button>
+                  </div>
+                </div>
+                <div class="panel-body arrivals-grid" id="staff-arrivals-list"></div>
+                <template id="staff-arrival-card-template">
+                  <article class="arrival-card">
+                    <header>
+                      <strong data-field="guest"></strong>
+                      <span class="badge room" data-field="room"></span>
+                    </header>
+                    <div class="details" data-field="details"></div>
+                    <footer>
+                      <span class="status-pill" data-field="status"></span>
+                      <div class="arrival-actions" data-field="actions"></div>
+                    </footer>
+                  </article>
+                </template>
+                <template id="staff-arrival-detail-template">
+                  <div>
+                    <span class="label" data-field="label"></span>
+                    <span data-field="value"></span>
+                  </div>
+                </template>
+                <template id="staff-arrival-action-template">
+                  <button class="pill-btn" data-field="label"></button>
+                </template>
+              </section>
+
+              <section class="panel activity-panel">
+                <div class="panel-header">
+                  <div>
+                    <div class="panel-title">Activity highlights</div>
+                    <p class="panel-subtitle">Recent actions from the shift</p>
+                  </div>
+                  <button class="pill-btn" data-action="view-log">Open full log</button>
+                </div>
+                <div class="panel-body">
+                  <div class="activity-stream" id="staff-activity-stream"></div>
+                  <template id="staff-activity-column-template">
+                    <article class="activity-card">
+                      <h3 data-field="title"></h3>
+                      <div data-field="body"></div>
+                    </article>
+                  </template>
+                  <template id="staff-activity-timeline-template">
+                    <div class="activity-timeline" data-field="timeline"></div>
+                  </template>
+                  <template id="staff-activity-timeline-item-template">
+                    <div class="timeline-item">
+                      <span class="timeline-dot"></span>
+                      <div data-field="text"></div>
+                    </div>
+                  </template>
+                  <template id="staff-activity-task-template">
+                    <div class="task-card" data-field="tone">
+                      <strong data-field="headline"></strong>
+                      <p data-field="description"></p>
+                    </div>
+                  </template>
+                  <template id="staff-activity-note-template">
+                    <li data-field="text"></li>
+                  </template>
+                </div>
+              </section>
+            </div>
+          </div>
+
+          <div class="role-dashboard" data-role-view="housekeeping">
+            <section class="panel assignments-panel">
+              <div class="panel-header">
+                <div class="panel-title">Active cleaning queue</div>
+                <button class="pill-btn" data-action="dispatch">Dispatch runner</button>
+              </div>
+              <div class="panel-body assignments-grid" id="housekeeping-assignments-grid"></div>
+            </section>
+
+            <div class="cards-grid" id="housekeeping-snapshot-grid"></div>
+
+            <section class="panel">
+              <div class="panel-header">
+                <div class="panel-title">Turnover progress</div>
+                <button class="pill-btn">View checklist</button>
+              </div>
+              <div class="panel-body" id="housekeeping-turnover"></div>
+            </section>
+          </div>
+
+          <div class="role-dashboard" data-role-view="kitchen">
+            <section class="panel assignments-panel">
+              <div class="panel-header">
+                <div class="panel-title">Kitchen queue</div>
+                <button class="pill-btn" data-action="add-order">Add order</button>
+              </div>
+              <div
+                class="panel-body scrollable assignments-grid"
+                id="kitchen-assignments-grid"
+              ></div>
+            </section>
+
+            <div class="cards-grid" id="kitchen-snapshot-grid"></div>
+
+            <section class="panel">
+              <div class="panel-header">
+                <div class="panel-title">Service capacity</div>
+                <button class="pill-btn" data-action="notify-floor">Notify floor</button>
+              </div>
+              <div class="panel-body" id="kitchen-capacity"></div>
+            </section>
+          </div>
+
+          <div class="role-dashboard" data-role-view="maintenance">
+            <section class="panel assignments-panel">
+              <div class="panel-header">
+                <div class="panel-title">Maintenance queue</div>
+                <button class="pill-btn" data-action="dispatch-tech">Dispatch tech</button>
+              </div>
+              <div class="panel-body assignments-grid" id="maintenance-assignments-grid"></div>
+            </section>
+
+            <div class="cards-grid" id="maintenance-snapshot-grid"></div>
+
+            <section class="panel">
+              <div class="panel-header">
+                <div class="panel-title">Upcoming inspections</div>
+                <button class="pill-btn" data-action="export">Export list</button>
+              </div>
+              <div class="panel-body" id="maintenance-inspections"></div>
+            </section>
+          </div>
+        </section>
+
+        <section id="rooms" class="content-section">
+          <div class="section-header">
+            <div>
+              <h1>Room Management</h1>
+              <p>Monitor room availability, turnover, and maintenance holds.</p>
+            </div>
+            <button class="header-btn">Open room matrix</button>
+          </div>
+          <section class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Live room status</div>
+              <button class="pill-btn">Download report</button>
+            </div>
+            <div class="panel-body">
+              <div class="room-status-grid" id="room-status-grid"></div>
+              <template id="room-status-block-template">
+                <article class="room-status-block">
+                  <header data-field="title"></header>
+                  <ul class="room-list" data-field="items"></ul>
+                </article>
+              </template>
+              <template id="room-status-line-template">
+                <li data-field="text"></li>
+              </template>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Room roster</div>
+              <button class="pill-btn" data-action="toggle-roster">Assign staff</button>
+            </div>
+            <div class="panel-body scrollable">
+              <table class="roster-table">
+                <thead>
+                  <tr>
+                    <th>Room</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Next action</th>
+                    <th>Assigned to</th>
+                  </tr>
+                </thead>
+                <tbody id="room-roster-body"></tbody>
+              </table>
+              <template id="room-roster-row-template">
+                <tr>
+                  <td data-field="room"></td>
+                  <td data-field="type"></td>
+                  <td data-field="status"></td>
+                  <td data-field="next"></td>
+                  <td data-field="assigned"></td>
+                </tr>
+              </template>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Housekeeping notes</div>
+              <button class="pill-btn" data-action="notify-supervisor">Notify</button>
+            </div>
+            <div class="panel-body">
+              <ul class="room-notes" id="room-notes-list"></ul>
+              <template id="room-note-item-template">
+                <li data-field="text"></li>
+              </template>
+            </div>
+          </section>
+        </section>
+
+        <section id="bookings" class="content-section">
+          <div class="section-header">
+            <div>
+              <h1>Bookings</h1>
+              <p>View arrivals, departures, and required follow-ups for this shift.</p>
+            </div>
+            <button class="header-btn">Create booking</button>
+          </div>
+          <section class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Today’s arrivals &amp; departures</div>
+              <button class="pill-btn">View calendar</button>
+            </div>
+            <div class="panel-body scrollable">
+              <table class="roster-table">
+                <thead>
+                  <tr>
+                    <th>Guest</th>
+                    <th>Room</th>
+                    <th>Type</th>
+                    <th>Next step</th>
+                    <th>Notes</th>
+                  </tr>
+                </thead>
+                <tbody id="shift-bookings-body"></tbody>
+              </table>
+              <template id="shift-booking-row-template">
+                <tr>
+                  <td data-field="guest"></td>
+                  <td data-field="room"></td>
+                  <td data-field="type"></td>
+                  <td data-field="step"></td>
+                  <td data-field="notes"></td>
+                </tr>
+              </template>
+            </div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Upcoming reservations</div>
+              <button class="pill-btn">Manage blocks</button>
+            </div>
+            <div class="panel-body scrollable">
+              <ul class="reservation-list" id="upcoming-reservations-list"></ul>
+              <template id="upcoming-reservation-template">
+                <li>
+                  <strong data-field="summary"></strong>
+                  <span data-field="details"></span>
+                </li>
+              </template>
+            </div>
+          </section>
+        </section>
+
+        <section id="customers" class="content-section">
+          <div class="section-header">
+            <div>
+              <h1>Customer History</h1>
+              <p>Personalize service using loyalty insights and guest preferences.</p>
+            </div>
+            <button class="header-btn">Search guest</button>
+          </div>
+          <section class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Top loyalty guests</div>
+              <button class="pill-btn">View profiles</button>
+            </div>
+            <div class="panel-body">
+              <ul class="note-list" id="loyalty-guest-list"></ul>
+              <template id="loyalty-guest-template">
+                <li data-field="text"></li>
+              </template>
+            </div>
+          </section>
+        </section>
+
+        <section id="orders" class="content-section">
+          <div class="section-header">
+            <div>
+              <h1>Orders & Menu</h1>
+              <p>Coordinate room service, spa, and concierge requests.</p>
+            </div>
+            <button class="header-btn">Open master menu</button>
+          </div>
+          <section class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Service capacity</div>
+              <button class="pill-btn">Notify kitchen</button>
+            </div>
+            <div class="panel-body" id="orders-capacity"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <div class="panel-title">Room service queue</div>
+                <p class="panel-subtitle">Kitchen load light • Avg prep 18m</p>
+              </div>
+              <button class="pill-btn" data-action="view-menu">View menu</button>
+            </div>
+            <div class="panel-body scrollable" id="room-service-queue"></div>
+            <template id="room-service-row-template">
+              <div class="list-row">
+                <div class="list-info">
+                  <strong data-field="title"></strong>
+                  <div class="list-meta" data-field="meta"></div>
+                </div>
+                <div class="list-actions">
+                  <span class="status-pill" data-field="status"></span>
+                  <div class="list-buttons" data-field="actions"></div>
+                </div>
+              </div>
+            </template>
+            <template id="room-service-meta-fragment">
+              <span data-field="text"></span>
+            </template>
+            <template id="room-service-action-template">
+              <button class="pill-btn" data-field="label"></button>
+            </template>
+          </section>
+        </section>
+
+        <section id="billing" class="content-section">
+          <div class="section-header">
+            <div>
+              <h1>Billing</h1>
+              <p>Manage deposits, folios, and reconciliations proactively.</p>
+            </div>
+            <button class="header-btn">Open billing console</button>
+          </div>
+          <section class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Collections summary</div>
+              <button class="pill-btn">Export</button>
+            </div>
+            <div class="panel-body" id="billing-summary"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <div class="panel-title">Pending payments</div>
+                <p class="panel-subtitle">Follow up before checkout to avoid delays</p>
+              </div>
+              <button class="pill-btn" data-action="view-billing">Open billing</button>
+            </div>
+            <div class="panel-body scrollable" id="pending-payments"></div>
+            <template id="pending-payment-template">
+              <div class="list-row">
+                <div class="list-info">
+                  <strong data-field="title"></strong>
+                  <div class="list-meta" data-field="meta"></div>
+                </div>
+                <div class="list-actions">
+                  <span class="status-pill" data-field="status"></span>
+                  <div class="list-buttons" data-field="actions"></div>
+                </div>
+              </div>
+            </template>
+          </section>
+        </section>
+
+        <section id="transactions" class="content-section">
+          <div class="section-header">
+            <div>
+              <h1>Transactions</h1>
+              <p>Audit payments, refunds, and adjustments.</p>
+            </div>
+            <button class="header-btn">View ledger</button>
+          </div>
+          <section class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Recent activity</div>
+              <button class="pill-btn">Filter</button>
+            </div>
+            <div class="panel-body">
+              <ul class="note-list" id="transaction-activity-list"></ul>
+              <template id="transaction-activity-template">
+                <li data-field="text"></li>
+              </template>
+            </div>
+          </section>
+        </section>
+
+        <section id="reports" class="content-section">
+          <div class="section-header">
+            <div>
+              <h1>Daily Reports</h1>
+              <p>Produce summaries for management and night audit.</p>
+            </div>
+            <button class="header-btn">Send nightly report</button>
+          </div>
+          <section class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Report shortcuts</div>
+              <button class="pill-btn">Schedule</button>
+            </div>
+            <div class="panel-body">
+              <ul class="note-list" id="report-shortcuts-list"></ul>
+              <template id="report-shortcut-template">
+                <li data-field="text"></li>
+              </template>
+            </div>
+          </section>
+        </section>
+
+        <section id="contact" class="content-section">
+          <div class="section-header">
+            <div>
+              <h1>Contact Administration</h1>
+              <p>Contact management or support teams instantly.</p>
+            </div>
+            <button class="header-btn">Open directory</button>
+          </div>
+          <section class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Quick contacts</div>
+              <button class="pill-btn">Send message</button>
+            </div>
+            <div class="panel-body">
+              <ul class="note-list" id="quick-contact-list"></ul>
+              <template id="quick-contact-template">
+                <li data-field="text"></li>
+              </template>
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <div class="action-drawer" id="action-drawer">
+      <div class="drawer-menu" aria-label="Quick actions">
+        <button class="drawer-action" data-action="walkin">➕ Register walk-in</button>
+        <button class="drawer-action" data-action="late-checkout">🕓 Approve late checkout</button>
+        <button class="drawer-action" data-action="maintenance">🛠️ Log maintenance</button>
+        <button class="drawer-action" data-action="handover">📋 Leave shift note</button>
+      </div>
+      <button class="drawer-toggle" id="drawer-toggle">
+        <span>⚡ Quick Actions</span>
+      </button>
+    </div>
+
+    <footer class="footer">
+      <p>
+        &copy; 2025 Champion Hotel • Staff Operations Portal • Delivering excellence every shift
+      </p>
+    </footer>
+  </body>
+</html>

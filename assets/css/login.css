@@ -28,9 +28,9 @@ body {
   --accent-blue-600: #1e8cff;
   --accent-blue-400: #6fc0ff;
   --muted-ink: #0f2a3d;
-  --panel-glass-strong: rgba(255,255,255,0.86);
-  --panel-glass-light: rgba(255,255,255,0.72);
-  --overlay-tint: rgba(6,35,70,0.18);
+  --panel-glass-strong: rgba(255, 255, 255, 0.86);
+  --panel-glass-light: rgba(255, 255, 255, 0.72);
+  --overlay-tint: rgba(6, 35, 70, 0.18);
 }
 
 /* ============================================
@@ -59,7 +59,7 @@ body {
   width: 100%;
   height: 100%;
   /* gentle tint to improve contrast while preserving colors */
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), var(--overlay-tint));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), var(--overlay-tint));
   z-index: -2; /* above image, below content */
   pointer-events: none;
 }
@@ -81,14 +81,14 @@ body {
 /* ===== LEFT PANEL - BRANDING (translucent frosted panel) ===== */
 .login-branding-panel {
   flex: 0 0 40%;
-  background: rgba(255,255,255,0.06); /* subtle translucency so photo shows */
+  background: rgba(255, 255, 255, 0.06); /* subtle translucency so photo shows */
   backdrop-filter: blur(10px) saturate(120%);
   padding: 60px 40px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-right: 1px solid rgba(255,255,255,0.06);
-  box-shadow: inset -2px 0 20px rgba(6,35,70,0.06);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: inset -2px 0 20px rgba(6, 35, 70, 0.06);
   color: #ffffff;
 }
 
@@ -117,10 +117,12 @@ body {
   height: 100px;
   object-fit: contain;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(255,255,255,0.94) 0%, rgba(240,248,255,0.9) 100%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.94) 0%, rgba(240, 248, 255, 0.9) 100%);
   padding: 10px;
-  box-shadow: 0 12px 36px rgba(6,35,70,0.25), inset 0 2px 6px rgba(255,255,255,0.6);
-  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow:
+    0 12px 36px rgba(6, 35, 70, 0.25),
+    inset 0 2px 6px rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .branding-title {
@@ -130,7 +132,7 @@ body {
   color: #ffffff;
   margin: 16px 0 8px 0;
   letter-spacing: 1px;
-  text-shadow: 0 2px 6px rgba(6,35,70,0.45);
+  text-shadow: 0 2px 6px rgba(6, 35, 70, 0.45);
 }
 
 .branding-tagline {
@@ -164,7 +166,7 @@ body {
 
 .branding-text {
   font-size: 14px;
-  color: rgba(255,255,255,0.9);
+  color: rgba(255, 255, 255, 0.9);
   line-height: 1.6;
   margin: 0;
 }
@@ -185,7 +187,7 @@ body {
 }
 
 .branding-link:hover {
-  background: rgba(30,140,255,0.06);
+  background: rgba(30, 140, 255, 0.06);
   color: #08324d;
 }
 
@@ -224,8 +226,8 @@ body {
   padding: 44px 32px;
   background: var(--panel-glass-strong); /* semi-opaque white */
   border-radius: 14px;
-  border: 1px solid rgba(6,35,70,0.06);
-  box-shadow: 0 22px 60px rgba(6,35,70,0.18);
+  border: 1px solid rgba(6, 35, 70, 0.06);
+  box-shadow: 0 22px 60px rgba(6, 35, 70, 0.18);
   backdrop-filter: blur(10px) saturate(120%);
 }
 
@@ -234,7 +236,7 @@ body {
   display: flex;
   gap: 8px;
   margin-bottom: 32px;
-  background: rgba(255,255,255,0.88);
+  background: rgba(255, 255, 255, 0.88);
   padding: 6px;
   border-radius: 8px;
 }
@@ -264,7 +266,7 @@ body {
 .tab-btn.active {
   background: linear-gradient(135deg, var(--accent-blue-700), var(--accent-blue-600));
   color: #fff;
-  box-shadow: 0 8px 28px rgba(30,140,255,0.16);
+  box-shadow: 0 8px 28px rgba(30, 140, 255, 0.16);
 }
 
 .tab-icon {
@@ -292,7 +294,7 @@ body {
 
 #portal-description {
   font-size: 13px;
-  color: rgba(15,42,61,0.6);
+  color: rgba(15, 42, 61, 0.6);
   margin: 0;
 }
 
@@ -362,15 +364,15 @@ body {
   position: relative;
   display: flex;
   align-items: center;
-  background: rgba(255,255,255,0.94);
-  border: 1px solid rgba(6,35,70,0.04);
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(6, 35, 70, 0.04);
   border-radius: 8px;
   transition: all 0.3s ease;
 }
 
 .input-wrapper:focus-within {
   border-color: var(--accent-blue-600);
-  box-shadow: 0 8px 26px rgba(30,140,255,0.06);
+  box-shadow: 0 8px 26px rgba(30, 140, 255, 0.06);
 }
 
 .input-icon {
@@ -499,12 +501,12 @@ body {
 .btn-primary {
   background: linear-gradient(135deg, var(--accent-blue-700) 0%, var(--accent-blue-600) 100%);
   color: #ffffff;
-  box-shadow: 0 12px 36px rgba(30,140,255,0.18);
+  box-shadow: 0 12px 36px rgba(30, 140, 255, 0.18);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 16px 46px rgba(30,140,255,0.22);
+  box-shadow: 0 16px 46px rgba(30, 140, 255, 0.22);
 }
 
 .btn-primary:active {
@@ -591,9 +593,9 @@ body {
 
 /* ===== FOOTER ===== */
 .login-footer {
-  background: linear-gradient(to top, rgba(6,35,70,0.16), rgba(6,35,70,0.06));
+  background: linear-gradient(to top, rgba(6, 35, 70, 0.16), rgba(6, 35, 70, 0.06));
   backdrop-filter: blur(6px);
-  color: rgba(255,255,255,0.95);
+  color: rgba(255, 255, 255, 0.95);
   padding: 20px 40px;
   text-align: center;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -632,21 +634,21 @@ body {
     flex: 0 0 35%;
     padding: 40px 30px;
   }
-  
+
   .login-form-panel {
     flex: 0 0 65%;
     padding: 30px;
   }
-  
+
   .login-card {
     max-width: 380px;
     padding: 40px 32px;
   }
-  
+
   .branding-title {
     font-size: 36px;
   }
-  
+
   #portal-title {
     font-size: 28px;
   }
@@ -658,7 +660,7 @@ body {
     height: auto;
     min-height: 100vh;
   }
-  
+
   .login-branding-panel {
     flex: 0 0 auto;
     border-right: none;
@@ -666,36 +668,36 @@ body {
     padding: 40px 30px;
     min-height: 280px;
   }
-  
+
   .login-form-panel {
     flex: 1;
     padding: 30px 20px;
     justify-content: flex-start;
     padding-top: 60px;
   }
-  
+
   .form-header-top {
     position: static;
     margin-bottom: 30px;
     display: flex;
     justify-content: center;
   }
-  
+
   .login-card {
     max-width: 100%;
     width: 100%;
   }
-  
+
   .branding-title {
     font-size: 32px;
   }
-  
+
   .branding-links {
     flex-direction: row;
     justify-content: center;
     flex-wrap: wrap;
   }
-  
+
   .branding-link {
     flex: 0 1 auto;
   }
@@ -705,30 +707,30 @@ body {
   .login-card {
     padding: 32px 24px;
   }
-  
+
   #portal-title {
     font-size: 24px;
   }
-  
+
   .user-type-tabs {
     gap: 4px;
   }
-  
+
   .tab-btn {
     padding: 8px 10px;
     font-size: 11px;
   }
-  
+
   .form-options {
     flex-direction: column;
     gap: 12px;
     align-items: flex-start;
   }
-  
+
   .login-footer {
     padding: 16px 20px;
   }
-  
+
   .footer-links {
     font-size: 11px;
   }

@@ -5,6 +5,8 @@ require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/middleware/json_middleware.php';
 require_once __DIR__ . '/middleware/auth_middleware.php';
+$db = get_db_connection();
+require_once __DIR__ . '/controllers/RoomController.php';
 
 // Set headers for CORS and JSON response
 header('Access-Control-Allow-Origin: *');
@@ -20,12 +22,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 // Simple router
 $request_uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$base_path = '/api';
-$endpoint = str_replace($base_path, '', $request_uri);
+$endpoint = preg_replace('#^.*?/api#', '', $request_uri);
 $method = $_SERVER['REQUEST_METHOD'];
 
 // Include route files
 require_once __DIR__ . '/routes/auth_routes.php';
+require_once __DIR__ . '/routes/oauth_routes.php';
 require_once __DIR__ . '/routes/room_routes.php';
 require_once __DIR__ . '/routes/booking_routes.php';
 require_once __DIR__ . '/routes/food_order_routes.php';

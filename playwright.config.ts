@@ -11,7 +11,7 @@ export default defineConfig({
     headless: true,
   },
   webServer: {
-    command: 'npx http-server -p 4173 -c-1 .',
+    command: 'cmd.exe /c npx http-server -p 4173 -c-1 .',
     port: 4173,
     reuseExistingServer: !process.env.CI,
   },

@@ -13,7 +13,7 @@ const elements = {
   scrollTop: document.getElementById('scroll-top'),
   contactForm: document.getElementById('contact-form'),
   quickCheckin: document.getElementById('quick-checkin'),
-  quickCheckout: document.getElementById('quick-checkout')
+  quickCheckout: document.getElementById('quick-checkout'),
 };
 
 // ============================================
@@ -40,7 +40,7 @@ function initializeNavigation() {
   }
 
   // Close mobile menu when clicking on a link
-  elements.navLinks.forEach(link => {
+  elements.navLinks.forEach((link) => {
     link.addEventListener('click', () => {
       if (window.innerWidth <= 768) {
         closeMobileMenu();
@@ -93,14 +93,14 @@ function updateActiveLink() {
   const sections = document.querySelectorAll('section[id]');
   const scrollY = window.pageYOffset;
 
-  sections.forEach(section => {
+  sections.forEach((section) => {
     const sectionHeight = section.offsetHeight;
     const sectionTop = section.offsetTop - 100;
     const sectionId = section.getAttribute('id');
     const navLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
 
     if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-      elements.navLinks.forEach(link => link.classList.remove('active'));
+      elements.navLinks.forEach((link) => link.classList.remove('active'));
       if (navLink) {
         navLink.classList.add('active');
       }
@@ -146,7 +146,7 @@ if (elements.scrollTop) {
   elements.scrollTop.addEventListener('click', () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
   });
 }
@@ -158,22 +158,22 @@ if (elements.scrollTop) {
  * Initialize smooth scrolling for anchor links
  */
 function initializeSmoothScroll() {
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener('click', function (e) {
       const href = this.getAttribute('href');
-      
+
       // Skip if it's just "#"
       if (href === '#') return;
-      
+
       e.preventDefault();
       const target = document.querySelector(href);
-      
+
       if (target) {
         const offsetTop = target.offsetTop - 80; // Account for fixed nav
-        
+
         window.scrollTo({
           top: offsetTop,
-          behavior: 'smooth'
+          behavior: 'smooth',
         });
       }
     });
@@ -204,9 +204,9 @@ function initializeDateInputs() {
     const checkinDate = new Date(elements.quickCheckin.value);
     const minCheckout = new Date(checkinDate);
     minCheckout.setDate(minCheckout.getDate() + 1);
-    
+
     elements.quickCheckout.min = formatDate(minCheckout);
-    
+
     // Adjust checkout if it's before new minimum
     if (new Date(elements.quickCheckout.value) <= checkinDate) {
       elements.quickCheckout.value = formatDate(minCheckout);
@@ -246,7 +246,7 @@ async function handleContactSubmit(e) {
     name: document.getElementById('contact-name').value,
     email: document.getElementById('contact-email').value,
     subject: document.getElementById('contact-subject').value,
-    message: document.getElementById('contact-message').value
+    message: document.getElementById('contact-message').value,
   };
 
   // Show loading state
@@ -257,11 +257,11 @@ async function handleContactSubmit(e) {
 
   try {
     // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    await new Promise((resolve) => setTimeout(resolve, 1500));
 
     // Show success message
-    showNotification('Message sent successfully! We\'ll get back to you soon.', 'success');
-    
+    showNotification("Message sent successfully! We'll get back to you soon.", 'success');
+
     // Reset form
     elements.contactForm.reset();
   } catch (error) {
@@ -308,11 +308,11 @@ function showNotification(message, type = 'info') {
  */
 const observerOptions = {
   threshold: 0.1,
-  rootMargin: '0px 0px -50px 0px'
+  rootMargin: '0px 0px -50px 0px',
 };
 
 const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
+  entries.forEach((entry) => {
     if (entry.isIntersecting) {
       entry.target.classList.add('fade-in');
       observer.unobserve(entry.target);
@@ -321,7 +321,7 @@ const observer = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 // Observe elements
-document.querySelectorAll('.room-card, .amenity-card, .stat-item').forEach(el => {
+document.querySelectorAll('.room-card, .amenity-card, .stat-item').forEach((el) => {
   observer.observe(el);
 });
 
@@ -348,11 +348,11 @@ function debounce(func, wait) {
  */
 function throttle(func, limit) {
   let inThrottle;
-  return function(...args) {
+  return function (...args) {
     if (!inThrottle) {
       func.apply(this, args);
       inThrottle = true;
-      setTimeout(() => inThrottle = false, limit);
+      setTimeout(() => (inThrottle = false), limit);
     }
   };
 }

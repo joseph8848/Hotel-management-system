@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grand Horizon Hotel - Admin Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="assets/js/shared/mockData.js" defer></script>
+    <script src="assets/js/shared/main.js" defer></script>
+    <script src="assets/js/admin/dashboard.js" defer></script>
+    <link rel="stylesheet" href="assets/css/admin/admin-dashboard.css">
+  </head>
+  <body class="admin-dashboard">
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    <!-- Sidebar -->
+    <div class="sidebar" id="admin-sidebar" aria-label="Primary navigation">
+      <div class="sidebar-header">
+        <img
+          src="Champion hotel logo.png"
+          alt="Champion Hotel Logo"
+          class="hotel-logo"
+          loading="lazy"
+        />
+        <div>
+          <h2>Champion Hotel</h2>
+          <div class="hotel-brand">Signature Hospitality</div>
+        </div>
+      </div>
+      <div class="sidebar-menu">
+        <ul>
+          <li class="active">
+            <a href="#dashboard">
+              <i class="fas fa-home"></i>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="#bookings">
+              <i class="fas fa-calendar-alt"></i>
+              <span>Bookings</span>
+            </a>
+          </li>
+          <li>
+            <a href="#rooms">
+              <i class="fas fa-bed"></i>
+              <span>Rooms</span>
+            </a>
+          </li>
+          <li>
+            <a href="#guests">
+              <i class="fas fa-users"></i>
+              <span>Guests</span>
+            </a>
+          </li>
+          <li>
+            <a href="#services">
+              <i class="fas fa-concierge-bell"></i>
+              <span>Services</span>
+            </a>
+          </li>
+          <li>
+            <a href="#reports">
+              <i class="fas fa-chart-bar"></i>
+              <span>Reports</span>
+            </a>
+          </li>
+          <li>
+            <a href="#settings">
+              <i class="fas fa-cog"></i>
+              <span>Settings</span>
+            </a>
+          </li>
+          <li>
+            <a href="#orders">
+              <i class="fas fa-utensils"></i>
+              <span>Menu &amp; Orders</span>
+            </a>
+          </li>
+          <li>
+            <a href="logout.php">
+              <i class="fas fa-sign-out-alt"></i>
+              <span>Logout</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="main-content">
+      <!-- Header -->
+      <div class="header">
+        <div class="header-left">
+          <button
+            class="mobile-menu-btn"
+            aria-label="Toggle menu"
+            aria-controls="admin-sidebar"
+            aria-expanded="false"
+          >
+            <i class="fas fa-bars"></i>
+          </button>
+          <div>
+            <h1>Champion Hotel · Executive Operations Console</h1>
+            <div class="date-display" id="currentDate">Monday, October 16, 2023</div>
+          </div>
+        </div>
+        <div class="header-right">
+          <div class="notification">
+            <i class="fas fa-bell"></i>
+            <span class="notification-count">5</span>
+          </div>
+          <div class="user-profile">
+            <img
+              src="https://randomuser.me/api/portraits/men/41.jpg"
+              alt="User Profile"
+              loading="lazy"
+            />
+            <div class="user-info">
+              <div class="user-name">Michael Rodriguez</div>
+              <div class="user-role">Hotel Manager</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="content" id="dashboard">
+        <!-- Welcome Banner -->
+        <div class="welcome-banner">
+          <div class="welcome-text">
+            <h2 id="admin-welcome-title"></h2>
+            <p id="admin-welcome-subtitle"></p>
+          </div>
+          <div class="welcome-icon">
+            <i class="fas fa-concierge-bell"></i>
+          </div>
+        </div>
+
+        <!-- Dashboard Cards -->
+        <div class="dashboard-cards" id="admin-metric-cards"></div>
+        <template id="admin-metric-template">
+          <div class="card" data-field="card">
+            <div class="card-header">
+              <div class="card-title" data-field="title"></div>
+              <div class="card-icon" data-field="icon"></div>
+            </div>
+            <div class="card-value" data-field="value"></div>
+            <div class="card-footer" data-field="trend"></div>
+          </div>
+        </template>
+
+        <section class="module-launch" aria-labelledby="module-launch-title">
+          <div class="module-launch-header">
+            <h3 id="module-launch-title">
+              <i class="fas fa-sitemap" aria-hidden="true"></i>Operations suite
+            </h3>
+            <span style="font-size: 0.85rem; color: rgba(224, 231, 255, 0.7)"
+              >Open dedicated workspaces without leaving the console.</span
+            >
+          </div>
+          <div class="module-launch-grid">
+            <a class="module-link" href="reports_analytics.html">
+              <div class="module-link-title">
+                <i class="fas fa-chart-line" aria-hidden="true"></i>
+                Reports &amp; Analytics
+              </div>
+              <span class="module-link-title"><span>Deep-dive dashboards</span></span>
+            </a>
+            <a class="module-link" href="billing_transactions.html">
+              <div class="module-link-title">
+                <i class="fas fa-file-invoice-dollar" aria-hidden="true"></i>
+                Billing &amp; Transactions
+              </div>
+              <span class="module-link-title"><span>Ledger workspace</span></span>
+            </a>
+            <a class="module-link" href="system_settings.html">
+              <div class="module-link-title">
+                <i class="fas fa-sliders-h" aria-hidden="true"></i>
+                System Settings
+              </div>
+              <span class="module-link-title"><span>Configuration hub</span></span>
+            </a>
+          </div>
+        </section>
+
+        <!-- Main Dashboard Grid -->
+        <div class="dashboard-grid">
+          <!-- Left Column -->
+          <div class="dashboard-main">
+            <!-- Revenue Chart -->
+            <div class="chart-container">
+              <h3 class="section-title">
+                <i class="fas fa-chart-line"></i>
+                Revenue Overview
+              </h3>
+              <div class="chart-wrapper">
+                <canvas id="admin-revenue-chart"></canvas>
+              </div>
+            </div>
+
+            <!-- Today's Activity -->
+            <div class="todays-activity">
+              <h3 class="section-title">
+                <i class="fas fa-list-alt"></i>
+                Today's Activity
+              </h3>
+              <div class="activity-list" id="admin-activity-list"></div>
+              <template id="admin-activity-template">
+                <div class="activity-item">
+                  <div class="activity-icon" data-field="icon"></div>
+                  <div class="activity-details">
+                    <h4 data-field="title"></h4>
+                    <p data-field="description"></p>
+                  </div>
+                  <div class="activity-time" data-field="time"></div>
+                </div>
+              </template>
+            </div>
+          </div>
+
+          <!-- Right Column -->
+          <div class="dashboard-sidebar">
+            <!-- Recent Bookings -->
+            <div class="recent-bookings">
+              <h3 class="section-title">
+                <i class="fas fa-calendar-day"></i>
+                Today's Bookings
+              </h3>
+              <div id="admin-bookings-list"></div>
+              <template id="admin-booking-template">
+                <div class="booking-item">
+                  <div class="booking-info">
+                    <h4 data-field="guest"></h4>
+                    <p data-field="meta"></p>
+                  </div>
+                  <div class="booking-status" data-field="status"></div>
+                </div>
+              </template>
+            </div>
+
+            <!-- Staff on Duty -->
+            <div class="staff-on-duty">
+              <h3 class="section-title">
+                <i class="fas fa-user-tie"></i>
+                Staff on Duty
+              </h3>
+              <div class="staff-list" id="admin-staff-list"></div>
+              <template id="admin-staff-template">
+                <div class="staff-member">
+                  <img data-field="avatar" alt="Staff" class="staff-avatar" />
+                  <div class="staff-details">
+                    <h4 data-field="name"></h4>
+                    <p data-field="role"></p>
+                  </div>
+                  <div class="staff-status" data-field="status"></div>
+                </div>
+              </template>
+            </div>
+
+            <!-- Guest Feedback -->
+            <div class="guest-feedback">
+              <h3 class="section-title">
+                <i class="fas fa-comment-alt"></i>
+                Recent Feedback
+              </h3>
+              <div class="feedback-list" id="admin-feedback-list"></div>
+              <template id="admin-feedback-template">
+                <div class="feedback-item">
+                  <div class="feedback-header">
+                    <div class="feedback-guest" data-field="guest"></div>
+                    <div class="feedback-rating" data-field="rating"></div>
+                  </div>
+                  <div class="feedback-content" data-field="content"></div>
+                  <div class="feedback-date" data-field="date"></div>
+                </div>
+              </template>
+            </div>
+          </div>
+        </div>
+
+        <!-- Room Occupancy -->
+        <div class="room-occupancy">
+          <h3 class="section-title">
+            <i class="fas fa-door-open"></i>
+            Room Status Overview
+          </h3>
+          <div class="room-status" id="admin-room-status"></div>
+          <template id="admin-room-template">
+            <div class="room" data-field="room"></div>
+          </template>
+        </div>
+
+        <section id="bookings" class="info-section">
+          <div class="info-header">
+            <h3><i class="fas fa-calendar-alt"></i>Booking Ledger</h3>
+            <span>Overview of confirmed and arriving reservations</span>
+            <div class="panel-actions">
+              <button class="btn btn-primary" id="admin-new-booking">New Booking</button>
+              <button class="btn btn-secondary" id="admin-search-booking">Search</button>
+            </div>
+          </div>
+          <table class="info-table">
+            <thead>
+              <tr>
+                <th>Reservation</th>
+                <th>Guest</th>
+                <th>Accommodation</th>
+                <th>Stay Dates</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-ledger-body"></tbody>
+          </table>
+          <template id="admin-ledger-row-template">
+            <tr>
+              <td data-field="reservation"></td>
+              <td data-field="guest"></td>
+              <td data-field="accommodation"></td>
+              <td data-field="stay"></td>
+              <td data-field="status"></td>
+              <td class="table-actions" data-field="actions"></td>
+            </tr>
+          </template>
+        </section>
+
+        <section id="rooms" class="info-section">
+          <div class="info-header">
+            <h3><i class="fas fa-bed"></i>Room Inventory</h3>
+            <span>Live status of premium accommodations</span>
+            <div class="panel-actions">
+              <button class="btn btn-primary" id="admin-assign-room">Assign Room</button>
+              <button class="btn btn-secondary" id="admin-export-rooms">Export</button>
+            </div>
+          </div>
+          <table class="info-table">
+            <thead>
+              <tr>
+                <th>Room</th>
+                <th>Category</th>
+                <th>Occupancy</th>
+                <th>Guest Status</th>
+                <th>Housekeeping</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-room-inventory"></tbody>
+          </table>
+          <template id="admin-room-row-template">
+            <tr>
+              <td data-field="room"></td>
+              <td data-field="category"></td>
+              <td data-field="occupancy"></td>
+              <td data-field="guestStatus"></td>
+              <td data-field="housekeeping"></td>
+              <td class="table-actions" data-field="actions"></td>
+            </tr>
+          </template>
+        </section>
+
+        <section id="guests" class="info-section">
+          <div class="info-header">
+            <h3><i class="fas fa-users"></i>Guest Directory</h3>
+            <span>Key profiles and tailored preferences in-house</span>
+            <div class="panel-actions">
+              <button class="btn btn-primary" id="admin-add-guest">Add Guest</button>
+              <button class="btn btn-secondary" id="admin-search-guest">Search</button>
+            </div>
+          </div>
+          <table class="info-table">
+            <thead>
+              <tr>
+                <th>Guest</th>
+                <th>Loyalty Tier</th>
+                <th>Length of Stay</th>
+                <th>Account Balance</th>
+                <th>Notes</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-guest-directory"></tbody>
+          </table>
+          <template id="admin-guest-row-template">
+            <tr>
+              <td data-field="guest"></td>
+              <td data-field="tier"></td>
+              <td data-field="stay"></td>
+              <td data-field="balance"></td>
+              <td data-field="notes"></td>
+              <td class="table-actions" data-field="actions"></td>
+            </tr>
+          </template>
+        </section>
+
+        <section id="services" class="info-section">
+          <div class="info-header">
+            <h3><i class="fas fa-concierge-bell"></i>Signature Services</h3>
+            <span>Curated highlights delivered today</span>
+          </div>
+          <div class="resource-grid" id="admin-services-grid"></div>
+          <template id="admin-service-template">
+            <article class="resource-card">
+              <h4 data-field="title"></h4>
+              <p data-field="description"></p>
+            </article>
+          </template>
+        </section>
+
+        <section id="reports" class="info-section">
+          <div class="info-header">
+            <h3><i class="fas fa-chart-bar"></i>Performance Reports</h3>
+            <span>Latest metrics prepared for executive review</span>
+          </div>
+          <div class="resource-grid" id="admin-reports-grid"></div>
+          <template id="admin-report-template">
+            <article class="resource-card">
+              <h4 data-field="title"></h4>
+              <p data-field="description"></p>
+            </article>
+          </template>
+        </section>
+
+        <section id="settings" class="info-section">
+          <div class="info-header">
+            <h3><i class="fas fa-cog"></i>Property Controls</h3>
+            <span>Administrative tools and preferential configurations</span>
+          </div>
+          <ul class="settings-list" id="admin-settings-list"></ul>
+          <template id="admin-setting-template">
+            <li>
+              <i data-field="icon" aria-hidden="true"></i>
+              <span data-field="label"></span>
+            </li>
+          </template>
+        </section>
+
+        <section id="orders" class="info-section">
+          <div class="info-header">
+            <h3><i class="fas fa-utensils"></i>Menu &amp; Food Orders</h3>
+            <span>Live dining requests and menu management</span>
+          </div>
+          <div class="resource-grid">
+            <article class="resource-card">
+              <h4>Live order timeline</h4>
+              <ul class="order-list" id="admin-orders-timeline">
+                <li>
+                  <strong>ORD012</strong> · In Kitchen · ETA 12m
+                  <footer>Suite 101 · Truffle pasta &amp; salad</footer>
+                </li>
+                <li>
+                  <strong>ORD010</strong> · Ready · Notify pickup
+                  <footer>Lobby Café · Espresso &amp; croissant</footer>
+                </li>
+                <li>
+                  <strong>ORD014</strong> · Queued · Prep 5m
+                  <footer>Skyline Lounge · Chef tasting flight</footer>
+                </li>
+              </ul>
+            </article>
+            <article class="resource-card">
+              <h4>Recent food orders</h4>
+              <div class="table-responsive" id="orders-table-wrapper">
+                <table class="info-table" id="orders-table">
+                  <thead>
+                    <tr>
+                      <th>Order</th>
+                      <th>Items</th>
+                      <th>Date</th>
+                      <th>Status</th>
+                      <th>Total</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="admin-orders-history">
+                    <tr>
+                      <td>ORD008</td>
+                      <td>Grilled chicken · Seasonal vegetables</td>
+                      <td>Nov 10</td>
+                      <td><span class="status-pill pill-confirmed">Delivered</span></td>
+                      <td>$40.00</td>
+                      <td class="table-actions">
+                        <button class="action-link">Reorder</button>
+                        <button class="action-link">Track</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>ORD007</td>
+                      <td>Garden salad · Soup · Sandwich</td>
+                      <td>Nov 08</td>
+                      <td><span class="status-pill pill-pending">Preparing</span></td>
+                      <td>$28.00</td>
+                      <td class="table-actions">
+                        <button class="action-link">Status</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>ORD005</td>
+                      <td>Sushi platter · Green tea</td>
+                      <td>Nov 05</td>
+                      <td><span class="status-pill pill-confirmed">Delivered</span></td>
+                      <td>$45.00</td>
+                      <td class="table-actions">
+                        <button class="action-link">Reorder</button>
+                        <button class="action-link">Track</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </article>
+          </div>
+        </section>
+      </div>
+    </div>
+  </body>
+</html>

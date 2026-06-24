@@ -1,22 +1,11 @@
 const { test, expect } = require('@playwright/test');
 
-const settingsPath = '/system_settings.html';
+const settingsPath = '/system-settings.html';
 
 test.describe('System settings workspace', () => {
   test.beforeEach(async ({ page }) => {
     await page.addInitScript(() => {
-      window.__dialogs = { alerts: [], confirms: [], prompts: [] };
-      window.alert = message => {
-        window.__dialogs.alerts.push(message);
-      };
-      window.confirm = message => {
-        window.__dialogs.confirms.push(message);
-        return true;
-      };
-      window.prompt = (message, defaultValue) => {
-        window.__dialogs.prompts.push({ message, defaultValue });
-        return 'RESET';
-      };
+      // Initialize layout or mock APIs if necessary
     });
     await page.goto(settingsPath);
     await expect(page.locator('#currentDate')).not.toHaveText('Monday, October 16, 2023');
@@ -33,50 +22,35 @@ test.describe('System settings workspace', () => {
     await form.locator('#current-password').fill('oldPass1!');
     await form.locator('#new-password').fill('NewPass123');
     await form.locator('#confirm-password').fill('Mismatch321');
-    const beforeAlerts = await page.evaluate(() => window.__dialogs.alerts.length);
     await form.locator('button', { hasText: 'Change Password' }).click();
-    await page.waitForFunction(prev => window.__dialogs.alerts.length > prev, beforeAlerts);
-    const lastAlert = await page.evaluate(() => {
-      const alerts = window.__dialogs.alerts;
-      return alerts.length ? alerts[alerts.length - 1] : '';
-    });
-    expect(lastAlert).toContain('do not match');
+    
+    // Assert that a toast notification appears with the error
+    const toastMessage = page.locator('.toast.alert-error');
+    await expect(toastMessage).toBeVisible();
+    await expect(toastMessage).toContainText('do not match');
   });
 
-  test('initiates database backup and observes success alert', async ({ page }) => {
+  test('initiates database backup and observes success flow', async ({ page }) => {
     const backupButton = page.locator('button', { hasText: 'Backup Database' });
-    const [initialConfirmCount, initialAlertCount] = await page.evaluate(() => [
-      window.__dialogs.confirms.length,
-      window.__dialogs.alerts.length,
-    ]);
 
     await backupButton.click();
 
-    const dialogState = await page.evaluate(({ prevConfirm, prevAlert }) => {
-      return new Promise(resolve => {
-        const check = () => {
-          const state = {
-            confirms: window.__dialogs.confirms,
-            alerts: window.__dialogs.alerts,
-          };
-          if (state.confirms.length > prevConfirm && state.alerts.length > prevAlert) {
-            resolve(state);
-          } else {
-            requestAnimationFrame(check);
-          }
-        };
-        check();
-      });
-    }, { prevConfirm: initialConfirmCount, prevAlert: initialAlertCount });
+    // The backup modal should appear
+    const modal = page.locator('#global-modal-overlay');
+    await expect(modal).toBeVisible();
+    await expect(page.locator('#global-modal-title')).toHaveText('Initiate Database Backup');
 
-    expect(dialogState.confirms[dialogState.confirms.length - 1]).toContain('backup the database');
-    expect(dialogState.alerts[dialogState.alerts.length - 1]).toContain('backup initiated');
+    // Confirm the backup
+    await page.locator('#global-modal-confirm').click();
 
-    await page.waitForFunction(prev => window.__dialogs.alerts.length > prev && window.__dialogs.alerts[window.__dialogs.alerts.length - 1].includes('backup completed'), dialogState.alerts.length);
-    const latestAlert = await page.evaluate(() => {
-      const alerts = window.__dialogs.alerts;
-      return alerts.length ? alerts[alerts.length - 1] : '';
-    });
-    expect(latestAlert).toContain('backup completed');
+    // Verify information toast
+    const infoToast = page.locator('.toast.alert-info');
+    await expect(infoToast).toBeVisible();
+    await expect(infoToast).toContainText('backup initiated');
+
+    // Verify success toast appears after timeout
+    const successToast = page.locator('.toast.alert-success').first();
+    await expect(successToast).toBeVisible({ timeout: 5000 });
+    await expect(successToast).toContainText('backup completed');
   });
 });

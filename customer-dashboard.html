@@ -1,0 +1,2437 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customer Dashboard - Champion Hotel</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="assets/js/shared/mockData.js" defer></script>
+    <script src="assets/js/shared/main.js" defer></script>
+    <script src="assets/js/customer/dashboard.js" defer></script>
+    <link rel="stylesheet" href="assets/css/customer/customer-dashboard.css">
+  </head>
+  <body class="customer-dashboard">
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    <!-- Hamburger Menu for Mobile -->
+    <button
+      class="hamburger"
+      id="customer-hamburger"
+      aria-label="Toggle navigation"
+      aria-controls="sidebar"
+      aria-expanded="false"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <img
+            src="Champion hotel logo.png"
+            alt="Champion Hotel Logo"
+            style="width: 70px"
+            loading="lazy"
+          />
+        </div>
+        <div class="sidebar-title">Customer Portal</div>
+        <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px">
+          Tailored experiences at your fingertips
+        </p>
+      </div>
+      <nav class="sidebar-nav">
+        <span class="sidebar-label">Essentials</span>
+        <ul>
+          <li>
+            <a href="#" class="active" data-section="dashboard">
+              <span class="nav-left"><span class="icon">🏠</span> Dashboard</span>
+              <span class="nav-chevron">›</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" data-section="bookings">
+              <span class="nav-left"><span class="icon">🛏️</span> Book Room</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" id="sidebar-menu">
+              <span class="nav-left"><span class="icon">🍽️</span> Food Menu</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" data-section="orders">
+              <span class="nav-left"><span class="icon">📦</span> Orders</span>
+              <span class="nav-count" id="nav-count-orders">5</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" data-section="support">
+              <span class="nav-left"><span class="icon">📞</span> Support</span>
+              <span class="nav-chevron">›</span>
+            </a>
+          </li>
+        </ul>
+        <span class="sidebar-label">More</span>
+        <ul>
+          <li>
+            <a href="#" data-section="reservations">
+              <span class="nav-left"><span class="icon">📅</span> Upcoming Reservations</span>
+              <span class="nav-count" id="nav-count-reservations">2</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" data-section="payments">
+              <span class="nav-left"><span class="icon">💳</span> My Payments</span>
+              <span class="nav-count" id="nav-count-payments">8</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" data-section="receipts">
+              <span class="nav-left"><span class="icon">🧾</span> Receipts</span>
+              <span class="nav-count" id="nav-count-receipts">8</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div class="sidebar-logout">
+        <a href="#" onclick="logout()"><span class="icon">🚪</span> Logout</a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" id="main-content" role="main">
+      <div id="dashboard" class="content-section active">
+        <div class="header">
+          <section class="welcome-card">
+            <div class="welcome-content">
+              <div class="welcome-greeting" id="welcome-greeting">✨ Luxurious Escape Awaits</div>
+              <h1 class="welcome" id="welcome">Welcome back, Joseph Kilonzo</h1>
+              <div class="welcome-subtext">
+                Your next unforgettable experience starts now. We've prepared something special for
+                you.
+              </div>
+              <div class="welcome-highlights">
+                <span class="welcome-badge">⭐ VIP Member</span>
+                <span class="welcome-badge">💎 Diamond Status</span>
+              </div>
+        </div>
+
+          </section>
+          <div class="corner-clock" role="status" aria-live="polite">
+            <div id="digital-clock">--:--</div>
+            <div id="current-date">---</div>
+            
+          </div>
+          <script>
+            (function () {
+              var timeEl = document.getElementById('digital-clock');
+              var dateEl = document.getElementById('current-date');
+              function formatTime(d) {
+                var h = d.getHours();
+                var m = d.getMinutes();
+                var ampm = h >= 12 ? 'PM' : 'AM';
+                h = h % 12; if (h === 0) h = 12;
+                var mm = String(m).padStart(2, '0');
+                return h + ':' + mm + ' ' + ampm;
+              }
+              function formatDate(d) {
+                var weekdays = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+                var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+                return weekdays[d.getDay()] + ', ' + months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+              }
+              function update() {
+                var now = new Date();
+                if (timeEl) timeEl.textContent = formatTime(now);
+                if (dateEl) dateEl.textContent = formatDate(now);
+              }
+              try {
+                update();
+                setInterval(update, 1000);
+              } catch (e) {}
+            })();
+          </script>
+        </div>
+
+        <!-- New Customer Guidance -->
+        <section class="new-customer-guide" id="new-customer-guide" style="display:none">
+          <div class="guide-card">
+            <div class="guide-icon">🎯</div>
+            <div class="guide-content">
+              <h3>Getting Started is Easy!</h3>
+              <p>As a new guest, you can book a room or order delicious food. Start with what you need most:</p>
+              <div class="guide-steps">
+                <div class="step">
+                  <span class="step-number">1</span>
+                  <span class="step-text">Book a room for your stay</span>
+                </div>
+                <div class="step">
+                  <span class="step-number">2</span>
+                  <span class="step-text">Order food to your room or table</span>
+                </div>
+                <div class="step">
+                  <span class="step-number">3</span>
+                  <span class="step-text">Call a waiter if you need assistance</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <script>
+          (function () {
+            var bookBtn = document.getElementById('primary-book-room');
+            var menuBtn = document.getElementById('primary-open-menu');
+            var waiterBtn = document.getElementById('primary-call-waiter');
+            function bind(btn, handler) {
+              if (!btn || btn.dataset.bound === '1') return;
+              btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                try { handler(); } catch (_) {}
+              });
+              btn.dataset.bound = '1';
+            }
+            bind(bookBtn, function () {
+              if (typeof window.startBooking === 'function') {
+                window.startBooking();
+              } else {
+                if (typeof window.showSection === 'function') window.showSection('bookings');
+                showToast('Booking flow started.', 'info');
+              }
+            });
+            bind(menuBtn, function () {
+              if (typeof window.openMenuOverlay === 'function') window.openMenuOverlay();
+            });
+            bind(waiterBtn, function () {
+              if (typeof window.callWaiter === 'function') window.callWaiter();
+            });
+          })();
+        </script>
+
+        <section class="primary-actions" aria-label="Quick customer actions">
+          <article class="primary-card" id="primary-booking-card">
+            <h3>Book a Room</h3>
+            <p id="primary-booking-copy">Choose your suite and confirm dates.</p>
+            <div class="btn-row">
+              <a href="#bookings" class="primary-btn" id="primary-book-room" role="button" onclick="showSection('bookings'); startBooking(); return false;">📅 Book a Room</a>
+              <button type="button" class="sub-btn" id="primary-upgrade-room" style="display:none">⬆️ Upgrade Room</button>
+              <button type="button" class="sub-btn" id="primary-room-service" style="display:none">🧹 Room Service</button>
+            </div>
+          </article>
+          <article class="primary-card" id="primary-food-card">
+            <h3>Order Food</h3>
+            <p id="primary-food-copy">Browse the menu and order to your room or table.</p>
+            <div class="btn-row">
+              <button type="button" class="primary-btn" id="primary-open-menu" onclick="openMenuOverlay()">🍽️ View Menu</button>
+              <button type="button" class="sub-btn" id="primary-track-order" style="display:none">🔎 Track Order</button>
+              <button type="button" class="sub-btn" id="primary-cancel-order" style="display:none">✖️ Cancel Order</button>
+              <button type="button" class="sub-btn" id="primary-call-waiter" onclick="callWaiter()">🛎️ Call Waiter</button>
+            </div>
+          </article>
+        </section>
+
+        <div class="menu-overlay" id="menu-overlay" aria-hidden="true">
+          <div class="menu-modal" role="dialog" aria-modal="true" aria-labelledby="menu-title">
+            <header>
+              <h3 id="menu-title">Hotel Menu</h3>
+              <button type="button" class="sub-btn" id="menu-close">Close</button>
+            </header>
+            <div class="menu-grid">
+              <div class="menu-card"><strong>Breakfast</strong><div>Pancakes • Omelette • Fruit Bowl</div></div>
+              <div class="menu-card"><strong>Main Course</strong><div>Grilled Chicken • Beef Steak • Veg Curry</div></div>
+              <div class="menu-card"><strong>Drinks</strong><div>Coffee • Fresh Juice • Mocktails</div></div>
+              <div class="menu-card"><strong>Dessert</strong><div>Cheesecake • Ice Cream • Brownie</div></div>
+            </div>
+            <div class="menu-actions">
+              <button type="button" class="primary-btn" id="menu-start-order">Start Order</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-actions">
+          <div class="service-actions-header">
+            <h2>Plan Your Stay</h2>
+            <p>Quickly jump into bookings, dining, spa, or concierge services.</p>
+          </div>
+          <div class="quick-actions">
+            <div class="quick-group">
+              <h3>Stay &amp; Room</h3>
+              <p>Handle your reservations, upgrades, and in-room comfort.</p>
+              <div class="btn-row">
+                <button
+                  type="button"
+                  class="btn primary booking-cta quick-action-trigger"
+                  data-target="manageStay"
+                >
+                  🛏️ Manage Stay
+                </button>
+                <button
+                  type="button"
+                  class="btn booking-cta quick-action-trigger"
+                  style="background: #14b8a6; color: #fff"
+                  data-target="housekeeping"
+                >
+                  🧹 Housekeeping
+                </button>
+                <button
+                  type="button"
+                  class="btn booking-cta quick-action-trigger"
+                  style="background: #7c3aed; color: #fff"
+                  data-target="loyalty"
+                >
+                  🏅 Loyalty Rewards
+                </button>
+              </div>
+              <div class="quick-panel" data-panel="manageStay" aria-live="polite"></div>
+            </div>
+
+            <div class="quick-group">
+              <h3>Arrival &amp; Departure</h3>
+              <p>Simplify check-in, check-out, and transport arrangements.</p>
+              <div class="btn-row">
+                <button
+                  type="button"
+                  class="btn booking-cta quick-action-trigger"
+                  style="background: #4f46e5; color: #fff"
+                  data-target="arrival"
+                >
+                  🛬 Check-In / Check-Out
+                </button>
+                <button
+                  type="button"
+                  class="btn booking-cta quick-action-trigger"
+                  style="background: #6366f1; color: #fff"
+                  data-target="transfer"
+                >
+                  🚘 Airport Transfer
+                </button>
+                <button
+                  type="button"
+                  class="btn booking-cta quick-action-trigger"
+                  style="background: #2563eb; color: #fff"
+                  data-target="concierge"
+                >
+                  💬 Chat Concierge
+                </button>
+              </div>
+              <div class="quick-panel" data-panel="arrival" aria-live="polite"></div>
+            </div>
+
+            <div class="quick-group">
+              <h3>Dining &amp; Experiences</h3>
+              <p>Reserve signature dining, order in-room service, and plan activities.</p>
+              <div class="btn-row">
+                <button
+                  type="button"
+                  class="btn booking-cta quick-action-trigger"
+                  style="background: #0ea5e9; color: #fff"
+                  data-target="reserveDining"
+                >
+                  🍽️ Reserve Dining
+                </button>
+                <button
+                  type="button"
+                  class="btn booking-cta quick-action-trigger"
+                  style="background: #0ea5e9; color: #fff"
+                  data-target="inRoomDining"
+                >
+                  🥂 In-Room Dining
+                </button>
+                <button
+                  type="button"
+                  class="btn booking-cta quick-action-trigger"
+                  style="background: #f59e0b; color: #fff"
+                  data-target="activities"
+                >
+                  🎟️ Activities & Tours
+                </button>
+              </div>
+              <div class="quick-panel" data-panel="reserveDining" aria-live="polite"></div>
+            </div>
+
+            <div class="quick-group">
+              <h3>Wellness &amp; Billing</h3>
+              <p>Relax with spa rituals and keep tabs on your finances.</p>
+              <div class="btn-row">
+                <button
+                  type="button"
+                  class="btn booking-cta quick-action-trigger"
+                  style="background: #10b981; color: #fff"
+                  data-target="wellness"
+                >
+                  💆‍♀️ Spa &amp; Wellness
+                </button>
+                <button
+                  type="button"
+                  class="btn booking-cta quick-action-trigger"
+                  style="background: #f97316; color: #fff"
+                  data-target="billing"
+                >
+                  💳 View Bills &amp; Receipts
+                </button>
+              </div>
+              <div class="quick-panel" data-panel="wellness" aria-live="polite"></div>
+            </div>
+          </div>
+        </div>
+
+        <section class="service-marquee" aria-label="Hotel services carousel">
+          <div class="service-track">
+            <article class="service-card">
+              <img src="Imgs/Champ 2.jpeg" alt="Presidential suite living room" />
+              <div class="caption">
+                <h3 class="service-title">Presidential Suite</h3>
+                <p class="service-desc">
+                  Panoramic skyline views, private butler service, and bespoke in-room luxuries.
+                </p>
+                <a href="#" class="btn booking-cta" onclick="startBooking('Presidential Suite')"
+                  >Reserve Suite</a
+                >
+              </div>
+            </article>
+            <article class="service-card">
+              <img src="Imgs/5star.jpg" alt="Family villa pool" />
+              <div class="caption">
+                <h3 class="service-title">Family Villa</h3>
+                <p class="service-desc">
+                  Expansive retreat with a private pool, outdoor lounge, and kid-friendly amenities.
+                </p>
+                <a href="#" class="btn booking-cta" onclick="startBooking('Family Villa')"
+                  >Reserve Villa</a
+                >
+              </div>
+            </article>
+            <article class="service-card">
+              <img src="Imgs/champ 3.jpeg" alt="Chef plating gourmet dish" />
+              <div class="caption">
+                <h3 class="service-title">Signature Dining</h3>
+                <p class="service-desc">
+                  Chef-curated tasting menus paired with sommelier-selected vintages.
+                </p>
+                <a href="#" class="btn booking-cta" onclick="startBooking('Signature Dining')"
+                  >Reserve Table</a
+                >
+              </div>
+            </article>
+            <article class="service-card">
+              <img src="Imgs/champ 4.jpeg" alt="Spa room with candles" />
+              <div class="caption">
+                <h3 class="service-title">Serenity Spa</h3>
+                <p class="service-desc">
+                  Aromatherapy rituals, hot stone massages, and private relaxation suites.
+                </p>
+                <a href="#" class="btn booking-cta" onclick="startBooking('Serenity Spa')"
+                  >Reserve Spa Escape</a
+                >
+              </div>
+            </article>
+            <article class="service-card">
+              <img src="Imgs/Hilton.jpg" alt="Ballroom decorated for event" />
+              <div class="caption">
+                <h3 class="service-title">Grand Ballroom</h3>
+                <p class="service-desc">
+                  Opulent venue with custom lighting, dramatic florals, and curated banquets.
+                </p>
+                <a href="#" class="btn booking-cta" onclick="startBooking('Grand Ballroom')"
+                  >Plan Celebration</a
+                >
+              </div>
+            </article>
+            <article class="service-card">
+              <img src="Imgs/Bison.jpg" alt="Rooftop lounge fire pits" />
+              <div class="caption">
+                <h3 class="service-title">Skyline Lounge</h3>
+                <p class="service-desc">
+                  Twilight cocktails beside fire pits with sweeping views of the city lights.
+                </p>
+                <a href="#" class="btn booking-cta" onclick="startBooking('Skyline Lounge')"
+                  >Reserve Lounge</a
+                >
+              </div>
+            </article>
+            <!-- Duplicate set for seamless loop -->
+            <article class="service-card">
+              <img src="Imgs/Champ 2.jpeg" alt="Presidential suite living room" />
+              <div class="caption">
+                <h3 class="service-title">Presidential Suite</h3>
+                <p class="service-desc">
+                  Panoramic skyline views, private butler service, and bespoke in-room luxuries.
+                </p>
+                <a href="#" class="btn booking-cta" onclick="startBooking('Presidential Suite')"
+                  >Reserve Suite</a
+                >
+              </div>
+            </article>
+            <article class="service-card">
+              <img src="Imgs/5star.jpg" alt="Family villa pool" />
+              <div class="caption">
+                <h3 class="service-title">Family Villa</h3>
+                <p class="service-desc">
+                  Expansive retreat with a private pool, outdoor lounge, and kid-friendly amenities.
+                </p>
+                <a href="#" class="btn booking-cta" onclick="startBooking('Family Villa')"
+                  >Reserve Villa</a
+                >
+              </div>
+            </article>
+            <article class="service-card">
+              <img src="Imgs/champ 3.jpeg" alt="Chef plating gourmet dish" />
+              <div class="caption">
+                <h3 class="service-title">Signature Dining</h3>
+                <p class="service-desc">
+                  Chef-curated tasting menus paired with sommelier-selected vintages.
+                </p>
+                <a href="#" class="btn booking-cta" onclick="startBooking('Signature Dining')"
+                  >Reserve Table</a
+                >
+              </div>
+            </article>
+            <article class="service-card">
+              <img src="Imgs/champ 4.jpeg" alt="Spa room with candles" />
+              <div class="caption">
+                <h3 class="service-title">Serenity Spa</h3>
+                <p class="service-desc">
+                  Aromatherapy rituals, hot stone massages, and private relaxation suites.
+                </p>
+                <a href="#" class="btn booking-cta" onclick="startBooking('Serenity Spa')"
+                  >Reserve Spa Escape</a
+                >
+              </div>
+            </article>
+            <article class="service-card">
+              <img src="Imgs/Hilton.jpg" alt="Ballroom decorated for event" />
+              <div class="caption">
+                <h3 class="service-title">Grand Ballroom</h3>
+                <p class="service-desc">
+                  Opulent venue with custom lighting, dramatic florals, and curated banquets.
+                </p>
+                <a href="#" class="btn booking-cta" onclick="startBooking('Grand Ballroom')"
+                  >Plan Celebration</a
+                >
+              </div>
+            </article>
+            <article class="service-card">
+              <img src="Imgs/Bison.jpg" alt="Rooftop lounge fire pits" />
+              <div class="caption">
+                <h3 class="service-title">Skyline Lounge</h3>
+                <p class="service-desc">
+                  Twilight cocktails beside fire pits with sweeping views of the city lights.
+                </p>
+                <a href="#" class="btn booking-cta" onclick="startBooking('Skyline Lounge')"
+                  >Reserve Lounge</a
+                >
+              </div>
+            </article>
+          </div>
+          <div class="service-nav">
+            <button class="service-prev">&larr;</button>
+            <button class="service-next">&rarr;</button>
+          </div>
+        </section>
+
+        <div class="live-ops">
+          <section class="dining-tracker" aria-label="Live in-room dining updates">
+            <header>
+              <div>
+                <h3>Kitchen Order Feed</h3>
+                <p class="dining-status prep">Updating every 30 seconds</p>
+              </div>
+              <button class="btn ghost" onclick="gotoSection('orders')">Open Orders</button>
+            </header>
+            <div class="dining-feed" id="dining-feed" aria-live="polite"></div>
+            <template id="dining-item-template">
+              <article class="dining-item">
+                <strong data-field="title"></strong>
+                <div class="dining-meta">
+                  <span data-field="items"></span>
+                  <span class="dining-status" data-field="status"></span>
+                </div>
+                <div class="dining-meta">
+                  <span data-field="eta"></span>
+                  <button class="view-all" type="button" data-field="action"></button>
+                </div>
+              </article>
+            </template>
+          </section>
+        </div>
+
+        <section class="stay-snapshot" aria-label="Stay summary">
+          <div class="snapshot-header">
+            <div>
+              <h2 class="snapshot-title">Stay Snapshot</h2>
+              <p class="snapshot-caption">At-a-glance overview of your current stay essentials.</p>
+            </div>
+            <button type="button" class="snapshot-action" onclick="gotoSection('bookings')">
+              Manage Stay
+            </button>
+          </div>
+          <div class="snapshot-grid">
+            <article class="snapshot-card">
+              <div class="snapshot-top">
+                <span class="snapshot-icon">🏨</span>
+                <span class="snapshot-status">In House</span>
+              </div>
+              <div class="snapshot-body">
+                <span class="snapshot-label">Current booking</span>
+                <span class="snapshot-value">Room 101</span>
+                <span class="snapshot-meta">Deluxe Suite · Check-out Nov 18</span>
+              </div>
+              <button type="button" class="snapshot-action" onclick="gotoSection('bookings')">
+                View details
+              </button>
+            </article>
+            <article class="snapshot-card">
+              <div class="snapshot-top">
+                <span class="snapshot-icon">💵</span>
+                <span class="snapshot-status">Balance</span>
+              </div>
+              <div class="snapshot-body">
+                <span class="snapshot-label">Outstanding bill</span>
+                <span class="snapshot-value">$450.00</span>
+                <span class="snapshot-meta">Pending spa services · Due on departure</span>
+              </div>
+              <button type="button" class="snapshot-action" onclick="gotoSection('payments')">
+                Settle bill
+              </button>
+            </article>
+            <article class="snapshot-card">
+              <div class="snapshot-top">
+                <span class="snapshot-icon">🍽️</span>
+                <span class="snapshot-status">Live</span>
+              </div>
+              <div class="snapshot-body">
+                <span class="snapshot-label">Active orders</span>
+                <span class="snapshot-value">2</span>
+                <span class="snapshot-meta">1 in kitchen · 1 en route to suite</span>
+              </div>
+              <button type="button" class="snapshot-action" onclick="gotoSection('orders')">
+                Track orders
+              </button>
+            </article>
+            <article class="snapshot-card">
+              <div class="snapshot-top">
+                <span class="snapshot-icon">📅</span>
+                <span class="snapshot-status">Next</span>
+              </div>
+              <div class="snapshot-body">
+                <span class="snapshot-label">Upcoming experience</span>
+                <span class="snapshot-value">Nov 15, 7:00 PM</span>
+                <span class="snapshot-meta">Chef's Table Dinner · Lumière Restaurant</span>
+              </div>
+              <button type="button" class="snapshot-action" onclick="gotoSection('reservations')">
+                Review itinerary
+              </button>
+            </article>
+          </div>
+        </section>
+      </div>
+
+      <div id="bookings" class="content-section">
+        <div class="section-shell">
+        <div class="section-intro">
+          <div>
+            <h2 class="section-title">My Bookings</h2>
+            <p class="section-subtitle">
+              Monitor every reservation, confirm guest preferences, and request bespoke services
+              before arrival.
+            </p>
+            <div class="section-actions" style="margin-top: 12px;">
+              <button type="button" class="btn primary" onclick="gotoSection('dashboard')">← Back to Dashboard</button>
+            </div>
+          </div>
+            <div class="stats-grid">
+              <div class="stat-card">
+                <span class="label">Active stay</span>
+                <span class="value" id="booking-active-stay-value">Room 101</span>
+                <span class="muted" id="booking-active-stay-meta">Checking out Nov 18</span>
+              </div>
+              <div class="stat-card">
+                <span class="label">Upcoming stays</span>
+                <span class="value" id="booking-upcoming-stays-value">2</span>
+                <span class="muted" id="booking-upcoming-stays-meta">Next arrival Nov 24</span>
+              </div>
+              <div class="stat-card">
+                <span class="label">Upgrade requests</span>
+                <span class="value" id="booking-upgrade-requests-value">1</span>
+                <span class="muted" id="booking-upgrade-requests-meta">Awaiting confirmation</span>
+              </div>
+            </div>
+          </div>
+          <div class="content-layout">
+            <div class="detail-card" id="booking-current-card">
+              <header>
+                <h3 id="booking-current-title"></h3>
+                <span class="badge" id="booking-current-status"></span>
+              </header>
+              <ul class="meta-list" id="booking-current-meta"></ul>
+              <div class="pill-row" id="booking-current-addons"></div>
+              <div class="card-actions" id="booking-current-actions"></div>
+            </div>
+            <div class="detail-card" id="booking-planner-card">
+              <header>
+                <h3 id="booking-planner-title"></h3>
+                <span class="badge" id="booking-planner-badge"></span>
+              </header>
+              <p id="booking-planner-description"></p>
+              <ul class="meta-list" id="booking-planner-meta"></ul>
+          <div class="card-actions" id="booking-planner-actions"></div>
+          <div class="catalog-block">
+            <h4 style="margin:10px 0;color:var(--deep-blue)">Choose your room</h4>
+            <div id="room-catalog" class="room-grid">
+              <div style="grid-column: 1/-1; font-weight: 700; color: var(--deep-blue);">Economy</div>
+              <div class="room-card">
+                <header>
+                  <div class="room-title">Standard Room</div>
+                  <div class="room-price">From $80/night</div>
+                </header>
+                <div class="room-desc">Comfortable room, perfect for short stays and solo travelers.</div>
+                <div class="room-amenities">
+                  <span class="amenity">Free Wi‑Fi</span>
+                  <span class="amenity">Smart TV</span>
+                  <span class="amenity">Air Conditioning</span>
+                </div>
+                <div class="btn-row">
+                  <button type="button" class="sub-btn" onclick="selectSuiteAndFocus('Standard Room')">Select</button>
+                </div>
+              </div>
+              <div style="grid-column: 1/-1; font-weight: 700; color: var(--deep-blue); margin-top: 4px;">Suites</div>
+              <div class="room-card">
+                <header>
+                  <div class="room-title">Deluxe Suite</div>
+                  <div class="room-price">From $120/night</div>
+                </header>
+                <div class="room-desc">Spacious suite with living area — best value for couples.</div>
+                <div class="room-amenities">
+                  <span class="amenity">City View</span>
+                  <span class="amenity">Mini Bar</span>
+                  <span class="amenity">King Bed</span>
+                </div>
+                <div class="btn-row">
+                  <button type="button" class="sub-btn" onclick="selectSuiteAndFocus('Deluxe Suite')">Select</button>
+                </div>
+              </div>
+              <div class="room-card">
+                <header>
+                  <div class="room-title">Executive Suite</div>
+                  <div class="room-price">From $180/night</div>
+                </header>
+                <div class="room-desc">Premium suite ideal for business travelers with workspace.</div>
+                <div class="room-amenities">
+                  <span class="amenity">Workspace</span>
+                  <span class="amenity">Lounge Access</span>
+                  <span class="amenity">Nespresso</span>
+                </div>
+                <div class="btn-row">
+                  <button type="button" class="sub-btn" onclick="selectSuiteAndFocus('Executive Suite')">Select</button>
+                </div>
+              </div>
+              <div style="grid-column: 1/-1; font-weight: 700; color: var(--deep-blue); margin-top: 4px;">Luxury</div>
+              <div class="room-card">
+                <header>
+                  <div class="room-title">Royal Suite</div>
+                  <div class="room-price">From $260/night</div>
+                </header>
+                <div class="room-desc">Luxury suite with refined interior and panoramic views.</div>
+                <div class="room-amenities">
+                  <span class="amenity">Butler Service</span>
+                  <span class="amenity">Jacuzzi</span>
+                  <span class="amenity">Panoramic View</span>
+                </div>
+                <div class="btn-row">
+                  <button type="button" class="sub-btn" onclick="selectSuiteAndFocus('Royal Suite')">Select</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+          </div>
+          <div class="detail-card">
+            <header>
+              <h3>All bookings</h3>
+              <p class="section-subtitle">
+                Tap any reservation to modify details, chat with concierge, or add experiences.
+              </p>
+            </header>
+            <div class="table-wrapper">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Booking</th>
+                    <th>Suite</th>
+                    <th>Dates</th>
+                    <th>Status</th>
+                    <th>Add-ons</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="bookings-table-body"></tbody>
+              </table>
+              <template id="booking-row-template">
+                <tr>
+                  <td data-field="id"></td>
+                  <td data-field="suite"></td>
+                  <td data-field="dates"></td>
+                  <td><span class="status" data-field="status"></span></td>
+                  <td>
+                    <div class="pill-row" data-field="addons"></div>
+                  </td>
+                  <td class="table-actions">
+                    <button type="button" class="action-link" data-action="primary"></button>
+                    <button type="button" class="action-link" data-action="secondary"></button>
+                  </td>
+                </tr>
+              </template>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="reservations" class="content-section">
+        <div class="section-shell">
+          <div class="section-intro">
+            <div>
+              <h2 class="section-title">Upcoming Reservations</h2>
+              <p class="section-subtitle">
+                Keep track of experiences, dining, and activities scheduled during your stay.
+              </p>
+            </div>
+            <div class="stats-grid">
+              <div class="stat-card">
+                <span class="label">This week</span>
+                <span class="value" id="reservations-week-value">0</span>
+                <span class="muted" id="reservations-week-meta"></span>
+              </div>
+              <div class="stat-card">
+                <span class="label">Concierge holds</span>
+                <span class="value" id="reservations-holds-value">0</span>
+                <span class="muted" id="reservations-holds-meta"></span>
+              </div>
+            </div>
+          </div>
+          <div class="content-layout">
+            <div class="detail-card" id="reservations-highlight-card">
+              <header>
+                <h3 id="reservations-highlight-title"></h3>
+                <span class="badge" id="reservations-highlight-badge"></span>
+              </header>
+              <div class="timeline" id="reservations-highlight-timeline"></div>
+            </div>
+            <div class="detail-card" id="reservations-recommendations-card">
+              <header>
+                <h3 id="reservations-recommendations-title"></h3>
+                <span class="badge" id="reservations-recommendations-badge"></span>
+              </header>
+              <p id="reservations-recommendations-copy"></p>
+              <ul class="meta-list" id="reservations-recommendations"></ul>
+              <div class="card-actions" id="reservations-recommendations-actions"></div>
+            </div>
+          </div>
+          <div class="detail-card">
+            <header>
+              <h3>Reservation list</h3>
+              <p class="section-subtitle">
+                Upcoming engagements across dining, wellness, and leisure.
+              </p>
+            </header>
+            <div class="table-wrapper">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Experience</th>
+                    <th>Date &amp; time</th>
+                    <th>Guests</th>
+                    <th>Status</th>
+                    <th>Notes</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="reservations-table-body"></tbody>
+              </table>
+            </div>
+            <template id="reservation-row-template">
+              <tr>
+                <td data-field="experience"></td>
+                <td data-field="schedule"></td>
+                <td data-field="guests"></td>
+                <td><span class="status" data-field="status"></span></td>
+                <td data-field="notes"></td>
+                <td class="table-actions" data-field="actions"></td>
+              </tr>
+            </template>
+          </div>
+        </div>
+      </div>
+
+      <div id="payments" class="content-section">
+        <div class="section-shell">
+          <div class="section-intro">
+            <div>
+              <h2 class="section-title">My Payments</h2>
+              <p class="section-subtitle">
+                Track balances, view billing history, and settle charges securely in one place.
+              </p>
+            </div>
+            <div class="stats-grid">
+              <div class="stat-card">
+                <span class="label">Outstanding balance</span>
+                <span class="value" id="payments-outstanding-value">$0.00</span>
+                <span class="muted" id="payments-outstanding-meta">All settled</span>
+              </div>
+              <div class="stat-card">
+                <span class="label">Last payment</span>
+                <span class="value" id="payments-last-value">$0.00</span>
+                <span class="muted" id="payments-last-meta">No recent activity</span>
+              </div>
+            </div>
+          </div>
+          <div class="content-layout">
+            <div class="detail-card">
+              <header>
+                <h3>Billing overview</h3>
+                <span class="badge neutral">Updated hourly</span>
+              </header>
+              <div class="financial-summary" id="payments-summary"></div>
+              <div class="card-actions" id="payments-summary-actions"></div>
+            </div>
+            <div class="detail-card">
+              <header>
+                <h3>Payment methods</h3>
+                <span class="badge success">Secure</span>
+              </header>
+              <ul class="meta-list" id="payments-methods"></ul>
+              <div class="card-actions" id="payments-method-actions"></div>
+            </div>
+          </div>
+          <div class="detail-card">
+            <header>
+              <h3>Recent transactions</h3>
+              <p class="section-subtitle">A detailed record of charges and processed payments.</p>
+            </header>
+            <div class="table-wrapper">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Reference</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="payments-table-body"></tbody>
+              </table>
+            </div>
+            <template id="payment-row-template">
+              <tr>
+                <td data-field="reference"></td>
+                <td data-field="description"></td>
+                <td data-field="date"></td>
+                <td data-field="amount"></td>
+                <td><span class="status" data-field="status"></span></td>
+                <td class="table-actions" data-field="actions"></td>
+              </tr>
+            </template>
+          </div>
+        </div>
+      </div>
+
+      <div id="receipts" class="content-section">
+        <div class="section-shell">
+          <div class="section-intro">
+            <div>
+              <h2 class="section-title">Receipts Archive</h2>
+              <p class="section-subtitle">
+                Download digital copies of every charge, export summaries, and keep your records
+                organized.
+              </p>
+            </div>
+            <div class="stats-grid">
+              <div class="stat-card">
+                <span class="label">Receipts stored</span>
+                <span class="value">18</span>
+                <span class="muted">Across the past 12 months</span>
+              </div>
+              <div class="stat-card">
+                <span class="label">Latest export</span>
+                <span class="value">Nov 01</span>
+                <span class="muted">CSV &amp; PDF bundle</span>
+              </div>
+            </div>
+          </div>
+          <div class="download-grid" id="receipts-grid"></div>
+          <div class="card-actions" id="receipts-actions"></div>
+          <template id="receipt-card-template">
+            <article class="download-card">
+              <header>
+                <h4 data-field="title"></h4>
+                <span class="badge" data-field="badge"></span>
+              </header>
+              <p data-field="description"></p>
+              <ul class="meta-list" data-field="meta"></ul>
+              <div class="card-actions compact" data-field="actions"></div>
+            </article>
+          </template>
+        </div>
+      </div>
+
+      <div id="orders" class="content-section">
+        <div class="section-shell">
+          <div class="section-intro">
+            <div>
+              <h2 class="section-title">Dining &amp; Room Orders</h2>
+              <p class="section-subtitle">
+                Track preparation progress, reorder favorites, and receive timely delivery updates.
+              </p>
+            </div>
+            <div class="stats-grid">
+              <div class="stat-card">
+                <span class="label">Active orders</span>
+                <span class="value" id="orders-active-value">0</span>
+                <span class="muted" id="orders-active-meta"></span>
+              </div>
+              <div class="stat-card">
+                <span class="label">Average delivery</span>
+                <span class="value" id="orders-average-value">—</span>
+                <span class="muted" id="orders-average-meta"></span>
+              </div>
+            </div>
+          </div>
+          <div class="content-layout single-col">
+            <div class="detail-card" id="orders-timeline-card">
+              <header>
+                <h3 id="orders-timeline-title"></h3>
+                <span class="badge" id="orders-timeline-badge"></span>
+              </header>
+              <div class="timeline" id="orders-timeline"></div>
+              <div class="card-actions" id="orders-timeline-actions"></div>
+            </div>
+          </div>
+          <div class="detail-card">
+            <header>
+              <h3>Order history</h3>
+              <p class="section-subtitle">
+                Reference past orders, rate experiences, or repeat a selection.
+              </p>
+            </header>
+            <div class="table-wrapper">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Order</th>
+                    <th>Items</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Total</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="orders-history-body"></tbody>
+              </table>
+            </div>
+            <template id="order-history-row-template">
+              <tr>
+                <td data-field="order"></td>
+                <td data-field="items"></td>
+                <td data-field="date"></td>
+                <td><span class="status" data-field="status"></span></td>
+                <td data-field="total"></td>
+                <td class="table-actions" data-field="actions"></td>
+              </tr>
+            </template>
+          </div>
+        </div>
+      </div>
+
+      <div id="support" class="content-section">
+        <div class="section-shell">
+          <div class="section-intro">
+            <div>
+              <h2 class="section-title">Contact Support</h2>
+              <p class="section-subtitle">
+                Concierge, billing, and dining specialists are available around the clock—reach out
+                in the way that suits you best.
+              </p>
+            </div>
+            <div class="stats-grid">
+              <div class="stat-card">
+                <span class="label">Average reply</span>
+                <span class="value" id="support-reply-value">—</span>
+                <span class="muted" id="support-reply-meta"></span>
+              </div>
+              <div class="stat-card">
+                <span class="label">Open requests</span>
+                <span class="value" id="support-open-value">0</span>
+                <span class="muted" id="support-open-meta"></span>
+              </div>
+            </div>
+          </div>
+          <div class="content-layout">
+            <div class="detail-card" id="support-concierge-card">
+              <header>
+                <h3 id="support-concierge-title"></h3>
+                <span class="badge" id="support-concierge-badge"></span>
+              </header>
+              <ul class="meta-list" id="support-concierge-meta"></ul>
+              <div class="card-actions" id="support-concierge-actions"></div>
+            </div>
+            <div class="detail-card" id="support-timeline-card">
+              <header>
+                <h3 id="support-timeline-title"></h3>
+                <span class="badge" id="support-timeline-badge"></span>
+              </header>
+              <div class="timeline" id="support-timeline"></div>
+            </div>
+          </div>
+          <div class="support-grid" id="support-channel-grid"></div>
+          <template id="support-channel-template">
+            <article class="support-card">
+              <header>
+                <h4 data-field="title"></h4>
+                <span class="badge" data-field="badge"></span>
+              </header>
+              <div class="contact-highlight" data-field="highlight"></div>
+              <div class="contact-meta" data-field="meta"></div>
+              <p data-field="description"></p>
+              <div class="support-actions" data-field="actions"></div>
+            </article>
+          </template>
+          <div class="detail-card">
+            <header>
+              <h3>Send a message</h3>
+              <span class="badge neutral">Replies within minutes</span>
+            </header>
+            <form class="support-form">
+              <div class="form-field">
+                <label for="subject">Subject</label>
+                <input
+                  type="text"
+                  id="subject"
+                  name="subject"
+                  placeholder="e.g. Request late checkout"
+                  required
+                />
+              </div>
+              <div class="form-field">
+                <label for="message">Message</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="5"
+                  placeholder="Share details about your request so we can assist promptly."
+                  required
+                ></textarea>
+              </div>
+              <div class="form-actions">
+                <button type="button" class="btn ghost" onclick="gotoSection('dashboard')">
+                  Back to Dashboard
+                </button>
+                <button
+                  type="submit"
+                  class="btn primary"
+                  style="background: var(--gradient-accent)"
+                >
+                  Send Message
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <div class="security-banner" role="status" aria-live="polite">
+          <div class="security-badge">🔒</div>
+          <div class="security-meta">
+            <h3>Session Secured</h3>
+            <p>
+              <span>Multi-factor verified</span>
+              <span>TLS 1.3 encrypted</span>
+              <span>Auto-logout after 15 min inactivity</span>
+            </p>
+          </div>
+        </div>
+        <p>2025 Champion Hotel | Customer Portal | Your Comfort, Our Priority</p>
+      </footer>
+    </main>
+
+    <div class="quick-action-overlay" id="quick-action-overlay" aria-hidden="true">
+      <div
+        class="quick-action-drawer"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="quick-action-title"
+      >
+        <header>
+          <div>
+            <h3 id="quick-action-title"></h3>
+            <p id="quick-action-subtitle"></p>
+          </div>
+          <button type="button" class="quick-action-close" id="quick-action-close">Close</button>
+        </header>
+        <div class="quick-action-cards" id="quick-action-content"></div>
+      </div>
+    </div>
+
+    <script>
+      const customerState = {
+        isFirstLogin: false,
+        hasActiveBooking: false,
+        hasActiveOrder: false,
+        isInHouse: false,
+      };
+
+      window.initialiseSupportChannels = function(support) {
+        if (typeof renderSupportSection === 'function') {
+          renderSupportSection(support);
+        }
+      };
+      // Toggle Sidebar
+      function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const hamburger = document.querySelector('.hamburger');
+        sidebar.classList.toggle('show');
+        hamburger.classList.toggle('active');
+      }
+
+      // Show Section
+      function showSection(sectionId) {
+        const sections = document.querySelectorAll('.content-section');
+        sections.forEach((section) => section.classList.remove('active'));
+        const target = document.getElementById(sectionId);
+        if (target) target.classList.add('active');
+        try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (_) {}
+        try { window.location.hash = sectionId; } catch (_) {}
+        if (window.innerWidth <= 768) {
+          toggleSidebar();
+        }
+      }
+
+      // View All
+      function viewAll(type) {
+        showSection(type);
+      }
+
+      // Wire sidebar navigation to switch sections
+      function wireSidebarNav() {
+        const links = document.querySelectorAll('.sidebar nav a[data-section]');
+        links.forEach((link) => {
+          if (link.dataset.bound) return;
+          link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const sectionId = link.getAttribute('data-section');
+            showSection(sectionId);
+            // update active state on links
+            links.forEach((l) => l.classList.remove('active'));
+            link.classList.add('active');
+          });
+          link.dataset.bound = '1';
+        });
+      }
+      wireSidebarNav();
+
+      const _sidebarMenu = document.getElementById('sidebar-menu');
+      if (_sidebarMenu && !_sidebarMenu.dataset.bound) {
+        _sidebarMenu.addEventListener('click', (e) => {
+          e.preventDefault();
+          openMenuOverlay();
+        });
+        _sidebarMenu.dataset.bound = '1';
+      }
+
+      if (typeof window.gotoSection !== 'function') {
+        window.gotoSection = function (sectionId) {
+          showSection(sectionId);
+        };
+      }
+
+      wireCustomerQuickActions();
+
+      // Booking Details
+      function showBookingDetails(id) {
+        const details = {
+          BK001:
+            'Booking ID: BK001\nRoom Type: Deluxe Suite\nCheck-In: 2023-11-15\nCheck-Out: 2023-11-18\nStatus: Confirmed\nTotal: $750.00\nGuest: John Doe',
+          BK002:
+            'Booking ID: BK002\nRoom Type: Standard Room\nCheck-In: 2023-12-01\nCheck-Out: 2023-12-03\nStatus: Pending\nTotal: $300.00\nGuest: Jane Smith',
+          BK003:
+            'Booking ID: BK003\nRoom Type: Executive Suite\nCheck-In: 2023-12-10\nCheck-Out: 2023-12-15\nStatus: Confirmed\nTotal: $1200.00\nGuest: Alice Johnson',
+          BK004:
+            'Booking ID: BK004\nRoom Type: Family Room\nCheck-In: 2024-01-05\nCheck-Out: 2024-01-08\nStatus: Pending\nTotal: $400.00\nGuest: Bob Wilson',
+          BK005:
+            'Booking ID: BK005\nRoom Type: Deluxe Suite\nCheck-In: 2024-02-14\nCheck-Out: 2024-02-17\nStatus: Confirmed\nTotal: $750.00\nGuest: Emma Davis',
+          BK006:
+            'Booking ID: BK006\nRoom Type: Standard Room\nCheck-In: 2024-03-01\nCheck-Out: 2024-03-05\nStatus: Confirmed\nTotal: $300.00\nGuest: Michael Brown',
+          BK007:
+            'Booking ID: BK007\nRoom Type: Presidential Suite\nCheck-In: 2024-04-10\nCheck-Out: 2024-04-15\nStatus: Pending\nTotal: $2000.00\nGuest: Sarah Miller',
+          BK008:
+            'Booking ID: BK008\nRoom Type: Deluxe Suite\nCheck-In: 2024-05-20\nCheck-Out: 2024-05-25\nStatus: Confirmed\nTotal: $750.00\nGuest: David Garcia',
+        };
+        const bkStr = details[id] || 'Details not found';
+        const formatted = bkStr.replace(/\n/g, '<br/>');
+        showModal('Booking Details', `<p style="line-height:1.6">${formatted}</p>`, null, 'Close', 'Close');
+      }
+
+      // Payment Receipt
+      function showPaymentReceipt(id) {
+        const receipts = {
+          BILL001:
+            'Receipt ID: BILL001\nAmount: $750.00\nMethod: Credit Card\nDate: 2023-11-18\nStatus: Pending\nDescription: Room Booking - Deluxe Suite',
+          BILL002:
+            'Receipt ID: BILL002\nAmount: $45.00\nMethod: Room Charge\nDate: 2023-10-16\nStatus: Paid\nDescription: Restaurant Order',
+          BILL003:
+            'Receipt ID: BILL003\nAmount: $120.00\nMethod: Debit Card\nDate: 2023-12-05\nStatus: Paid\nDescription: Room Service',
+          BILL004:
+            'Receipt ID: BILL004\nAmount: $200.00\nMethod: Cash\nDate: 2024-01-10\nStatus: Pending\nDescription: Additional Services',
+          BILL005:
+            'Receipt ID: BILL005\nAmount: $95.00\nMethod: Room Charge\nDate: 2024-02-20\nStatus: Paid\nDescription: Mini Bar',
+          BILL006:
+            'Receipt ID: BILL006\nAmount: $300.00\nMethod: Credit Card\nDate: 2024-03-15\nStatus: Paid\nDescription: Extended Stay',
+          BILL007:
+            'Receipt ID: BILL007\nAmount: $150.00\nMethod: Debit Card\nDate: 2024-04-02\nStatus: Pending\nDescription: Spa Services',
+          BILL008:
+            'Receipt ID: BILL008\nAmount: $80.00\nMethod: Room Charge\nDate: 2024-05-10\nStatus: Paid\nDescription: Laundry Service',
+        };
+        const rcStr = receipts[id] || 'Receipt not found';
+        const formatted = rcStr.replace(/\n/g, '<br/>');
+        showModal('Payment Receipt', `<p style="line-height:1.6">${formatted}</p>`, null, 'Close', 'Close');
+      }
+
+      // Order Tracking
+      function trackOrder(id) {
+        const tracks = {
+          ORD001:
+            'Order ID: ORD001\nItems: Burger, Fries, Coke\nTotal: $25.00\nStatus: Served\nEstimated Time: Completed',
+          ORD002:
+            'Order ID: ORD002\nItems: Pizza, Salad\nTotal: $30.00\nStatus: In Progress\nEstimated Time: 15 minutes',
+          ORD003:
+            'Order ID: ORD003\nItems: Steak, Wine, Dessert\nTotal: $85.00\nStatus: Served\nEstimated Time: Completed',
+          ORD004:
+            'Order ID: ORD004\nItems: Coffee, Croissant\nTotal: $12.00\nStatus: Preparing\nEstimated Time: 5 minutes',
+          ORD005:
+            'Order ID: ORD005\nItems: Sushi Platter, Green Tea\nTotal: $45.00\nStatus: Served\nEstimated Time: Completed',
+          ORD006:
+            'Order ID: ORD006\nItems: Pasta, Garlic Bread, Wine\nTotal: $55.00\nStatus: Served\nEstimated Time: Completed',
+          ORD007:
+            'Order ID: ORD007\nItems: Salad, Soup, Sandwich\nTotal: $28.00\nStatus: Preparing\nEstimated Time: 10 minutes',
+          ORD008:
+            'Order ID: ORD008\nItems: Grilled Chicken, Rice, Vegetables\nTotal: $40.00\nStatus: Served\nEstimated Time: Completed',
+        };
+        const trkStr = tracks[id] || 'Tracking info not found';
+        const formatted = trkStr.replace(/\n/g, '<br/>');
+        showModal('Track Order', `<p style="line-height:1.6">${formatted}</p>`, null, 'Close', 'Close');
+      }
+
+      // Reorder
+      function reorder(id) {
+        showModal('Reorder Items', `<p>Would you like to add the items from Order <strong>${id}</strong> back to your cart?</p>`, (closeFn) => {
+          showToast('Items added to cart.', 'success');
+          closeFn();
+        }, 'Add to Cart');
+      }
+
+      function startBooking(service) {
+        // Proceed directly without confirmation for smoother UX
+        customerState.hasActiveBooking = true;
+        customerState.isFirstLogin = false;
+
+        // Persist state changes
+        localStorage.setItem('customerHasBooking', '1');
+        localStorage.setItem('customerHasVisited', '1');
+
+        // Reflect new state in UI
+        applyDashboardMode();
+        updateNavigationCounts();
+        highlightStateChange('primary-booking-card');
+        highlightStateChange('nav-count-reservations');
+
+        // Navigate to bookings section and update URL
+        showSection('bookings');
+        try { window.location.hash = 'bookings'; } catch (_) {}
+        showToast('Booking flow started. Please fill in your stay details.', 'info');
+      }
+
+      // Quick action wiring and overlay controls for tests
+      const quickActionConfigs = {
+        manageStay: {
+          title: 'Manage Your Stay',
+          subtitle: 'Review and tailor your current reservation.',
+          inlineHeader: 'Current Stay',
+          cards: [
+            {
+              title: 'Upgrade room',
+              desc: 'Explore suite upgrades and view availability during your dates.',
+              primary: { label: 'View upgrades', intent: { fn: 'gotoSection', args: ['bookings'] } },
+              secondary: { label: 'Chat concierge', intent: { fn: 'gotoSection', args: ['support'] } },
+            },
+            {
+              title: 'Late checkout',
+              desc: 'Request an extended departure time based on your loyalty tier.',
+              primary: { label: 'Request late checkout', intent: { fn: 'gotoSection', args: ['bookings'] } },
+            },
+          ],
+        },
+        housekeeping: {
+          title: 'Housekeeping',
+          subtitle: 'Request cleaning, linens, amenities, or report an issue.',
+          inlineHeader: 'Housekeeping',
+          cards: [
+            {
+              title: 'Room cleaning',
+              desc: 'Schedule a full refresh or a light tidy at your preferred time.',
+              primary: { label: 'Schedule cleaning', intent: { fn: 'gotoSection', args: ['orders'] } },
+            },
+            {
+              title: 'Extra amenities',
+              desc: 'Request towels, toiletries, pillows, or a baby cot.',
+              primary: { label: 'Request amenities', intent: { fn: 'gotoSection', args: ['orders'] } },
+            },
+          ],
+        },
+        loyalty: {
+          title: 'Loyalty Rewards',
+          subtitle: 'View benefits, redeem upgrades, and track points.',
+          inlineHeader: 'Loyalty',
+          cards: [
+            {
+              title: 'Redeem upgrade',
+              desc: 'Use points to upgrade your current or next stay.',
+              primary: { label: 'Redeem now', intent: { fn: 'gotoSection', args: ['bookings'] } },
+            },
+            {
+              title: 'View benefits',
+              desc: 'See your tier perks and current balance.',
+              primary: { label: 'Open benefits', intent: { fn: 'gotoSection', args: ['reservations'] } },
+            },
+          ],
+        },
+        arrival: {
+          title: 'Arrival & Departure',
+          subtitle: 'Streamline your check-in and check-out preferences.',
+          inlineHeader: 'Arrival',
+          cards: [
+            {
+              title: 'Express check-in',
+              desc: 'Confirm ID and payment to collect keys on arrival without waiting.',
+              primary: { label: 'Start express check-in', intent: { fn: 'gotoSection', args: ['bookings'] } },
+            },
+            {
+              title: 'Airport transfer',
+              desc: 'Arrange a chauffeur pickup with your preferred vehicle class.',
+              primary: { label: 'Book transfer', intent: { fn: 'gotoSection', args: ['reservations'] } },
+            },
+          ],
+        },
+        transfer: {
+          title: 'Airport Transfer',
+          subtitle: 'Schedule a pickup or drop-off with preferred vehicle class.',
+          inlineHeader: 'Transfer',
+          cards: [
+            {
+              title: 'Arrange pickup',
+              desc: 'Provide flight details and choose vehicle type.',
+              primary: { label: 'Arrange now', intent: { fn: 'gotoSection', args: ['reservations'] } },
+            },
+          ],
+        },
+        concierge: {
+          title: 'Chat Concierge',
+          subtitle: 'Get help with bookings, recommendations, and special requests.',
+          inlineHeader: 'Concierge',
+          cards: [
+            {
+              title: 'Live chat',
+              desc: 'Connect immediately for tailored assistance.',
+              primary: { label: 'Start chat', intent: { fn: 'gotoSection', args: ['support'] } },
+            },
+            {
+              title: 'Plan itinerary',
+              desc: 'Share interests to receive a curated agenda.',
+              primary: { label: 'Plan now', intent: { fn: 'gotoSection', args: ['reservations'] } },
+            },
+          ],
+        },
+        reserveDining: {
+          title: 'Reserve Dining',
+          subtitle: 'Book a table at our signature restaurants.',
+          inlineHeader: 'Reserve Dining',
+          cards: [
+            {
+              title: 'Chef’s Table',
+              desc: 'Limited-seating tasting menu with wine pairings.',
+              primary: { label: 'Reserve table', intent: { fn: 'startBooking', args: ['Chef’s Table'] } },
+              secondary: { label: 'View dining', intent: { fn: 'gotoSection', args: ['reservations'] } },
+            },
+            {
+              title: 'In-room dining',
+              desc: 'Order from the comfort of your suite, delivered hot and fresh.',
+              primary: { label: 'Order now', intent: { fn: 'gotoSection', args: ['orders'] } },
+            },
+          ],
+        },
+        inRoomDining: {
+          title: 'In-Room Dining',
+          subtitle: 'Order dishes and drinks delivered to your suite.',
+          inlineHeader: 'In-Room Dining',
+          cards: [
+            {
+              title: 'Order room service',
+              desc: 'Browse menu and place your order.',
+              primary: { label: 'Open menu', intent: { fn: 'gotoSection', args: ['orders'] } },
+            },
+          ],
+        },
+        activities: {
+          title: 'Activities & Tours',
+          subtitle: 'Plan unique experiences during your stay.',
+          inlineHeader: 'Activities',
+          cards: [
+            {
+              title: 'City highlights tour',
+              desc: 'Guided experience covering iconic sights and hidden gems.',
+              primary: { label: 'Reserve tour', intent: { fn: 'startBooking', args: ['City Highlights Tour'] } },
+            },
+          ],
+        },
+        wellness: {
+          title: 'Spa & Wellness',
+          subtitle: 'Indulge in restorative treatments and rituals.',
+          inlineHeader: 'Wellness',
+          cards: [
+            {
+              title: 'Signature massage',
+              desc: '60-minute aromatherapy with hot stones and calming music.',
+              primary: { label: 'Book treatment', intent: { fn: 'startBooking', args: ['Signature Massage'] } },
+            },
+            {
+              title: 'Thermal circuit',
+              desc: 'Sauna, steam, and vitality pool access with relaxation lounge.',
+              primary: { label: 'Reserve slot', intent: { fn: 'gotoSection', args: ['reservations'] } },
+            },
+          ],
+        },
+        billing: {
+          title: 'Billing & Receipts',
+          subtitle: 'Review outstanding balance and download receipts.',
+          inlineHeader: 'Billing',
+          cards: [
+            {
+              title: 'Outstanding bill',
+              desc: 'Settle charges to streamline checkout and avoid delays.',
+              primary: { label: 'View payments', intent: { fn: 'gotoSection', args: ['payments'] } },
+              secondary: { label: 'View receipts', intent: { fn: 'gotoSection', args: ['receipts'] } },
+            },
+          ],
+        },
+      };
+
+      function getOverlayElements() {
+        return {
+          overlay: document.getElementById('quick-action-overlay'),
+          title: document.getElementById('quick-action-title'),
+          subtitle: document.getElementById('quick-action-subtitle'),
+          content: document.getElementById('quick-action-content'),
+          closeBtn: document.getElementById('quick-action-close'),
+        };
+      }
+
+      function performIntent(intent) {
+        if (!intent || !intent.fn) return;
+        const fn = window[intent.fn];
+        if (typeof fn === 'function') {
+          try { fn.apply(null, intent.args || []); } catch (_) {}
+          closeQuickAction();
+        }
+      }
+
+      function openQuickAction(target) {
+        const cfg = quickActionConfigs[target] || {};
+        const { overlay, title, subtitle, content, closeBtn } = getOverlayElements();
+        if (!overlay) return;
+        if (title) title.textContent = cfg.title || '';
+        if (subtitle) subtitle.textContent = cfg.subtitle || '';
+        if (content) {
+          content.innerHTML = '';
+          const cards = Array.isArray(cfg.cards) ? cfg.cards : [];
+          if (!cards.length) {
+            const block = document.createElement('div');
+            block.className = 'quick-action-card';
+            block.innerHTML = `<p>You're viewing details for: <strong>${cfg.title || target}</strong>.</p>`;
+            content.appendChild(block);
+          } else {
+            cards.forEach((c, idx) => {
+              const card = document.createElement('div');
+              card.className = 'quick-action-card';
+              const actions = [];
+              if (c.primary) actions.push({ ...c.primary, variant: 'primary' });
+              if (c.secondary) actions.push({ ...c.secondary, variant: 'ghost' });
+              card.innerHTML = `
+                <h4>${c.title || ''}</h4>
+                <p>${c.desc || ''}</p>
+                <div class="quick-action-actions"></div>
+              `;
+              const actionsEl = card.querySelector('.quick-action-actions');
+              actions.forEach((a, i) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = `btn ${a.variant === 'primary' ? 'booking-cta' : 'ghost'}`;
+                btn.textContent = a.label || 'Open';
+                btn.addEventListener('click', () => performIntent(a.intent));
+                actionsEl.appendChild(btn);
+              });
+              content.appendChild(card);
+            });
+          }
+        }
+        overlay.classList.add('is-visible');
+        overlay.setAttribute('aria-hidden', 'false');
+        if (closeBtn && !closeBtn.dataset.bound) {
+          closeBtn.addEventListener('click', closeQuickAction);
+          closeBtn.dataset.bound = '1';
+        }
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') closeQuickAction();
+        }, { once: true });
+        overlay.addEventListener('click', (e) => {
+          if (e.target === overlay) closeQuickAction();
+        });
+      }
+
+      function closeQuickAction() {
+        const { overlay } = getOverlayElements();
+        if (!overlay) return;
+        overlay.classList.remove('is-visible');
+        overlay.setAttribute('aria-hidden', 'true');
+      }
+
+      function renderInlineQuickPanel(target) {
+        const cfg = quickActionConfigs[target] || {};
+        const panel = document.querySelector(`.quick-panel[data-panel="${target}"]`);
+        if (!panel) return;
+        const preview = Array.isArray(cfg.cards) && cfg.cards.length ? cfg.cards[0] : null;
+        panel.innerHTML = `
+        <div class="quick-panel-header">
+          <h4>${cfg.inlineHeader || ''}</h4>
+        </div>
+        <div class="quick-panel-cards">
+          <div class="quick-action-card">
+            <h4>${preview && preview.title ? preview.title : 'Explore options'}</h4>
+            <p>${preview && preview.desc ? preview.desc : 'Tailored choices for your stay.'}</p>
+            <div class="quick-action-actions"></div>
+          </div>
+        </div>
+        <div class="quick-panel-footer">
+          <button type="button" class="btn ghost" data-open-overlay="${target}">Open full details</button>
+        </div>
+      `;
+        const actionsEl = panel.querySelector('.quick-action-actions');
+        if (actionsEl && preview) {
+          const actPrimary = preview.primary;
+          if (actPrimary) {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'btn booking-cta';
+            btn.textContent = actPrimary.label || 'Open';
+            btn.addEventListener('click', () => performIntent(actPrimary.intent));
+            actionsEl.appendChild(btn);
+          }
+        }
+        const openBtn = panel.querySelector(`[data-open-overlay="${target}"]`);
+        if (openBtn) {
+          openBtn.addEventListener('click', () => openQuickAction(target));
+        }
+      }
+
+      function wireCustomerQuickActions() {
+        const buttons = document.querySelectorAll('.quick-group .btn, .quick-actions .btn');
+        buttons.forEach((button) => {
+          if (button.dataset.bound) return;
+          button.addEventListener('click', () => {
+            const target = button.getAttribute('data-target');
+            const isActive = button.classList.contains('active');
+            
+            // Turn off all other buttons and panels
+            buttons.forEach((b) => b.classList.remove('active'));
+            document.querySelectorAll('.quick-panel').forEach(p => p.classList.remove('active'));
+            
+            if (!isActive) {
+              button.classList.add('active');
+              const panel = document.querySelector(`.quick-panel[data-panel="${target}"]`);
+              if (panel) panel.classList.add('active');
+              renderInlineQuickPanel(target);
+            }
+          });
+          button.dataset.bound = '1';
+        });
+      }
+
+      window.wireCustomerQuickActions = wireCustomerQuickActions;
+      window.openQuickAction = openQuickAction;
+      window.closeQuickAction = closeQuickAction;
+
+      // Real-time dining tracker demo
+      const diningFeed = document.getElementById('dining-feed');
+      const diningTemplate = document.getElementById('dining-item-template');
+
+      const diningStatusLabels = {
+        queued: 'Queued for kitchen',
+        prep: 'In kitchen',
+        enroute: 'On the way',
+        ready: 'Ready for pickup',
+      };
+
+      let diningOrders = [
+        {
+          id: 'ORD012',
+          location: 'Suite 101',
+          items: 'Truffle pasta • Garden salad',
+          status: 'prep',
+          eta: 'ETA 12 mins',
+          stage: 1,
+        },
+        {
+          id: 'ORD014',
+          location: 'Skyline Lounge',
+          items: 'Chef tasting flight',
+          status: 'queued',
+          eta: 'ETA 20 mins',
+          stage: 0,
+        },
+        {
+          id: 'ORD010',
+          location: 'Lobby Café',
+          items: 'Espresso • Almond croissant',
+          status: 'ready',
+          eta: 'Pickup at counter',
+          stage: 3,
+        },
+      ];
+
+      const statusFlow = ['queued', 'prep', 'enroute', 'ready'];
+
+      function renderDiningFeed(orders) {
+        if (!diningFeed || !diningTemplate) return;
+        diningFeed.innerHTML = '';
+
+        orders.forEach((order) => {
+          const clone = diningTemplate.content.firstElementChild.cloneNode(true);
+          const titleEl = clone.querySelector('[data-field="title"]');
+          const itemsEl = clone.querySelector('[data-field="items"]');
+          const statusEl = clone.querySelector('[data-field="status"]');
+          const etaEl = clone.querySelector('[data-field="eta"]');
+          const actionBtn = clone.querySelector('[data-field="action"]');
+
+          if (titleEl) titleEl.textContent = `${order.id} · ${order.location}`;
+          if (itemsEl) itemsEl.textContent = order.items;
+
+          if (statusEl) {
+            statusEl.textContent = diningStatusLabels[order.status] || order.status;
+            statusEl.className = `dining-status ${order.status}`;
+          }
+
+          if (etaEl) etaEl.textContent = order.eta || '';
+          if (actionBtn) {
+            actionBtn.textContent = order.status === 'ready' ? 'Notify Delivery' : 'Track Order';
+            actionBtn.dataset.orderId = order.id;
+          }
+
+          diningFeed.appendChild(clone);
+        });
+      }
+
+      function advanceDiningOrders() {
+        diningOrders = diningOrders.map((order) => {
+          if (order.stage < statusFlow.length - 1) {
+            const shouldAdvance = Math.random() > 0.55;
+            if (shouldAdvance) {
+              const nextStage = order.stage + 1;
+              order.stage = nextStage;
+              order.status = statusFlow[nextStage];
+              order.eta =
+                order.status === 'ready'
+                  ? 'Ready for delivery'
+                  : `ETA ${Math.max(5, 18 - nextStage * 4)} mins`;
+            }
+          }
+          return order;
+        });
+
+        renderDiningFeed(diningOrders);
+      }
+
+      let diningInterval = null;
+      function startDiningTracker() {
+        if (diningFeed && diningTemplate) {
+          if (diningInterval) clearInterval(diningInterval);
+          renderDiningFeed(diningOrders);
+          diningInterval = setInterval(advanceDiningOrders, 15000);
+          
+          const statusEl = document.querySelector('.dining-tracker .dining-status');
+          if (statusEl) {
+            statusEl.textContent = 'In Progress';
+            statusEl.className = 'dining-status active';
+          }
+        }
+      }
+
+      function stopDiningTracker() {
+        if (diningInterval) {
+          clearInterval(diningInterval);
+          diningInterval = null;
+        }
+        if (diningFeed) {
+          diningFeed.innerHTML = '<div class="dining-empty">No orders yet</div>';
+        }
+        const statusEl = document.querySelector('.dining-tracker .dining-status');
+        if (statusEl) {
+          statusEl.textContent = 'No orders yet';
+          statusEl.className = 'dining-status';
+        }
+      }
+
+      if (diningFeed && diningTemplate) {
+        if (customerState.hasActiveOrder) {
+          startDiningTracker();
+        } else {
+          stopDiningTracker();
+        }
+      }
+
+      if (diningFeed) {
+        diningFeed.addEventListener('click', (event) => {
+          const button = event.target.closest('button[data-order-id]');
+          if (!button) return;
+          const orderId = button.dataset.orderId;
+          const currentOrder = diningOrders.find((order) => order.id === orderId);
+          if (!currentOrder) return;
+
+          if (currentOrder.status === 'ready') {
+            showToast(`${orderId} is ready. Notifying your suite concierge now.`, 'success');
+          } else {
+            showToast(`Tracking ${orderId}. Current status: ${diningStatusLabels[currentOrder.status]}.`, 'info');
+          }
+        });
+      }
+
+      // Download Receipt
+      function downloadReceipt(id) {
+        showToast(`Downloading receipt for ${id}...`, 'success');
+      }
+
+      // Logout
+      function logout() {
+        showModal('Confirm Logout', '<p>Are you sure you want to log out of your session?</p>', (closeFn) => {
+          window.location.href = 'login.html';
+        }, 'Log Out');
+      }
+
+
+
+      function applyModeFromQuery() {
+        const params = new URLSearchParams(window.location.search);
+        const mode = params.get('mode');
+        const order = params.get('order');
+        const booking = params.get('booking');
+
+        if (mode) {
+          if (mode === 'new') {
+            customerState.isFirstLogin = true;
+            customerState.hasActiveBooking = false;
+            customerState.hasActiveOrder = false;
+            customerState.isInHouse = false;
+          } else if (mode === 'returning') {
+            customerState.isFirstLogin = false;
+            customerState.hasActiveBooking = false;
+            customerState.hasActiveOrder = false;
+            customerState.isInHouse = false;
+          } else if (mode === 'inhouse') {
+            customerState.isFirstLogin = false;
+            customerState.hasActiveBooking = true;
+            customerState.isInHouse = true;
+          }
+        } else {
+          // No explicit mode provided; infer from localStorage
+          if (localStorage.getItem('customerHasVisited') === '1') {
+            customerState.isFirstLogin = false;
+          }
+          if (localStorage.getItem('customerHasBooking') === '1') {
+            customerState.hasActiveBooking = true;
+          }
+          if (localStorage.getItem('customerHasOrder') === '1') {
+            customerState.hasActiveOrder = true;
+          }
+        }
+
+        if (order === '1') customerState.hasActiveOrder = true;
+        if (booking === '1') customerState.hasActiveBooking = true;
+      }
+
+      function initWelcomeMessage() {
+        const welcomeEl = document.getElementById('welcome');
+        const welcomeGreeting = document.getElementById('welcome-greeting');
+        const welcomeSubtext = document.querySelector('.welcome-subtext');
+        const welcomeHighlights = document.querySelector('.welcome-highlights');
+        
+        if (!welcomeEl) return;
+        
+        let welcomeText = '';
+        let greetingText = '';
+        let subtextText = '';
+        let highlightsHTML = '';
+        
+        if (customerState.isInHouse) {
+          welcomeText = 'Welcome to your stay, valued guest';
+          greetingText = '🏨 Your Home Away From Home';
+          subtextText = 'Enjoy your stay with us. Room service and amenities are at your fingertips.';
+          highlightsHTML = '<span class="welcome-badge">🏠 In-House Guest</span><span class="welcome-badge">🛎️ 24/7 Service</span>';
+        } else if (customerState.isFirstLogin) {
+          welcomeText = 'Welcome';
+          greetingText = '✨ Your Journey Begins Here';
+          subtextText = 'Discover exceptional hospitality. Book your first stay or order delicious cuisine.';
+          highlightsHTML = '<span class="welcome-badge">🎯 Book Your Stay</span><span class="welcome-badge">🍽️ Order Food</span>';
+        } else {
+          welcomeText = 'Welcome back, valued guest';
+          greetingText = '⭐ Welcome Back';
+          subtextText = 'Great to see you again. Continue your journey with us.';
+          highlightsHTML = '<span class="welcome-badge">👋 Welcome Back</span><span class="welcome-badge">🔄 Quick Actions</span>';
+        }
+        
+        welcomeEl.textContent = welcomeText;
+        if (welcomeGreeting) welcomeGreeting.textContent = greetingText;
+        if (welcomeSubtext) welcomeSubtext.textContent = subtextText;
+        if (welcomeHighlights) welcomeHighlights.innerHTML = highlightsHTML;
+        
+        localStorage.setItem('customerHasVisited', '1');
+      }
+
+      function highlightStateChange(elementId) {
+        const element = document.getElementById(elementId);
+        if (element) {
+          element.classList.add('state-updated');
+          setTimeout(() => {
+            element.classList.remove('state-updated');
+          }, 1500);
+        }
+      }
+
+      function updateNavigationCounts() {
+        const ordersCount = document.getElementById('nav-count-orders');
+        const reservationsCount = document.getElementById('nav-count-reservations');
+        const paymentsCount = document.getElementById('nav-count-payments');
+        const receiptsCount = document.getElementById('nav-count-receipts');
+        const moreSection = document.querySelector('.sidebar-nav .sidebar-label:nth-of-type(2)');
+        const moreItems = moreSection ? moreSection.nextElementSibling : null;
+
+        if (customerState.isFirstLogin) {
+          // New customer - everything starts at 0 and hide historical sections
+          if (ordersCount) ordersCount.textContent = '0';
+          if (reservationsCount) reservationsCount.textContent = '0';
+          if (paymentsCount) paymentsCount.textContent = '0';
+          if (receiptsCount) receiptsCount.textContent = '0';
+          
+          // Hide "More" section for new customers
+          if (moreSection) moreSection.style.display = 'none';
+          if (moreItems) moreItems.style.display = 'none';
+        } else if (customerState.isInHouse) {
+          // In-house guest - show active numbers and show More section
+          if (ordersCount) ordersCount.textContent = customerState.hasActiveOrder ? '1' : '0';
+          if (reservationsCount) reservationsCount.textContent = '1'; // Current stay
+          if (paymentsCount) paymentsCount.textContent = '2'; // Current stay + incidentals
+          if (receiptsCount) receiptsCount.textContent = '3'; // Recent transactions
+          
+          // Show "More" section for in-house guests
+          if (moreSection) moreSection.style.display = '';
+          if (moreItems) moreItems.style.display = '';
+        } else {
+          // Returning customer - show historical numbers and show More section
+          if (ordersCount) ordersCount.textContent = '2'; // Previous orders
+          if (reservationsCount) reservationsCount.textContent = '3'; // Past stays
+          if (paymentsCount) paymentsCount.textContent = '5'; // Payment history
+          if (receiptsCount) receiptsCount.textContent = '8'; // All receipts
+          
+          // Show "More" section for returning customers
+          if (moreSection) moreSection.style.display = '';
+          if (moreItems) moreItems.style.display = '';
+        }
+      }
+
+      function applyDashboardMode() {
+        const staySnapshot = document.querySelector('.stay-snapshot');
+        const bookingCurrent = document.getElementById('booking-current-card');
+        const bookingPlanner = document.getElementById('booking-planner-card');
+        const primaryUpgrade = document.getElementById('primary-upgrade-room');
+        const primaryService = document.getElementById('primary-room-service');
+        const primaryBookCopy = document.getElementById('primary-booking-copy');
+        const ordersActiveValue = document.getElementById('orders-active-value');
+        const ordersActiveMeta = document.getElementById('orders-active-meta');
+        const diningStatus = document.querySelector('.dining-tracker .dining-status');
+        const diningTracker = document.querySelector('.dining-tracker');
+        const newCustomerGuide = document.getElementById('new-customer-guide');
+
+        const showStay = !customerState.isFirstLogin && (customerState.isInHouse || customerState.hasActiveBooking);
+        if (staySnapshot) staySnapshot.style.display = showStay ? '' : 'none';
+        if (bookingCurrent) bookingCurrent.style.display = showStay ? '' : 'none';
+        if (bookingPlanner) bookingPlanner.style.display = showStay ? '' : '';
+
+        if (primaryUpgrade) primaryUpgrade.style.display = showStay ? 'inline-flex' : 'none';
+        if (primaryService) primaryService.style.display = showStay ? 'inline-flex' : 'none';
+        if (primaryBookCopy) primaryBookCopy.textContent = showStay
+          ? 'Manage or upgrade your current stay.'
+          : 'Choose your suite and confirm dates.';
+
+        if (ordersActiveValue) ordersActiveValue.textContent = customerState.hasActiveOrder ? '1' : '0';
+        if (ordersActiveMeta) ordersActiveMeta.textContent = customerState.hasActiveOrder ? 'Order in progress' : 'No active orders';
+        if (diningStatus && !customerState.hasActiveOrder) {
+          diningStatus.textContent = 'No orders yet';
+          diningStatus.className = 'dining-status';
+        }
+
+        // Hide dining tracker for new customers who have never ordered
+        if (diningTracker && customerState.isFirstLogin && !customerState.hasActiveOrder) {
+          diningTracker.style.display = 'none';
+        } else if (diningTracker) {
+          diningTracker.style.display = '';
+        }
+
+        // Show new customer guide for first-time visitors
+        if (newCustomerGuide) {
+          if (customerState.isFirstLogin && !customerState.hasActiveBooking && !customerState.hasActiveOrder) {
+            newCustomerGuide.style.display = 'block';
+          } else {
+            newCustomerGuide.style.display = 'none';
+          }
+        }
+
+        // Update navigation counts based on customer state
+        updateNavigationCounts();
+      }
+
+      function initPrimaryActions() {
+        const bookingCopy = document.getElementById('primary-booking-copy');
+        const foodCopy = document.getElementById('primary-food-copy');
+        const bookRoomBtn = document.getElementById('primary-book-room');
+        const upgradeRoomBtn = document.getElementById('primary-upgrade-room');
+        const roomServiceBtn = document.getElementById('primary-room-service');
+        const openMenuBtn = document.getElementById('primary-open-menu');
+        const trackOrderBtn = document.getElementById('primary-track-order');
+        const cancelOrderBtn = document.getElementById('primary-cancel-order');
+        const callWaiterBtn = document.getElementById('primary-call-waiter');
+
+        if (customerState.hasActiveBooking) {
+          if (bookingCopy) bookingCopy.textContent = 'Manage or upgrade your current stay.';
+          if (upgradeRoomBtn) upgradeRoomBtn.style.display = 'inline-flex';
+          if (roomServiceBtn) roomServiceBtn.style.display = 'inline-flex';
+        } else {
+          if (bookingCopy) bookingCopy.textContent = 'Choose your suite and confirm dates.';
+        }
+
+        if (customerState.hasActiveOrder) {
+          if (foodCopy) foodCopy.textContent = 'Manage your active order and delivery updates.';
+          if (trackOrderBtn) trackOrderBtn.style.display = 'inline-flex';
+          if (cancelOrderBtn) cancelOrderBtn.style.display = 'inline-flex';
+        } else {
+          if (foodCopy) foodCopy.textContent = 'Browse the menu and order to your room or table.';
+        }
+
+        // Always show Call Waiter under Order Food
+        if (callWaiterBtn) callWaiterBtn.style.display = 'inline-flex';
+
+        if (bookRoomBtn) {
+          bookRoomBtn.onclick = null;
+          bookRoomBtn.addEventListener('click', () => startBooking());
+        }
+        if (upgradeRoomBtn) {
+          upgradeRoomBtn.onclick = null;
+          upgradeRoomBtn.addEventListener('click', () => gotoSection('bookings'));
+        }
+        if (roomServiceBtn) {
+          roomServiceBtn.onclick = null;
+          roomServiceBtn.addEventListener('click', () => gotoSection('orders'));
+        }
+        if (openMenuBtn) {
+          openMenuBtn.onclick = null;
+          openMenuBtn.addEventListener('click', openMenuOverlay);
+        }
+        if (trackOrderBtn) {
+          trackOrderBtn.onclick = null;
+          trackOrderBtn.addEventListener('click', trackOrder);
+        }
+        if (cancelOrderBtn) {
+          cancelOrderBtn.onclick = null;
+          cancelOrderBtn.addEventListener('click', cancelActiveOrder);
+        }
+        if (callWaiterBtn) {
+          callWaiterBtn.onclick = null;
+          callWaiterBtn.addEventListener('click', callWaiter);
+        }
+
+        const menuClose = document.getElementById('menu-close');
+        const menuStart = document.getElementById('menu-start-order');
+        if (menuClose) menuClose.onclick = closeMenuOverlay;
+        if (menuStart) menuStart.onclick = () => {
+          customerState.hasActiveOrder = true;
+          customerState.isFirstLogin = false; // No longer a first-time customer
+          
+          // Persist order state
+          localStorage.setItem('customerHasOrder', '1');
+          localStorage.setItem('customerHasVisited', '1');
+          
+          closeMenuOverlay();
+          initPrimaryActions();
+          updateNavigationCounts();
+          startDiningTracker(); // Start the progress bar
+          
+          // Highlight the order section with visual feedback
+          highlightStateChange('primary-food-card');
+          highlightStateChange('nav-count-orders');
+          
+          gotoSection('orders');
+          showToast('Order started. Track it below.', 'success');
+        };
+      }
+
+      function openMenuOverlay() {
+        const overlay = document.getElementById('menu-overlay');
+        if (!overlay) return;
+        overlay.style.display = 'flex';
+        overlay.setAttribute('aria-hidden', 'false');
+      }
+
+      function closeMenuOverlay() {
+        const overlay = document.getElementById('menu-overlay');
+        if (!overlay) return;
+        overlay.style.display = 'none';
+        overlay.setAttribute('aria-hidden', 'true');
+      }
+
+      function trackOrder() {
+        gotoSection('orders');
+        showToast('Tracking your active order in real time.', 'info');
+      }
+
+      function cancelActiveOrder() {
+        showModal('Cancel Order', '<p>Are you sure you want to cancel your active order?</p>', (closeFn) => {
+          customerState.hasActiveOrder = false;
+          
+          // Remove order from localStorage
+          localStorage.removeItem('customerHasOrder');
+          
+          initPrimaryActions();
+          updateNavigationCounts();
+          stopDiningTracker(); // Stop the progress bar
+          
+          // Update dining status
+          const diningStatus = document.querySelector('.dining-tracker .dining-status');
+          if (diningStatus) {
+            diningStatus.textContent = 'No orders yet';
+            diningStatus.className = 'dining-status';
+          }
+          
+          showToast('Your order has been cancelled.', 'info');
+          closeFn();
+        }, 'Cancel Order');
+      }
+
+      function callWaiter() {
+        showToast('A waiter has been notified and will assist you shortly.', 'success');
+      }
+
+      window.startBooking = startBooking;
+      window.openMenuOverlay = openMenuOverlay;
+      window.closeMenuOverlay = closeMenuOverlay;
+      window.trackOrder = trackOrder;
+      window.cancelActiveOrder = cancelActiveOrder;
+      window.callWaiter = callWaiter;
+
+      function selectSuiteAndFocus(suiteName) {
+        const suiteSel = document.getElementById('plan-suite');
+        if (suiteSel) {
+          const exists = Array.from(suiteSel.options).some(o => o.value === suiteName);
+          if (!exists) { const opt = document.createElement('option'); opt.value = suiteName; opt.textContent = suiteName; suiteSel.appendChild(opt); }
+          suiteSel.value = suiteName;
+        }
+        try { highlightStateChange('booking-planner-card'); } catch(_) {}
+        try { document.getElementById('booking-planner-card').scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch(_) {}
+      }
+
+      function initBookingPlanner() {
+        const title = document.getElementById('booking-planner-title');
+        const badge = document.getElementById('booking-planner-badge');
+        const description = document.getElementById('booking-planner-description');
+        const actions = document.getElementById('booking-planner-actions');
+        if (!title || !badge || !description || !actions) return;
+        title.textContent = 'Plan your stay';
+        badge.className = 'badge info';
+        badge.textContent = 'New';
+        description.textContent = 'Select dates and suite to create your booking.';
+        actions.innerHTML = `
+          <div class="form-row">
+            <label>Check-in</label>
+            <input type="date" id="plan-checkin">
+          </div>
+          <div class="form-row">
+            <label>Check-out</label>
+            <input type="date" id="plan-checkout">
+          </div>
+          <div class="form-row">
+            <label>Suite</label>
+            <select id="plan-suite">
+              <option value="Deluxe Suite">Deluxe Suite</option>
+              <option value="Executive Suite">Executive Suite</option>
+              <option value="Royal Suite">Royal Suite</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label>Guests</label>
+            <input type="number" id="plan-guests" min="1" value="1">
+          </div>
+          <div class="btn-row">
+            <button type="button" class="primary-btn" id="plan-confirm">Book Now</button>
+          </div>
+        `;
+        const catalog = document.getElementById('room-catalog');
+        if (catalog && !catalog.innerHTML.trim()) {
+          const rooms = [
+            { name: 'Standard Room', price: 80, desc: 'Comfortable room, perfect for short stays.', amenities: ['Free Wi‑Fi','Smart TV','Air Conditioning'] },
+            { name: 'Deluxe Suite', price: 120, desc: 'Spacious suite with living area.', amenities: ['City View','Mini Bar','King Bed'] },
+            { name: 'Executive Suite', price: 180, desc: 'Premium suite ideal for business travelers.', amenities: ['Workspace','Lounge Access','Nespresso'] },
+            { name: 'Royal Suite', price: 260, desc: 'Luxury suite with refined interior.', amenities: ['Butler Service','Jacuzzi','Panoramic View'] },
+          ].sort((a,b) => a.price - b.price);
+          const cards = rooms.map(r => `
+            <div class="room-card">
+              <header>
+                <div class="room-title">${r.name}</div>
+                <div class="room-price">From $${r.price}/night</div>
+              </header>
+              <div class="room-desc">${r.desc}</div>
+              <div class="room-amenities">
+                ${r.amenities.map(a => `<span class="amenity">${a}</span>`).join('')}
+              </div>
+              <div class="btn-row">
+                <button type="button" class="sub-btn" data-select-suite="${r.name}">Select</button>
+              </div>
+            </div>
+          `).join('');
+          catalog.innerHTML = cards || '<div class="room-card"><div class="room-desc">No rooms found.</div></div>';
+          const suiteSelectBtns = catalog.querySelectorAll('[data-select-suite]');
+          suiteSelectBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+              const suite = btn.getAttribute('data-select-suite');
+              const suiteSel = document.getElementById('plan-suite');
+              if (suiteSel) {
+                if ([...suiteSel.options].some(o => o.value === suite)) {
+                  suiteSel.value = suite;
+                } else {
+                  const opt = document.createElement('option');
+                  opt.value = suite; opt.textContent = suite; suiteSel.appendChild(opt);
+                  suiteSel.value = suite;
+                }
+              }
+              try { highlightStateChange('booking-planner-card'); } catch(_){}
+            });
+          });
+        }
+        const confirmBtn = document.getElementById('plan-confirm');
+        if (confirmBtn) {
+          confirmBtn.onclick = function () {
+            const ci = (document.getElementById('plan-checkin').value || '').trim();
+            const co = (document.getElementById('plan-checkout').value || '').trim();
+            const suite = (document.getElementById('plan-suite').value || '').trim();
+            const guests = (document.getElementById('plan-guests').value || '1').trim();
+            customerState.hasActiveBooking = true;
+            customerState.isFirstLogin = false;
+            localStorage.setItem('customerHasBooking', '1');
+            localStorage.setItem('customerHasVisited', '1');
+
+            const curTitle = document.getElementById('booking-current-title');
+            const curStatus = document.getElementById('booking-current-status');
+            const curMeta = document.getElementById('booking-current-meta');
+            if (curTitle) curTitle.textContent = 'Your booking';
+            if (curStatus) { curStatus.className = 'badge success'; curStatus.textContent = 'Confirmed'; }
+            if (curMeta) {
+              curMeta.innerHTML = '';
+              const li1 = document.createElement('li');
+              li1.textContent = suite || 'Deluxe Suite';
+              const li2 = document.createElement('li');
+              li2.textContent = (ci && co) ? (ci + ' to ' + co) : 'Dates to be confirmed';
+              const li3 = document.createElement('li');
+              li3.textContent = 'Guests: ' + guests;
+              curMeta.appendChild(li1);
+              curMeta.appendChild(li2);
+              curMeta.appendChild(li3);
+            }
+
+            applyDashboardMode();
+            updateNavigationCounts();
+            highlightStateChange('booking-current-card');
+            showSection('bookings');
+            try { window.location.hash = 'bookings'; } catch (_) {}
+            showToast('Booking confirmed automatically.', 'success');
+          };
+        }
+      }
+
+      function updateCustomerClock() {
+        const timeEl = document.getElementById('digital-clock');
+        const dateEl = document.getElementById('current-date');
+        if (!timeEl && !dateEl) return;
+        const now = new Date();
+
+        function formatTime(d) {
+          let h = d.getHours();
+          const m = d.getMinutes();
+          const ampm = h >= 12 ? 'PM' : 'AM';
+          h = h % 12; if (h === 0) h = 12;
+          const mm = String(m).padStart(2, '0');
+          return `${h}:${mm} ${ampm}`;
+        }
+
+        function formatDate(d) {
+          const weekdays = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+          const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+          const wd = weekdays[d.getDay()];
+          const mon = months[d.getMonth()];
+          const day = d.getDate();
+          const year = d.getFullYear();
+          return `${wd}, ${mon} ${day}, ${year}`;
+        }
+
+        if (timeEl) timeEl.textContent = formatTime(now);
+        if (dateEl) dateEl.textContent = formatDate(now);
+      }
+
+      updateCustomerClock();
+      document.addEventListener('DOMContentLoaded', updateCustomerClock);
+      document.addEventListener('visibilitychange', function () { if (!document.hidden) updateCustomerClock(); });
+      setInterval(updateCustomerClock, 1000);
+      (function alignMinuteUpdates() {
+        const now = new Date();
+        const msToNextMinute = (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
+        setTimeout(function () {
+          updateCustomerClock();
+          setInterval(updateCustomerClock, 60000);
+        }, Math.max(0, msToNextMinute));
+      })();
+
+      applyModeFromQuery();
+      initPrimaryActions();
+      initWelcomeMessage();
+      applyDashboardMode();
+      initBookingPlanner();
+      document.addEventListener('DOMContentLoaded', function(){ try{ initBookingPlanner(); }catch(_){} });
+
+      function routeFromHash() {
+        var h = (window.location.hash || '').replace('#', '');
+        if (!h) return;
+        if (h === 'menu') { openMenuOverlay(); return; }
+        var sections = ['dashboard','bookings','orders','support','reservations','payments','receipts'];
+        if (sections.indexOf(h) !== -1) showSection(h);
+      }
+      routeFromHash();
+      window.addEventListener('hashchange', routeFromHash);
+
+      // Robust click delegation fallback for primary actions
+      document.addEventListener('click', function (e) {
+        var btn = e.target && (e.target.closest('#primary-book-room') || e.target.closest('#primary-open-menu') || e.target.closest('#primary-call-waiter'));
+        if (!btn) return;
+        if (btn.id === 'primary-book-room') startBooking();
+        else if (btn.id === 'primary-open-menu') { e.preventDefault(); openMenuOverlay(); }
+        else if (btn.id === 'primary-call-waiter') { e.preventDefault(); callWaiter(); }
+      });
+
+
+      // Service Carousel Control
+      const serviceTrack = document.querySelector('.service-track');
+      const servicePrev = document.querySelector('.service-prev');
+      const serviceNext = document.querySelector('.service-next');
+      const cards = document.querySelectorAll('.service-card');
+
+      if (serviceTrack && servicePrev && serviceNext && cards.length) {
+        const totalCards = cards.length / 2; // duplicates appended for looping
+        let currentIndex = 0;
+        let cardWidth = cards[0] ? cards[0].offsetWidth : 340;
+        const gap = 20;
+        let step = cardWidth + gap;
+        let isTransitioning = false;
+        let autoSlideInterval = null;
+
+        const rotationDelay = 3200;
+
+        const startAutoSlide = () => {
+          if (autoSlideInterval) clearInterval(autoSlideInterval);
+          autoSlideInterval = setInterval(slideNext, rotationDelay);
+        };
+
+        function updateCarousel() {
+          serviceTrack.scrollTo({ left: currentIndex * step, behavior: 'smooth' });
+        }
+
+        function resetCarousel() {
+          if (currentIndex >= totalCards) {
+            currentIndex = 0;
+            serviceTrack.scrollTo({ left: 0, behavior: 'auto' });
+          } else if (currentIndex < 0) {
+            currentIndex = totalCards - 1;
+            serviceTrack.scrollTo({ left: (totalCards - 1) * step, behavior: 'auto' });
+          }
+        }
+
+        function slideNext() {
+          if (isTransitioning) return;
+          isTransitioning = true;
+          currentIndex++;
+          updateCarousel();
+          setTimeout(() => { isTransitioning = false; resetCarousel(); }, 600);
+        }
+
+        function slidePrev() {
+          if (isTransitioning) return;
+          isTransitioning = true;
+          currentIndex--;
+          updateCarousel();
+          setTimeout(() => { isTransitioning = false; resetCarousel(); }, 600);
+        }
+
+        window.addEventListener('resize', () => {
+          cardWidth = cards[0] ? cards[0].offsetWidth : 340;
+          step = cardWidth + gap;
+          updateCarousel();
+        });
+
+        // No CSS transition; JS controls timing above
+
+        serviceNext.addEventListener('click', () => {
+          slideNext();
+          startAutoSlide();
+        });
+
+        servicePrev.addEventListener('click', () => {
+          slidePrev();
+          startAutoSlide();
+        });
+
+        serviceTrack.addEventListener('mouseenter', () => {
+          if (autoSlideInterval) clearInterval(autoSlideInterval);
+        });
+
+        serviceTrack.addEventListener('mouseleave', startAutoSlide);
+
+        updateCarousel();
+        startAutoSlide();
+        setTimeout(slideNext, 900); // kick off motion shortly after load
+      }
+    </script>
+  </body>
+</html>

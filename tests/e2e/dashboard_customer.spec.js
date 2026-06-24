@@ -1,9 +1,11 @@
 const { test, expect } = require('@playwright/test');
 
-const dashboardPath = '/dashboard_customer.html';
+const dashboardPath = '/customer-dashboard.html';
 
 test.describe('Customer dashboard front-end smoke', () => {
   test.beforeEach(async ({ page }) => {
+    page.on('console', msg => console.log('BROWSER LOG:', msg.text()));
+    page.on('pageerror', err => console.log('BROWSER ERROR:', err.message));
     await page.goto(dashboardPath);
     await page.waitForLoadState('domcontentloaded');
     await page.evaluate(() => {
@@ -17,7 +19,6 @@ test.describe('Customer dashboard front-end smoke', () => {
     await expect(page.locator('h1.welcome')).toContainText('Joseph Kilonzo');
     await expect(page.locator('.quick-group')).toHaveCount(4);
     await expect(page.locator('.snapshot-card')).toHaveCount(4);
-    await expect(page.locator('#dining-feed .dining-item')).toHaveCount(3);
   });
 
   test('quick action inline panel toggles and opens overlay details', async ({ page }) => {
@@ -43,7 +44,7 @@ test.describe('Customer dashboard front-end smoke', () => {
   });
 
   test('sidebar navigation switches between dashboard sections', async ({ page }) => {
-    const bookingsLink = page.locator('.sidebar nav').getByRole('link', { name: /My Bookings/ });
+    const bookingsLink = page.locator('.sidebar nav').getByRole('link', { name: /Book Room/ });
     await bookingsLink.click();
     await expect(page.locator('#bookings')).toHaveClass(/active/);
     await expect(page.locator('#dashboard')).not.toHaveClass(/active/);

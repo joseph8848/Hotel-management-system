@@ -7,7 +7,9 @@ test.describe('Logout landing page', () => {
     await page.goto(logoutPath);
 
     await expect(page.locator('h1', { hasText: 'Logged Out' })).toBeVisible();
-    await expect(page.locator('.logout-card p')).toContainText('You have been logged out successfully');
+    await expect(page.locator('.logout-card p')).toContainText(
+      'You have been logged out successfully'
+    );
     const loginLink = page.locator('a.login-link');
     await expect(loginLink).toHaveAttribute('href', 'login.html');
     await expect(loginLink).toHaveText(/Log In Again/i);

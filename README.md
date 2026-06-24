@@ -5,6 +5,7 @@ A comprehensive, modern hotel management system built with PHP, MySQL, and vanil
 ## 📋 Project Overview
 
 This system automates hotel operations including:
+
 - **Online Booking System** - Real-time room availability checking
 - **Guest Management** - Digital check-in/check-out processes
 - **Kitchen Order Tracking** - Real-time order status updates
@@ -21,11 +22,12 @@ As per the project requirements document, this system achieves:
 ✅ **Secure Billing System** - Encrypted transactions with audit trails  
 ✅ **Data Security** - HTTPS, password hashing, session management, CSRF protection  
 ✅ **Real-time Kitchen Orders** - Live order tracking and notifications  
-✅ **Manager Reports** - Real-time analytics and insights  
+✅ **Manager Reports** - Real-time analytics and insights
 
 ## 🚀 Features
 
 ### Customer Portal
+
 - Online room booking with real-time availability
 - View booking history and upcoming reservations
 - Order room service and track delivery
@@ -33,6 +35,7 @@ As per the project requirements document, this system achieves:
 - Profile management
 
 ### Staff Dashboard
+
 - Manage room assignments and status
 - Process check-ins and check-outs
 - Handle kitchen orders
@@ -40,6 +43,7 @@ As per the project requirements document, this system achieves:
 - Customer service tools
 
 ### Admin Dashboard
+
 - Complete hotel operations overview
 - User management (customers, staff)
 - Room and inventory management
@@ -49,18 +53,21 @@ As per the project requirements document, this system achieves:
 ## 🛠️ Technology Stack
 
 ### Frontend
+
 - **HTML5** - Semantic markup
 - **CSS3** - Modern design with CSS variables, Grid, Flexbox
 - **JavaScript (ES6+)** - Vanilla JS with modular architecture
 - **Design System** - Custom component library with glassmorphism
 
 ### Backend
+
 - **PHP 7.4+** - Server-side logic
 - **MySQL 8.0+** - Relational database
 - **PDO** - Database abstraction layer
 - **Session Management** - Secure authentication
 
 ### Security
+
 - Password hashing with bcrypt
 - HTTPS enforcement
 - SQL injection prevention (prepared statements)
@@ -72,6 +79,7 @@ As per the project requirements document, this system achieves:
 ## 📦 Installation
 
 ### Prerequisites
+
 - PHP 7.4 or higher
 - MySQL 8.0 or higher
 - Apache/Nginx web server
@@ -80,6 +88,7 @@ As per the project requirements document, this system achieves:
 ### Setup Steps
 
 1. **Clone the repository**
+
    ```bash
    git clone <repository-url>
    cd champion-hotel-management
@@ -166,6 +175,7 @@ champion-hotel-management/
 ## 🎨 Design System
 
 The application uses a modern design system with:
+
 - **Glassmorphism** - Frosted glass effects
 - **Luxury Color Palette** - Deep blues, gold accents
 - **Typography** - Playfair Display (headings) + Inter (body)
@@ -173,6 +183,7 @@ The application uses a modern design system with:
 - **Accessibility** - ARIA labels, keyboard navigation
 
 ### Color Palette
+
 - Primary: `#1a365d` (Deep Blue)
 - Secondary: `#c19a6b` (Gold)
 - Accent: `#8b7355` (Bronze)
@@ -182,6 +193,7 @@ The application uses a modern design system with:
 ## 📊 Database Schema
 
 ### Main Tables
+
 - **users** - Customer, staff, and admin accounts
 - **rooms** - Room inventory and details
 - **reservations** - Booking records
@@ -192,6 +204,7 @@ The application uses a modern design system with:
 ## 🧪 Testing
 
 Run end-to-end tests:
+
 ```bash
 npm install
 npm run test:e2e
@@ -200,10 +213,12 @@ npm run test:e2e
 ## 📱 API Endpoints
 
 ### Booking API
+
 - `GET /api/booking.php?action=available_rooms&check_in=YYYY-MM-DD&check_out=YYYY-MM-DD`
 - `POST /api/booking.php?action=create_booking`
 
 ### Response Format
+
 ```json
 {
   "success": true,
@@ -234,6 +249,7 @@ npm run test:e2e
 ## 👥 User Roles
 
 ### Customer
+
 - Book rooms online
 - View reservations
 - Order room service
@@ -241,6 +257,7 @@ npm run test:e2e
 - Update profile
 
 ### Staff
+
 - Manage check-ins/check-outs
 - Process orders
 - Update room status
@@ -248,6 +265,7 @@ npm run test:e2e
 - View daily tasks
 
 ### Admin
+
 - Full system access
 - User management
 - Financial reports
@@ -257,6 +275,7 @@ npm run test:e2e
 ## 🤝 Contributing
 
 This is a student project for Zetech University. For contributions:
+
 1. Fork the repository
 2. Create a feature branch
 3. Commit your changes
@@ -277,6 +296,7 @@ Zetech University
 ## 📞 Support
 
 For issues or questions:
+
 - Email: kilonzojoseph8848@gmail.com
 - Project Supervisor: [Supervisor Name]
 

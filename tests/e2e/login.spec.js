@@ -11,7 +11,9 @@ test.describe('Login portal', () => {
     await page.click('#login-btn');
 
     await expect(page.locator('#email-error')).toHaveText('Email is required');
-    await expect(page.locator('#password-error')).toHaveText('Password must be at least 6 characters');
+    await expect(page.locator('#password-error')).toHaveText(
+      'Password must be at least 6 characters'
+    );
     await expect(page.locator('#email')).toHaveClass(/invalid/);
     await expect(page.locator('#password')).toHaveClass(/invalid/);
   });
@@ -37,8 +39,8 @@ test.describe('Login portal', () => {
     await page.fill('#password', '8848joseph');
     await page.click('#login-btn');
 
-    await page.waitForURL('**/dashboard_customer.html');
-    await expect(page).toHaveURL(/dashboard_customer\.html$/);
+    await page.waitForURL('**/customer-dashboard.html');
+    await expect(page).toHaveURL(/customer-dashboard\.html$/);
     await expect(page.locator('h1.welcome')).toContainText('Joseph Kilonzo');
   });
 });
